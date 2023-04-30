@@ -1,10 +1,14 @@
-package singleproject.demo.user;
+package singleproject.demo.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import singleproject.demo.comment.Comment;
+import singleproject.demo.member.dto.MemberDto;
+import singleproject.demo.question.Question;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +36,12 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
     private Stamp stamp;
 
+    @OneToMany(mappedBy = "member")
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments;
+
     public enum MemberStatus {
         ACTIVE("활동중"),
         SLEEP("휴면 계정"),
@@ -43,5 +53,15 @@ public class Member {
         MemberStatus(String status) {
             this.status = status;
         }
+    }
+
+    public MemberDto.Response memberToMemberResponseDto() {
+        MemberDto.Response responseDto = new MemberDto.Response();
+        responseDto.setMemberId(memberId);
+        responseDto.setName(name);
+        responseDto.setEmail(email);
+        responseDto.setPhone(phone);
+
+        return responseDto;
     }
 }

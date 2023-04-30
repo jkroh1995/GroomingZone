@@ -1,4 +1,4 @@
-package singleproject.demo.user;
+package singleproject.demo.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

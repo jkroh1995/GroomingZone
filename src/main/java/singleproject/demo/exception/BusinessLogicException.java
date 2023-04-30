@@ -1,4 +1,4 @@
-package singleproject.demo.user;
+package singleproject.demo.exception;
 
 import lombok.Getter;
 
