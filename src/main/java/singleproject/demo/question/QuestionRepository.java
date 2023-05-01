@@ -7,5 +7,6 @@ import java.util.Optional;
 public interface QuestionRepository extends Repository<Question, Long> {
     Question save(Question question);
 
-    Optional<Question> findById(long questionId);
+    Optional<Question> findByQuestionId(long questionId);
+    void removeByQuestionId(long questionId);
 }

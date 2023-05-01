@@ -14,11 +14,13 @@ public class QuestionDto {
         private long memberId;
         private String header;
         private String text;
+        private int policyNum;
 
         public Question questionPostDtoToQuestion() {
             Question question = new Question();
             question.setHeader(header);
             question.setText(text);
+            question.setPolicy(policyNum);
             return question;
         }
     }
@@ -31,6 +33,7 @@ public class QuestionDto {
         private String memberName;
         private String header;
         private String text;
+        private Question.PublicPolicy policy;
         private List<Comment> comments;
     }
 
@@ -38,5 +41,6 @@ public class QuestionDto {
     public static class Patch {
         private long memberId;
         private String text;
+        private int policyNum;
     }
 }

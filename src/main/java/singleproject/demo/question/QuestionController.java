@@ -31,4 +31,10 @@ public class QuestionController {
         QuestionDto.Response response = service.updateQuestion(questionId, questionPatchDto);
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
+        service.deleteQuestion(questionId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
