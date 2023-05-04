@@ -1,7 +1,9 @@
 package singleproject.demo.question;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import singleproject.demo.comment.Comment;
 
 import java.util.List;
@@ -27,10 +29,11 @@ public class QuestionDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Response {
 
         private long questionId;
-        private String memberName;
+        private long memberId;
         private String header;
         private String text;
         private Question.PublicPolicy policy;

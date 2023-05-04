@@ -1,12 +1,16 @@
 package singleproject.demo.question;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import singleproject.demo.exception.BusinessLogicException;
 import singleproject.demo.exception.ExceptionCode;
 import singleproject.demo.member.Member;
 import singleproject.demo.member.service.MemberService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -32,7 +36,7 @@ public class QuestionService {
     public QuestionDto.Response updateQuestion(long questionId, QuestionDto.Patch questionPatchDto) {
         Question findQuestion = findVerifiedQuestion(questionId);
         verifyQuestionAlreadyAnswered(findQuestion);
-        verifyAuthoredMember(questionPatchDto, findQuestion);
+        verifyAuthoredMember(findQuestion.getMember().getMemberId(), questionId);
         findQuestion.setText(questionPatchDto.getText());
         changePolicy(questionPatchDto, findQuestion);
 
@@ -41,8 +45,40 @@ public class QuestionService {
     }
 
     public void deleteQuestion(long questionId) {
-        findVerifiedQuestion(questionId);
-        repository.removeByQuestionId(questionId);
+        Question question = findVerifiedQuestion(questionId);
+        question.setQuestionStatus(Question.QuestionStatus.QUESTION_DELETED);
+    }
+
+    public QuestionDto.Response findQuestion(long questionId) {
+        Question question = findVerifiedQuestion(questionId);
+        if(question.getQuestionStatus() == Question.QuestionStatus.QUESTION_DELETED){
+            throw new BusinessLogicException(ExceptionCode.QUESTION_DELETED);
+        }
+        if(question.getPolicy() == Question.PublicPolicy.SECRET){
+            verifyAuthoredMember(question.getMember().getMemberId(), questionId);
+        }
+        return question.questionToQuestionResponseDto();
+    }
+
+    public List<QuestionDto.Response> findQuestions(int page, int size) {
+        Page<Question> pageQuestions = findQuestionPages(page, size);
+        List<Question> questions = pageQuestions.getContent();
+        return questions.stream()
+                .map(question ->
+                    new QuestionDto.Response(
+                            question.getQuestionId(),
+                            question.getMember().getMemberId(),
+                            question.getHeader(),
+                            question.getText(),
+                            question.getPolicy(),
+                            question.getComments()
+                    )
+                )
+                .collect(Collectors.toList());
+    }
+
+    public Page<Question> findQuestionPages(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
     }
 
     private Question findVerifiedQuestion(long questionId) {
@@ -51,8 +87,8 @@ public class QuestionService {
                 new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 
-    private void verifyAuthoredMember(QuestionDto.Patch questionPatchDto, Question findQuestion) {
-        if(findQuestion.getMember().getMemberId() != questionPatchDto.getMemberId()){
+    private void verifyAuthoredMember(long memberIdOfFindQuestion, long memberIdOfRequest) {
+        if(memberIdOfFindQuestion != memberIdOfRequest){
             throw new BusinessLogicException(ExceptionCode.NOT_AUTHORED_MEMBER);
         }
     }
@@ -66,8 +102,7 @@ public class QuestionService {
 
     private void verifyQuestionAlreadyAnswered(Question findQuestion) {
         if(findQuestion.getQuestionStatus() == Question.QuestionStatus.QUESTION_ANSWERED){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_ANSWERED_QUESTION);
+            throw new BusinessLogicException(ExceptionCode.QUESTION_ALREADY_ANSWERED);
         }
     }
-
 }
