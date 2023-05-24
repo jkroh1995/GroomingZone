@@ -1,0 +1,108 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.link {
+    text-decoration: none;
+    color: #333;
+    margin-right: 10px;
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: #f2f2f2;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* 메인 섹션 스타일 */
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+section h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+section label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+section select,
+section input[type="text"],
+section input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+section button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* 결과 섹션 스타일 */
+.recommended-hairstyle {
+    margin-bottom: 30px;
+}
+
+.recommended-hairstyle h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.recommended-hairstyle img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    padding: 20px 0;
+    background-color: #f2f2f2;
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>헤어스타일 추천 서비스</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/home-styles.css">
 </head>
 
 <body>
@@ -17,12 +17,10 @@
         </nav>
     </header>
 
-    <main>
-    <!-- 메인 페이지 -->
+    <div class="container">
         <section>
             <h1>헤어스타일 추천 서비스</h1>
             <form action="/recommend" method="POST">
-            <!-- 사용자 입력 폼 -->
                 <label for="gender">성별:</label>
                 <select id="gender" name="gender">
                     <option value="male">남성</option>
@@ -43,13 +41,10 @@
                     <option value="curly">곱슬</option>
                 </select>
 
-            <!-- 추가적인 입력 필드 및 버튼 -->
-
                 <button type="submit">추천</button>
             </form>
         </section>
 
-    <!-- 결과 페이지 -->
         <section>
             <h2>추천된 헤어스타일</h2>
             <div th:if="${recommendedHairstyle}">
@@ -58,7 +53,7 @@
                 <p th:text="${recommendedHairstyle.description}"></p>
             </div>
         </section>
-    </main>
+    </div>
 
     <footer>
         <p>© 2023 헤어스타일 추천 서비스. All rights reserved.</p>
