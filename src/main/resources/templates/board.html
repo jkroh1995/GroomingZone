@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+      <html xmlns:th="http://www.thymeleaf.org">
+      <head>
+      <meta charset="UTF-8">
+      <title>게시판</title>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+<header>
+  <!-- 헤더 내용 -->
+</header>
+
+<div class="container">
+  <h1>게시판</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>추천 수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 게시물 목록 출력 -->
+    <tr th:each="post : ${posts}">
+      <td><a th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}"></a></td>
+      <td th:text="${post.member.nickName}"></td>
+<!--      <td th:text="${post.likes}"></td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <!-- 푸터 내용 -->
+</footer>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

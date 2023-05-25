@@ -1,4 +1,4 @@
-package singleproject.demo.domain;
+package singleproject.demo.member.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,14 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
 
+    @NotBlank
+    private String name;
+
     @Email
     private String email;
 
     @NotBlank
-    private String nickName;
+    private String nickname;
 
     @NotBlank
     private String instagram;
@@ -37,11 +40,11 @@ public class Member {
     private Category category;
 
     public enum Category{
-        CUSTOMER("cutomer"),
+        CUSTOMER("customer"),
         BARBER("barber");
 
         @Getter
-        private String category;
+        private final String category;
 
         Category(String category) {
             this.category = category;

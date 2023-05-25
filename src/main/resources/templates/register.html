@@ -13,6 +13,7 @@
         <ul>
             <li><a href="/" class="link">홈</a></li>
             <li><a href="/login" class="link">로그인</a></li>
+            <li><a href="/board" class="link">게시판</a></li>
         </ul>
     </nav>
 </header>
@@ -35,11 +36,11 @@
             </div>
             <div>
                 <label for="instagram">인스타그램 계정 이름:</label>
-                <input type="text" id="instagram" name="nickname" required>
+                <input type="text" id="instagram" name="instagram" required>
             </div>
             <div>
-                <label for="phoneNumber">전화번호:</label>
-                <input type="text" id="phoneNumber" name="phoneNumber">
+                <label for="phone">전화번호:</label>
+                <input type="text" id="phone" name="phone">
             </div>
             <div>
                 <label for="password">비밀번호:</label>
@@ -48,8 +49,8 @@
             <div>
                 <label for="category">회원 유형</label>
                 <select id="category" name="category">
-                    <option value="customer">손님</option>
-                    <option value="barber">디자이너</option>
+                    <option value="CUSTOMER">손님</option>
+                    <option value="BARBER">바버</option>
                 </select>
             </div>
             <button type="submit">회원가입</button>
