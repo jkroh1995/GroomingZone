@@ -1,4 +1,4 @@
-package singleproject.demo.post.entity;
+package singleproject.demo.posting.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-public class Post {
+public class Posting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +22,11 @@ public class Post {
     @NotBlank
     private String title;
 
+    @NotBlank
+    private String content;
+
     @OneToOne
     private Member member;
+
+    private long viewCount = 0;
 }

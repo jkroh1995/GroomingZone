@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>게시판</title>
+  <title>글 작성</title>
   <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
@@ -18,27 +18,22 @@
   </nav>
 </header>
 <main>
-  <h2>게시판</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>글머리</th>
-      <th>제목</th>
-      <th>작성자</th>
-      <th>추천 수</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 게시글 목록 반복 출력 -->
-    <tr th:each="post : ${posts}">
-      <td><a th:href="@{/board/post/{id}(id=${post.postId})}" th:text="${post.title}"></a></td>
-      <td th:text="${post.member.nickname}"></td>
-<!--      <td th:text="${post.likes}"></td>-->
-    </tr>
-    </tbody>
-  </table>
-  <!-- 글 작성 버튼 -->
-  <a href="/board/new" class="button">글 작성</a>
+  <h2>글 작성</h2>
+  <form action="/board/new" method="POST">
+    <div>
+      <label for="title">제목:</label>
+      <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+      <label for="content">내용:</label>
+      <textarea type="text" id="content" name="content" required></textarea>
+    </div>
+    <div>
+      <label for="nickname">작성자:</label>
+      <input type="text" id="nickname" name="nickname" required>
+    </div>
+    <button type="submit">글 작성</button>
+  </form>
 </main>
 <footer>
   <p>© 2023 헤어스타일 추천 서비스. All rights reserved.</p>

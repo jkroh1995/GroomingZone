@@ -128,3 +128,14 @@ footer {
     margin-top: 20px;
     font-size: 14px;
 }
+
+.error {
+    margin-top: 10px;
+}
+
+.alert {
+    padding: 10px;
+    border: 1px solid #f00;
+    background-color: #fee;
+    color: #f00;
+}

@@ -8,17 +8,24 @@
 
 <body>
 <div class="login-container">
-    <form class="login-form" action="/login" method="POST">
-        <h2>로그인 해주세요</h2>
-        <div class="form-group">
+    <h1 class="logo">로그인</h1>
+    <form action="/process_login" method="POST" th:action="@{/process_login}">
+        <div class="error" th:if="${param.error != null}">
+            <div class="alert">
+                잘못된 사용자명 또는 비밀번호입니다.
+            </div>
+        </div>
+        <div>
             <label for="username">사용자명:</label>
             <input type="text" id="username" name="username" required>
         </div>
-        <div class="form-group">
+        <div>
             <label for="password">비밀번호:</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <button type="submit" class="login-button">로그인</button>
+        <div>
+            <button type="submit">로그인</button>
+        </div>
     </form>
 </div>
 
