@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>글 작성</title>
-  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
 <header>
@@ -20,6 +20,14 @@
 <main>
   <h2>글 작성</h2>
   <form action="/board/new" method="POST">
+    <div>
+      <label for="category">성별:</label>
+      <select id="category" name="category">
+        <option value="QUESTION">질문</option>
+        <option value="RECRUITING">구인구직</option>
+        <option value="FREE">자유</option>
+      </select>
+    </div>
     <div>
       <label for="title">제목:</label>
       <input type="text" id="title" name="title" required>
