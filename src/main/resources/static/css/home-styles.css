@@ -22,7 +22,6 @@ body {
     margin-right: 10px;
 }
 
-/* 헤더 스타일 */
 header {
     background-color: #f2f2f2;
     padding: 20px;
@@ -41,6 +40,7 @@ nav ul li {
     display: inline-block;
     margin-right: 10px;
 }
+
 
 /* 메인 섹션 스타일 */
 
@@ -103,6 +103,6 @@ footer {
     text-align: center;
     margin-top: 30px;
     font-size: 14px;
-    padding: 20px 0;
+    padding: 10px 0;
     background-color: #f2f2f2;
 }

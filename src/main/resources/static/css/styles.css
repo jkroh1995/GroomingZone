@@ -6,8 +6,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
-/* 헤더 스타일 */
 header {
     background-color: #f2f2f2;
     padding: 20px;
@@ -25,11 +23,6 @@ nav ul {
 nav ul li {
     display: inline-block;
     margin-right: 10px;
-}
-
-.link {
-    color: black;
-    text-decoration: none;
 }
 
 /* 메인 컨텐츠 스타일 */
@@ -120,14 +113,6 @@ input[type="password"] {
     cursor: pointer;
 }
 
-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 14px;
-    padding: 20px 0;
-    background-color: #f2f2f2;
-}
-
 .error {
     margin-top: 10px;
 }
@@ -160,4 +145,28 @@ footer {
 
 .board-table tbody tr:hover {
     background-color: #eaeaea;
+}
+.post {
+    margin-bottom: 20px;
+}
+
+.post-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.post-content {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    padding: 10px 0;
+    background-color: #f2f2f2;
 }

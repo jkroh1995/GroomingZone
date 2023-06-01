@@ -32,11 +32,11 @@
     <tbody>
     <!-- 게시글 목록 반복 출력 -->
     <tr th:each="post : ${posts}">
-      <td><a th:href="@{/board/post/{id}(id=${post.postId})}" th:value="${post.category.getCategory()}"></a></td>
-      <td><a th:href="@{/board/post/{id}(id=${post.postId})}" th:value="${post.title}"></a> </td>
+      <td th:text="${post.category.getCategory()}"></td>
+      <td><a th:href="@{/board/{id}(id=${post.postId})}" th:text="${post.title}"></a> </td>
       <td th:text="${post.member.nickname}"></td>
-      <td th:number="${post.viewCount}"></td>
-      <td th:number="${post.getLikesCount()}"></td>
+      <td th:text="${post.viewCount}"></td>
+      <td th:text="${post.getLikesCount()}"></td>
     </tr>
     </tbody>
   </table>
@@ -44,7 +44,7 @@
   <a href="/board/new" class="button">글 작성</a>
 </main>
 <footer>
-  <p>© 2023 헤어스타일 추천 서비스. All rights reserved.</p>
+  <p>© GroomingZone. All rights reserved.</p>
 </footer>
 </body>
 </html>

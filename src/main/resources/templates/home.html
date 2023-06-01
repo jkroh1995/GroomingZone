@@ -7,58 +7,57 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="logo" style="display: inline-block;">헤어스타일 추천 서비스</h1>
-        <nav style="display: inline-block;">
-            <ul>
-                <li><a href="/" class="link">홈</a></li>
-                <li><a href="/auths/login-form" class="link">로그인</a></li>
-                <li><a href="/board" class="link">게시판</a></li>
-                <li><a href="/member/register" class="link">회원 가입</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <h1 class="logo" style="display: inline-block;">헤어스타일 추천 서비스</h1>
+    <nav style="display: inline-block;">
+        <ul>
+            <li><a href="/" class="link">홈</a></li>
+            <li><a href="/auths/login-form" class="link">로그인</a></li>
+            <li><a href="/board" class="link">게시판</a></li>
+            <li><a href="/member/register" class="link">회원 가입</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <section>
+        <h1>헤어스타일 추천 서비스</h1>
+        <form action="/recommend" method="POST">
+            <label for="gender">성별:</label>
+            <select id="gender" name="gender">
+                <option value="male">남성</option>
+                <option value="female">여성</option>
+            </select>
 
-    <div class="container">
-        <section>
-            <h1>헤어스타일 추천 서비스</h1>
-            <form action="/recommend" method="POST">
-                <label for="gender">성별:</label>
-                <select id="gender" name="gender">
-                    <option value="male">남성</option>
-                    <option value="female">여성</option>
-                </select>
+            <label for="hairLength">머리 길이:</label>
+            <select id="hairLength" name="hairLength">
+                <option value="short">단발</option>
+                <option value="medium">중발</option>
+                <option value="long">장발</option>
+            </select>
 
-                <label for="hairLength">머리 길이:</label>
-                <select id="hairLength" name="hairLength">
-                    <option value="short">단발</option>
-                    <option value="medium">중발</option>
-                    <option value="long">장발</option>
-                </select>
+            <label for="hairTexture">머리 텍스처:</label>
+            <select id="hairTexture" name="hairTexture">
+                <option value="straight">직모</option>
+                <option value="wavy">파동</option>
+                <option value="curly">곱슬</option>
+            </select>
 
-                <label for="hairTexture">머리 텍스처:</label>
-                <select id="hairTexture" name="hairTexture">
-                    <option value="straight">직모</option>
-                    <option value="wavy">파동</option>
-                    <option value="curly">곱슬</option>
-                </select>
+            <button type="submit">추천</button>
+        </form>
+    </section>
 
-                <button type="submit">추천</button>
-            </form>
-        </section>
+    <section>
+        <h2>추천된 헤어스타일</h2>
+        <div th:if="${recommendedHairstyle}">
+            <h3 th:text="${recommendedHairstyle.name}"></h3>
+            <img th:src="${recommendedHairstyle.image}" alt="헤어스타일 이미지">
+            <p th:text="${recommendedHairstyle.description}"></p>
+        </div>
+    </section>
+</div>
 
-        <section>
-            <h2>추천된 헤어스타일</h2>
-            <div th:if="${recommendedHairstyle}">
-                <h3 th:text="${recommendedHairstyle.name}"></h3>
-                <img th:src="${recommendedHairstyle.image}" alt="헤어스타일 이미지">
-                <p th:text="${recommendedHairstyle.description}"></p>
-            </div>
-        </section>
-    </div>
-
-    <footer>
-        <p>© 2023 헤어스타일 추천 서비스. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>© GroomingZone. All rights reserved.</p>
+</footer>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게시글</title>
+    <!-- CSS 및 기타 필요한 리소스를 추가합니다. -->
+    <link rel="stylesheet" type="text/css" href="/css/post-style.css">
+</head>
+<body>
+<header>
+    <h1 class="logo" style="display: inline-block;">헤어스타일 추천 서비스</h1>
+    <nav style="display: inline-block;">
+        <ul>
+            <li><a href="/" class="link">홈</a></li>
+            <li><a href="/auths/login-form" class="link">로그인</a></li>
+            <li><a href="/board" class="link">게시판</a></li>
+            <li><a href="/member/register" class="link">회원 가입</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="header">
+        <h1 class="title" th:text="${post.title}">게시글 제목</h1>
+        <p class="author" th:text="'작성자: ' + ${post.member.nickname}">작성자: 글 작성자</p>
+        <p class="number" th:text="'글 번호: ' + ${post.postId}">글 번호: 123456</p>
+    </div>
+
+    <div class="content">
+        <p th:text="${post.content}">글 내용이 여기에 들어갑니다.</p>
+        <!-- 글 내용을 출력하는 부분 -->
+    </div>
+
+<!--    <div class="comments">-->
+<!--        <h2 class="comment-title">댓글</h2>-->
+<!--        <ul class="comment-list">-->
+<!--            <li class="comment-item" th:each="comment : ${comments}" th:text="${comment.content}">댓글 내용 1</li>-->
+<!--            &lt;!&ndash; 댓글을 출력하는 부분 &ndash;&gt;-->
+<!--        </ul>-->
+<!--    </div>-->
+</div>
+<footer>
+    <p>© GroomingZone. All rights reserved.</p>
+</footer>
+</body>
+</html>
