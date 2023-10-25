@@ -2,7 +2,7 @@ package tdd.groomingzone.board;
 
 public class FreeBoardService {
 
-    public FreeBoardDto.Response createBoard(FreeBoardDto.Post boardPostDto) {
+    public FreeBoardDto.Response createFreeBoard(FreeBoardDto.Post postDto) {
         return null;
     }
 }

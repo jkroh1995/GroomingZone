@@ -11,7 +11,7 @@ public class FreeFreeBoardServiceTest {
     @Test
     void createBoardTest(){
         FreeBoardDto.Post boardPostDto = new FreeBoardDto.Post();
-        FreeBoardDto.Response boardResponseDto = boardService.createBoard(boardPostDto);
+        FreeBoardDto.Response boardResponseDto = boardService.createFreeBoard(boardPostDto);
         assertThat(boardResponseDto).isNull();
     }
 }

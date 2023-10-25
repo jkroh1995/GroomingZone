@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FreeBoardConverter {
 
-    public FreeBoard convertPostDtoToEntity(FreeBoardDto.Post boardPostDto) {
+    public FreeBoard convertPostDtoToEntity(FreeBoardDto.Post postDto) {
         return FreeBoard.builder()
-                .title(boardPostDto.getTitle())
-                .content(boardPostDto.getContent())
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
                 .build();
     }
 }
