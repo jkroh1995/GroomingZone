@@ -4,20 +4,20 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BoardConverterTest {
+class FreeFreeBoardConverterTest {
 
-    private final BoardConverter boardConverter = new BoardConverter();
+    private final FreeBoardConverter freeBoardConverter = new FreeBoardConverter();
 
     @Test
     void convertPostDtoToEntityTest(){
-        BoardDto.Post postDto = new BoardDto.Post();
+        FreeBoardDto.Post postDto = new FreeBoardDto.Post();
         String testTitle = "test";
         String testContent = "content";
 
         postDto.setTitle(testTitle);
         postDto.setContent(testContent);
 
-        Board entity = boardConverter.convertPostDtoToEntity(postDto);
+        FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
 
         String dtoTitle = postDto.getTitle();
         String entityTitle = entity.getTitle();

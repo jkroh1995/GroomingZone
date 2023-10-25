@@ -4,7 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-public class BoardDto {
+public class FreeBoardDto {
 
     @Getter
     @Setter
