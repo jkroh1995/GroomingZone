@@ -1,23 +1,34 @@
 package tdd.groomingzone.board;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class FreeBoardCommandServiceTest {
 
-    @Autowired
+    @Mock
+    private FreeBoardRepository freeBoardRepository;
+
+    @InjectMocks
     private FreeBoardCommandService freeBoardCommandService;
 
     @Test
-    void saveTest(){
+    void saveTest() {
         FreeBoard testEntity = FreeBoard.builder()
                 .title("test")
                 .content("content")
                 .build();
+        testEntity.setId(1L);
+
+        given(freeBoardRepository.save(any())).willReturn(testEntity);
+
         FreeBoard savedEntity = freeBoardCommandService.save(testEntity);
 
         assertThat(savedEntity.getId()).isEqualTo(1L);
