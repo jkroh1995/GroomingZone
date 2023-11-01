@@ -19,12 +19,8 @@ class FreeFreeBoardConverterTest {
 
         FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
 
-        String dtoTitle = postDto.getTitle();
-        String entityTitle = entity.getTitle();
-        assertThat(dtoTitle).isEqualTo(entityTitle);
+        assertThat(postDto.getTitle()).isEqualTo(entity.getTitle());
 
-        String dtoContent = postDto.getContent();
-        String entityContent = entity.getContent();
-        assertThat(dtoContent).isEqualTo(entityContent);
+        assertThat(postDto.getContent()).isEqualTo(entity.getContent());
     }
 }
