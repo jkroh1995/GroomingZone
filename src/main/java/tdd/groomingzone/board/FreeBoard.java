@@ -29,4 +29,9 @@ public class FreeBoard {
         this.title = title;
         this.content = content;
     }
+
+    public void modify(FreeBoardDto.Put putDto) {
+        this.title = putDto.getTitle();
+        this.content = putDto.getContent();
+    }
 }

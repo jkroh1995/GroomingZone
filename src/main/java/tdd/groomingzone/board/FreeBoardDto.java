@@ -17,9 +17,15 @@ public class FreeBoardDto {
     }
 
     @Getter
-    @Setter
     @Builder
     public static class Response{
+        private String title;
+        private String content;
+    }
+
+    @Getter
+    @Setter
+    public static class Put {
         private String title;
         private String content;
     }
