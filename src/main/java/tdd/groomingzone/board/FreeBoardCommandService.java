@@ -11,7 +11,7 @@ public class FreeBoardCommandService {
         this.freeBoardRepository = freeBoardRepository;
     }
 
-    public FreeBoard save(FreeBoard entity) {
+    public FreeBoard create(FreeBoard entity) {
         return freeBoardRepository.save(entity);
     }
 }
