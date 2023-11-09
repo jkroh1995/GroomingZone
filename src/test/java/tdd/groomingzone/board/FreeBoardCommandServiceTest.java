@@ -20,7 +20,7 @@ class FreeBoardCommandServiceTest {
     private FreeBoardCommandService freeBoardCommandService;
 
     @Test
-    void saveTest() {
+    void createTest() {
         FreeBoard testEntity = FreeBoard.builder()
                 .title("test")
                 .content("content")
@@ -29,10 +29,28 @@ class FreeBoardCommandServiceTest {
 
         given(freeBoardRepository.save(any())).willReturn(testEntity);
 
-        FreeBoard savedEntity = freeBoardCommandService.save(testEntity);
+        FreeBoard savedEntity = freeBoardCommandService.create(testEntity);
 
         assertThat(savedEntity.getId()).isEqualTo(1L);
         assertThat(savedEntity.getTitle()).isEqualTo(testEntity.getTitle());
         assertThat(savedEntity.getContent()).isEqualTo(testEntity.getContent());
+    }
+
+    @Test
+    void updateTest() {
+        FreeBoard testEntity = FreeBoard.builder()
+                .title("test")
+                .content("content")
+                .build();
+        testEntity.setId(1L);
+
+        FreeBoardDto.Put putDto = new FreeBoardDto.Put();
+        putDto.setTitle("modifiedTitle");
+        putDto.setContent("modifiedContent");
+
+        testEntity.modify(putDto);
+
+        assertThat(testEntity.getTitle()).isEqualTo(putDto.getTitle());
+        assertThat(testEntity.getContent()).isEqualTo(putDto.getContent());
     }
 }
