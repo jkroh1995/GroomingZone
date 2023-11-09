@@ -2,7 +2,7 @@ package tdd.groomingzone.member;
 
 import tdd.groomingzone.review.Review;
 import tdd.groomingzone.Wallet;
-import tdd.groomingzone.board.FreeBoard;
+import tdd.groomingzone.board.freeboard.FreeBoard;
 
 import javax.persistence.*;
 import java.util.ArrayList;

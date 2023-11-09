@@ -1,4 +1,4 @@
-package tdd.groomingzone.board;
+package tdd.groomingzone.board.freeboard;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

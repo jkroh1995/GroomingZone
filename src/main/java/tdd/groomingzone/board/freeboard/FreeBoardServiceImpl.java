@@ -1,4 +1,4 @@
-package tdd.groomingzone.board;
+package tdd.groomingzone.board.freeboard;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
