@@ -23,4 +23,17 @@ class FreeFreeBoardConverterTest {
 
         assertThat(postDto.getContent()).isEqualTo(entity.getContent());
     }
+
+    @Test
+    void convertEntityToResponseDtoTest(){
+        FreeBoard entity = FreeBoard.builder()
+                .title("title")
+                .content("content")
+                .build();
+
+        FreeBoardDto.Response responseDto = freeBoardConverter.convertEntityToResponseDto(entity);
+
+        assertThat(entity.getTitle()).isEqualTo(responseDto.getTitle());
+        assertThat(entity.getContent()).isEqualTo(responseDto.getContent());
+    }
 }
