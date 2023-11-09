@@ -14,4 +14,8 @@ public class FreeBoardCommandService {
     public FreeBoard create(FreeBoard entity) {
         return freeBoardRepository.save(entity);
     }
+
+    public void update(FreeBoard entity, FreeBoardDto.Put putDto) {
+        entity.modify(putDto);
+    }
 }

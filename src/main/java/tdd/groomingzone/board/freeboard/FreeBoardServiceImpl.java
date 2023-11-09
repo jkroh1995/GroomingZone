@@ -8,10 +8,12 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 
     private final FreeBoardConverter freeBoardConverter;
     private final FreeBoardCommandService freeBoardCommandService;
+    private final FreeBoardQueryService freeBoardQueryService;
 
-    public FreeBoardServiceImpl(FreeBoardConverter freeBoardConverter, FreeBoardCommandService freeBoardCommandService) {
+    public FreeBoardServiceImpl(FreeBoardConverter freeBoardConverter, FreeBoardCommandService freeBoardCommandService, FreeBoardQueryService freeBoardQueryService) {
         this.freeBoardConverter = freeBoardConverter;
         this.freeBoardCommandService = freeBoardCommandService;
+        this.freeBoardQueryService = freeBoardQueryService;
     }
 
     @Override
@@ -23,8 +25,10 @@ public class FreeBoardServiceImpl implements FreeBoardService{
     }
 
     @Override
-    public FreeBoardDto.Response putFreeBoard(FreeBoardDto.Put putDto) {
-
+    @Transactional
+    public FreeBoardDto.Response putFreeBoard(long id, FreeBoardDto.Put putDto) {
+        FreeBoard entity = freeBoardQueryService.readEntityById(id);
+        freeBoardCommandService.update(entity, putDto);
         return null;
     }
 }
