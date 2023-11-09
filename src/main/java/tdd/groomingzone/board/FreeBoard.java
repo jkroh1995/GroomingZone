@@ -1,6 +1,7 @@
 package tdd.groomingzone.board;
 
 import lombok.*;
+import tdd.groomingzone.member.Member;
 
 import javax.persistence.*;
 
@@ -12,12 +13,16 @@ public class FreeBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "free_board_id")
+    @Column(name = "FREE_BOARD_ID")
     private long id;
 
     private String title;
 
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Builder
     public FreeBoard(String title, String content){
