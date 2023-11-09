@@ -2,6 +2,8 @@ package tdd.groomingzone.board;
 
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class FreeBoardService {
 
@@ -13,9 +15,10 @@ public class FreeBoardService {
         this.freeBoardCommandService = freeBoardCommandService;
     }
 
+    @Transactional
     public FreeBoardDto.Response createFreeBoard(FreeBoardDto.Post postDto) {
         FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
         FreeBoard savedEntity = freeBoardCommandService.save(entity);
-        return null;
+        return freeBoardConverter.convertEntityToResponseDto(savedEntity);
     }
 }

@@ -11,4 +11,11 @@ public class FreeBoardConverter {
                 .content(postDto.getContent())
                 .build();
     }
+
+    public FreeBoardDto.Response convertEntityToResponseDto(FreeBoard entity) {
+        return FreeBoardDto.Response.builder()
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .build();
+    }
 }
