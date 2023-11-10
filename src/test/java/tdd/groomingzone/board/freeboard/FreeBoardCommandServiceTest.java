@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class FreeBoardCommandServiceTest {
@@ -48,9 +49,22 @@ class FreeBoardCommandServiceTest {
         putDto.setTitle("modifiedTitle");
         putDto.setContent("modifiedContent");
 
-        testEntity.modify(putDto);
+        freeBoardCommandService.update(testEntity, putDto);
 
         assertThat(testEntity.getTitle()).isEqualTo(putDto.getTitle());
         assertThat(testEntity.getContent()).isEqualTo(putDto.getContent());
+    }
+
+    @Test
+    void deleteTest(){
+        FreeBoard testEntity = FreeBoard.builder()
+                .title("test")
+                .content("content")
+                .build();
+        testEntity.setId(1L);
+
+        freeBoardCommandService.delete(testEntity);
+
+        verify(freeBoardRepository).delete(testEntity);
     }
 }
