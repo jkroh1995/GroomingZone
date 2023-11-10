@@ -31,4 +31,11 @@ public class FreeBoardServiceImpl implements FreeBoardService{
         freeBoardCommandService.update(entity, putDto);
         return null;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FreeBoardDto.Response getFreeBoard(long id){
+        FreeBoard entity = freeBoardQueryService.readEntityById(id);
+        return freeBoardConverter.convertEntityToResponseDto(entity);
+    }
 }
