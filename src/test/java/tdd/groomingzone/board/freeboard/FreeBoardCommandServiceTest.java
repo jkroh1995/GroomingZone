@@ -57,14 +57,17 @@ class FreeBoardCommandServiceTest {
 
     @Test
     void deleteTest(){
+        //given
         FreeBoard testEntity = FreeBoard.builder()
                 .title("test")
                 .content("content")
                 .build();
         testEntity.setId(1L);
 
+        //when
         freeBoardCommandService.delete(testEntity);
 
+        //then
         verify(freeBoardRepository).delete(testEntity);
     }
 }
