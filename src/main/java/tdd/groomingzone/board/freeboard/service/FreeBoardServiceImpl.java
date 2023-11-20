@@ -1,10 +1,13 @@
-package tdd.groomingzone.board.freeboard;
+package tdd.groomingzone.board.freeboard.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tdd.groomingzone.board.freeboard.FreeBoard;
+import tdd.groomingzone.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.board.freeboard.FreeBoardService;
 
 @Service
-public class FreeBoardServiceImpl implements FreeBoardService{
+public class FreeBoardServiceImpl implements FreeBoardService {
 
     private final FreeBoardConverter freeBoardConverter;
     private final FreeBoardCommandService freeBoardCommandService;
@@ -29,7 +32,7 @@ public class FreeBoardServiceImpl implements FreeBoardService{
     public FreeBoardDto.Response putFreeBoard(long id, FreeBoardDto.Put putDto) {
         FreeBoard entity = freeBoardQueryService.readEntityById(id);
         freeBoardCommandService.update(entity, putDto);
-        return null;
+        return freeBoardConverter.convertEntityToResponseDto(entity);
     }
 
     @Override
@@ -37,5 +40,12 @@ public class FreeBoardServiceImpl implements FreeBoardService{
     public FreeBoardDto.Response getFreeBoard(long id){
         FreeBoard entity = freeBoardQueryService.readEntityById(id);
         return freeBoardConverter.convertEntityToResponseDto(entity);
+    }
+
+    @Override
+    @Transactional
+    public void deleteFreeBoard(long id) {
+        FreeBoard entity = freeBoardQueryService.readEntityById(id);
+        freeBoardCommandService.delete(entity);
     }
 }

@@ -1,13 +1,11 @@
 package tdd.groomingzone.board.freeboard;
 
 import org.junit.jupiter.api.Test;
-import tdd.groomingzone.board.freeboard.FreeBoard;
-import tdd.groomingzone.board.freeboard.FreeBoardConverter;
-import tdd.groomingzone.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.board.freeboard.service.FreeBoardConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FreeFreeBoardConverterTest {
+class FreeBoardConverterTest {
 
     private final FreeBoardConverter freeBoardConverter = new FreeBoardConverter();
 

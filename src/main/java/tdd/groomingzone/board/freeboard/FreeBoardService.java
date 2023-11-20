@@ -7,4 +7,6 @@ public interface FreeBoardService {
     FreeBoardDto.Response putFreeBoard(long id, FreeBoardDto.Put putDto);
 
     FreeBoardDto.Response getFreeBoard(long id);
+
+    void deleteFreeBoard(long id);
 }

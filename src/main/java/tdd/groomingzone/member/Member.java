@@ -1,7 +1,6 @@
 package tdd.groomingzone.member;
 
 import tdd.groomingzone.review.Review;
-import tdd.groomingzone.Wallet;
 import tdd.groomingzone.board.freeboard.FreeBoard;
 
 import javax.persistence.*;
@@ -17,9 +16,6 @@ public class Member {
     private long id;
 
     private String name;
-
-    @OneToOne(mappedBy = "member")
-    private Wallet wallet;
 
     @OneToMany(mappedBy = "member")
     private List<FreeBoard> freeBoards = new ArrayList<>();
