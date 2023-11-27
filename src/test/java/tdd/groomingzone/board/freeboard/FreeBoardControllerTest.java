@@ -11,8 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.board.freeboard.service.FreeBoardServiceImpl;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,5 +60,38 @@ class FreeBoardControllerTest {
                 ).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(testPost.getTitle()))
                 .andExpect(jsonPath("$.content").value(testPost.getContent()));
+    }
+
+    @Test
+    @DisplayName("정상적인 게시글 수정 요청 테스트")
+    void putFreeBoardTest() throws Exception {
+        // given
+        String testTitle = "changedTitle";
+        String testContent = "changedContent";
+        long testId = 1L;
+
+        FreeBoardDto.Put testPut = new FreeBoardDto.Put();
+        testPut.setTitle(testTitle);
+        testPut.setContent(testContent);
+
+        FreeBoardDto.Response testResponse = FreeBoardDto.Response
+                .builder()
+                .title(testTitle)
+                .content(testContent)
+                .build();
+
+        String content = gson.toJson(testPut);
+
+        given(freeBoardService.putFreeBoard(anyLong(), any())).willReturn(testResponse);
+
+        // when // then
+        mockMvc.perform(
+                        put("/free-board/" + testId)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value(testPut.getTitle()))
+                .andExpect(jsonPath("$.content").value(testPut.getContent()));
     }
 }
