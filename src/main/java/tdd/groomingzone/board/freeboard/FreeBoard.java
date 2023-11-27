@@ -1,37 +1,23 @@
 package tdd.groomingzone.board.freeboard;
 
 import lombok.*;
-import tdd.groomingzone.member.Member;
+import tdd.groomingzone.board.Board;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeBoard {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FREE_BOARD_ID")
-    private long id;
-
-    private String title;
-
-    private String content;
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+@DiscriminatorValue(value = "FREE")
+public class FreeBoard extends Board {
 
     @Builder
     public FreeBoard(String title, String content){
-        this.title = title;
-        this.content = content;
+        this.setTitle(title);
+        this.setContent(content);
     }
 
     public void modify(FreeBoardDto.Put putDto) {
-        this.title = putDto.getTitle();
-        this.content = putDto.getContent();
+        this.setTitle(putDto.getTitle());
+        this.setContent(putDto.getContent());
     }
 }

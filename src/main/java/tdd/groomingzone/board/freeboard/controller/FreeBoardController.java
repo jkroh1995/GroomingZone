@@ -1,8 +1,10 @@
-package tdd.groomingzone.board.freeboard;
+package tdd.groomingzone.board.freeboard.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tdd.groomingzone.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.board.freeboard.FreeBoardService;
 
 @RestController
 @RequestMapping("/free-board")

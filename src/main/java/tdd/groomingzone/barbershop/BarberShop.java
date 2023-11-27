@@ -1,7 +1,7 @@
 package tdd.groomingzone.barbershop;
 
 import lombok.Getter;
-import tdd.groomingzone.member.Member;
+import tdd.groomingzone.board.review.Review;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,4 +17,7 @@ public class BarberShop {
     private long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "barberShop")
+    private List<Review> reviews = new ArrayList<>();
 }

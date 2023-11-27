@@ -16,6 +16,7 @@ public class FreeBoardConverter {
 
     public FreeBoardDto.Response convertEntityToResponseDto(FreeBoard entity) {
         return FreeBoardDto.Response.builder()
+                .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
                 .build();
