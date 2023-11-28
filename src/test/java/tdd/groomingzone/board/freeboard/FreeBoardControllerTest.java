@@ -10,17 +10,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.controller.FreeBoardController;
 import tdd.groomingzone.domain.board.freeboard.service.FreeBoardServiceImpl;
+import tdd.groomingzone.util.StubTime;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -45,6 +45,9 @@ class FreeBoardControllerTest {
 
     @MockBean
     private FreeBoardServiceImpl freeBoardService;
+
+    @MockBean
+    private StubTime stubTime;
 
     @Test
     @DisplayName("정상적인 게시글 등록 요청 테스트")
@@ -125,7 +128,7 @@ class FreeBoardControllerTest {
 
         String content = gson.toJson(testPut);
 
-        given(freeBoardService.putFreeBoard(anyLong(), any())).willReturn(testResponse);
+        given(freeBoardService.putFreeBoard(anyLong(), any(), any())).willReturn(testResponse);
 
         // when // then
         mockMvc.perform(
