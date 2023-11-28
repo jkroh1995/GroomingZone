@@ -4,6 +4,7 @@ import lombok.*;
 import tdd.groomingzone.domain.board.Board;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,5 +20,6 @@ public class FreeBoard extends Board {
     public void modify(FreeBoardDto.Put putDto) {
         this.setTitle(putDto.getTitle());
         this.setContent(putDto.getContent());
+        this.setModifiedAt(LocalDateTime.now());
     }
 }

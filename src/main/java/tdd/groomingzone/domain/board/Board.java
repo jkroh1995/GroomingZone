@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import tdd.groomingzone.domain.comment.Comment;
 import tdd.groomingzone.domain.member.Member;
+import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Board{
+public abstract class Board extends BaseEntity {
 
     @Id
     @GeneratedValue
