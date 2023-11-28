@@ -16,7 +16,7 @@ public class FreeBoardDto {
     @Getter
     @Builder
     public static class Response{
-        private long id;
+        private long boardId;
         private String title;
         private String content;
     }

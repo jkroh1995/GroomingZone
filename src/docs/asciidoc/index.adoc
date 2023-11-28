@@ -1,0 +1,77 @@
+= Grooming Zone
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+ⓒ JKROH <shworud1995@naver.com / shworud29@gmail.comn>
+
+***
+== FreeBoardController
+=== 자유 게시글 등록
+.curl-request
+include::{snippets}/post-free-board/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-free-board/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-free-board/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-free-board/http-response.adoc[]
+
+.response-headers
+include::{snippets}/post-free-board/response-headers.adoc[]
+
+=== 자유 게시글 수정
+.curl-request
+include::{snippets}/put-free-board/curl-request.adoc[]
+
+.http-request
+include::{snippets}/put-free-board/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/put-free-board/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/put-free-board/request-fields.adoc[]
+
+.http-response
+include::{snippets}/put-free-board/http-response.adoc[]
+
+.response-fields
+include::{snippets}/put-member/response-fields.adoc[]
+
+=== 자유 게시글 조회
+.curl-request
+include::{snippets}/get-free-board/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-free-board/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-free-board/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/get-free-board/request-fields.adoc[]
+
+.http-response
+include::{snippets}/get-free-board/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-member/response-fields.adoc[]
+
+=== 자유 게시글 삭제
+.curl-request
+include::{snippets}/delete-free-board/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-free-board/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-free-board/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-free-board/http-response.adoc[]
