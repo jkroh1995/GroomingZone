@@ -18,3 +18,4 @@ TDD 연습을 위한 프로젝트입니다.
 - [Pull Request 013 - 자유 게시글 수정 기능 컨트롤러 계층 TDD로 구현하기](https://random-topic.tistory.com/170)
 - [Pull Request 014. 게시판 테이블 상속하기](https://random-topic.tistory.com/171)
 - [Pull Request 015. API 문서화 적용하기 - Spring Rest Docs](https://random-topic.tistory.com/172)
+- [Pull Request 016. Base Entity를 통해 데이터 생성일 / 수정일 설정하기 - 제어하기 어려운 코드 개선, static 메서드 mocking 테스트](https://random-topic.tistory.com/173)
