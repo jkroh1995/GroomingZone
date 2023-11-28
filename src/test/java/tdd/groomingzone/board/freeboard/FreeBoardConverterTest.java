@@ -23,7 +23,6 @@ class FreeBoardConverterTest {
         FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
 
         assertThat(postDto.getTitle()).isEqualTo(entity.getTitle());
-
         assertThat(postDto.getContent()).isEqualTo(entity.getContent());
     }
 
