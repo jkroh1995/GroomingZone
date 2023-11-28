@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import tdd.groomingzone.domain.board.recruitment.Recruitment;
 import tdd.groomingzone.domain.board.review.Review;
 import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

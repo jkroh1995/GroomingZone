@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.board.freeboard;
+package tdd.groomingzone.domain.board.freeboard.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +19,8 @@ public class FreeBoardDto {
         private long boardId;
         private String title;
         private String content;
+        private String createdAt;
+        private String modifiedAt;
     }
 
     @Getter

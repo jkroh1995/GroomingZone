@@ -2,7 +2,7 @@ package tdd.groomingzone.board.freeboard;
 
 import org.junit.jupiter.api.Test;
 import tdd.groomingzone.domain.board.freeboard.FreeBoard;
-import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.service.FreeBoardConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +23,6 @@ class FreeBoardConverterTest {
         FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
 
         assertThat(postDto.getTitle()).isEqualTo(entity.getTitle());
-
         assertThat(postDto.getContent()).isEqualTo(entity.getContent());
     }
 

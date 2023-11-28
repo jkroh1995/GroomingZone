@@ -10,14 +10,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.controller.FreeBoardController;
 import tdd.groomingzone.domain.board.freeboard.service.FreeBoardServiceImpl;
+import tdd.groomingzone.util.StubTime;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -43,6 +46,9 @@ class FreeBoardControllerTest {
     @MockBean
     private FreeBoardServiceImpl freeBoardService;
 
+    @MockBean
+    private StubTime stubTime;
+
     @Test
     @DisplayName("정상적인 게시글 등록 요청 테스트")
     void postFreeBoardTest() throws Exception {
@@ -60,6 +66,8 @@ class FreeBoardControllerTest {
                 .boardId(testId)
                 .title(testTitle)
                 .content(testContent)
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();
 
         String content = gson.toJson(testPost);
@@ -87,9 +95,11 @@ class FreeBoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),           // (5)
+                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
                         )
                 ));
@@ -112,11 +122,13 @@ class FreeBoardControllerTest {
                 .boardId(testId)
                 .title(testTitle)
                 .content(testContent)
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();
 
         String content = gson.toJson(testPut);
 
-        given(freeBoardService.putFreeBoard(anyLong(), any())).willReturn(testResponse);
+        given(freeBoardService.putFreeBoard(anyLong(), any(), any())).willReturn(testResponse);
 
         // when // then
         mockMvc.perform(
@@ -141,9 +153,11 @@ class FreeBoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),           // (5)
+                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
                         )
                 ));
@@ -161,6 +175,8 @@ class FreeBoardControllerTest {
                 .builder()
                 .title(testTitle)
                 .content(testContent)
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();
 
         given(freeBoardService.getFreeBoard(anyLong())).willReturn(testResponse);
@@ -182,9 +198,11 @@ class FreeBoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),           // (5)
+                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
                         )
                 ));

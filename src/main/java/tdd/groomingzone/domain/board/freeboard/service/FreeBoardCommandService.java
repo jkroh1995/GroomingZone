@@ -3,8 +3,10 @@ package tdd.groomingzone.domain.board.freeboard.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.domain.board.freeboard.FreeBoard;
-import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
+
+import java.time.LocalDateTime;
 
 @Service
 public class FreeBoardCommandService {
@@ -21,8 +23,8 @@ public class FreeBoardCommandService {
     }
 
     @Transactional
-    public void update(FreeBoard entity, FreeBoardDto.Put putDto) {
-        entity.modify(putDto);
+    public void update(FreeBoard entity, FreeBoardDto.Put putDto, LocalDateTime modifiedAt) {
+        entity.modify(putDto, modifiedAt);
     }
 
     @Transactional
