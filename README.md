@@ -1,7 +1,7 @@
 # GroomingZone
 TDD 연습을 위한 프로젝트입니다.
 
-## 🏁Progress
+## 🏁 Progress
 - [Pull Request 000 - 시작하기에 앞서](https://random-topic.tistory.com/114)
 - [Pull Request 001 - 요구 사항 분석](https://random-topic.tistory.com/120)
 - [Pull Request 001 - 기술 스택 정리](https://random-topic.tistory.com/123)
