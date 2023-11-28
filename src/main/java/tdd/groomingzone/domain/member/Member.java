@@ -1,11 +1,11 @@
-package tdd.groomingzone.member;
+package tdd.groomingzone.domain.member;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.groomingzone.board.recruitment.Recruitment;
-import tdd.groomingzone.board.review.Review;
-import tdd.groomingzone.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.recruitment.Recruitment;
+import tdd.groomingzone.domain.board.review.Review;
+import tdd.groomingzone.domain.board.freeboard.FreeBoard;
 
 import javax.persistence.*;
 import java.util.ArrayList;

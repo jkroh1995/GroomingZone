@@ -1,9 +1,9 @@
-package tdd.groomingzone.board.review;
+package tdd.groomingzone.domain.board.review;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import tdd.groomingzone.barbershop.BarberShop;
-import tdd.groomingzone.board.Board;
+import tdd.groomingzone.domain.barbershop.BarberShop;
+import tdd.groomingzone.domain.board.Board;
 
 import javax.persistence.*;
 

@@ -1,10 +1,10 @@
-package tdd.groomingzone.board.freeboard.service;
+package tdd.groomingzone.domain.board.freeboard.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tdd.groomingzone.board.freeboard.FreeBoard;
-import tdd.groomingzone.board.freeboard.FreeBoardDto;
-import tdd.groomingzone.board.freeboard.FreeBoardService;
+import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService {

@@ -1,9 +1,9 @@
-package tdd.groomingzone.board.recruitment;
+package tdd.groomingzone.domain.board.recruitment;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.groomingzone.board.Board;
+import tdd.groomingzone.domain.board.Board;
 
 import javax.persistence.*;
 

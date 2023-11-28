@@ -6,8 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.groomingzone.board.freeboard.repository.FreeBoardRepository;
-import tdd.groomingzone.board.freeboard.service.FreeBoardQueryService;
+import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
+import tdd.groomingzone.domain.board.freeboard.service.FreeBoardQueryService;
 
 import java.util.Optional;
 

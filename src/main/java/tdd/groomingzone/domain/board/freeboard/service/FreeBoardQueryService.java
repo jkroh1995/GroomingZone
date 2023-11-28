@@ -1,9 +1,9 @@
-package tdd.groomingzone.board.freeboard.service;
+package tdd.groomingzone.domain.board.freeboard.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tdd.groomingzone.board.freeboard.FreeBoard;
-import tdd.groomingzone.board.freeboard.repository.FreeBoardRepository;
+import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
 
 @Service
 public class FreeBoardQueryService {

@@ -1,7 +1,7 @@
-package tdd.groomingzone.board.freeboard;
+package tdd.groomingzone.domain.board.freeboard;
 
 import lombok.*;
-import tdd.groomingzone.board.Board;
+import tdd.groomingzone.domain.board.Board;
 
 import javax.persistence.*;
 

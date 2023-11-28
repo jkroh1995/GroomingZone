@@ -1,8 +1,8 @@
-package tdd.groomingzone.comment;
+package tdd.groomingzone.domain.comment;
 
 import lombok.Getter;
 import lombok.Setter;
-import tdd.groomingzone.board.Board;
+import tdd.groomingzone.domain.board.Board;
 
 import javax.persistence.*;
 

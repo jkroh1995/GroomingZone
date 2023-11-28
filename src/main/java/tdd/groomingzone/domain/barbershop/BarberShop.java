@@ -1,7 +1,7 @@
-package tdd.groomingzone.barbershop;
+package tdd.groomingzone.domain.barbershop;
 
 import lombok.Getter;
-import tdd.groomingzone.board.review.Review;
+import tdd.groomingzone.domain.board.review.Review;
 
 import javax.persistence.*;
 import java.util.ArrayList;

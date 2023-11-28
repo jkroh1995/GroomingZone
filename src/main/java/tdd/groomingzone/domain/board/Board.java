@@ -1,10 +1,10 @@
-package tdd.groomingzone.board;
+package tdd.groomingzone.domain.board;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import tdd.groomingzone.comment.Comment;
-import tdd.groomingzone.member.Member;
+import tdd.groomingzone.domain.comment.Comment;
+import tdd.groomingzone.domain.member.Member;
 
 import javax.persistence.*;
 import java.util.ArrayList;

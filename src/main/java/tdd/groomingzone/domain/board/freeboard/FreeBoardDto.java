@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.freeboard;
+package tdd.groomingzone.domain.board.freeboard;
 
 import lombok.Builder;
 import lombok.Getter;

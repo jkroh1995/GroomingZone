@@ -1,8 +1,8 @@
-package tdd.groomingzone.board.freeboard.service;
+package tdd.groomingzone.domain.board.freeboard.service;
 
 import org.springframework.stereotype.Service;
-import tdd.groomingzone.board.freeboard.FreeBoard;
-import tdd.groomingzone.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
 
 @Service
 public class FreeBoardConverter {
