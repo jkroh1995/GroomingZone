@@ -14,6 +14,9 @@ import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.controller.FreeBoardController;
 import tdd.groomingzone.domain.board.freeboard.service.FreeBoardServiceImpl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -60,6 +63,8 @@ class FreeBoardControllerTest {
                 .boardId(testId)
                 .title(testTitle)
                 .content(testContent)
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();
 
         String content = gson.toJson(testPost);
@@ -87,9 +92,11 @@ class FreeBoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),           // (5)
+                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
                         )
                 ));
@@ -112,6 +119,8 @@ class FreeBoardControllerTest {
                 .boardId(testId)
                 .title(testTitle)
                 .content(testContent)
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();
 
         String content = gson.toJson(testPut);
@@ -141,9 +150,11 @@ class FreeBoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),           // (5)
+                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
                         )
                 ));
@@ -161,6 +172,8 @@ class FreeBoardControllerTest {
                 .builder()
                 .title(testTitle)
                 .content(testContent)
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();
 
         given(freeBoardService.getFreeBoard(anyLong())).willReturn(testResponse);
@@ -182,9 +195,11 @@ class FreeBoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),           // (5)
+                                        fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
                         )
                 ));
