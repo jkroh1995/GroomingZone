@@ -2,6 +2,7 @@ package tdd.groomingzone.domain.board.freeboard;
 
 import lombok.*;
 import tdd.groomingzone.domain.board.Board;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,9 +18,9 @@ public class FreeBoard extends Board {
         this.setContent(content);
     }
 
-    public void modify(FreeBoardDto.Put putDto) {
+    public void modify(FreeBoardDto.Put putDto, LocalDateTime modifiedAt) {
         this.setTitle(putDto.getTitle());
         this.setContent(putDto.getContent());
-        this.setModifiedAt(LocalDateTime.now());
+        this.setModifiedAt(modifiedAt);
     }
 }

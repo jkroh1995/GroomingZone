@@ -2,7 +2,7 @@ package tdd.groomingzone.domain.board.freeboard.service;
 
 import org.springframework.stereotype.Service;
 import tdd.groomingzone.domain.board.freeboard.FreeBoard;
-import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;

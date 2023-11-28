@@ -4,17 +4,20 @@ import com.fasterxml.jackson.databind.annotation.NoClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tdd.groomingzone.domain.board.freeboard.FreeBoardDto;
+import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
+import tdd.groomingzone.global.time.Time;
 
 @RestController
 @RequestMapping("/free-board")
 public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
+    private final Time time;
 
-    public FreeBoardController(FreeBoardService freeBoardService) {
+    public FreeBoardController(FreeBoardService freeBoardService, Time time) {
         this.freeBoardService = freeBoardService;
+        this.time = time;
     }
 
     @PostMapping
@@ -26,7 +29,7 @@ public class FreeBoardController {
     @PutMapping("/{free-board-id}")
     public ResponseEntity<FreeBoardDto.Response> putFreeBoard(@PathVariable("free-board-id") long freeBoardId,
                                                               @RequestBody FreeBoardDto.Put dto){
-        FreeBoardDto.Response responseDto = freeBoardService.putFreeBoard(freeBoardId, dto);
+        FreeBoardDto.Response responseDto = freeBoardService.putFreeBoard(freeBoardId, dto, time.now());
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 public class BaseEntity {
 
-    @Column(name = "CREATE_AT")
+    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "LAST_MODIFIED_AT")
