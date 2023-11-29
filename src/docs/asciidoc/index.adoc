@@ -41,9 +41,6 @@ include::{snippets}/put-free-board/request-fields.adoc[]
 .http-response
 include::{snippets}/put-free-board/http-response.adoc[]
 
-.response-fields
-include::{snippets}/put-member/response-fields.adoc[]
-
 === 자유 게시글 조회
 .curl-request
 include::{snippets}/get-free-board/curl-request.adoc[]
@@ -60,8 +57,18 @@ include::{snippets}/get-free-board/request-fields.adoc[]
 .http-response
 include::{snippets}/get-free-board/http-response.adoc[]
 
-.response-fields
-include::{snippets}/get-member/response-fields.adoc[]
+=== 자유 게시글 페이지 조회
+.curl-request
+include::{snippets}/get-paged-free-board/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-paged-free-board/http-request.adoc[]
+
+.request-parameters
+include::{snippets}/get-paged-free-board/request-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-paged-free-board/http-response.adoc[]
 
 === 자유 게시글 삭제
 .curl-request
