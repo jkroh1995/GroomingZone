@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.freeboard;
+package tdd.groomingzone.domain.board.freeboard.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,10 +6,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
-import tdd.groomingzone.domain.board.freeboard.service.FreeBoardQueryService;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,14 +41,38 @@ class FreeBoardQueryServiceTest {
                 .content("content")
                 .build());
 
-        //when
         given(freeBoardRepository.findById(appropriateId)).willReturn(testEntity);
         given(freeBoardRepository.findById(inappropriateId)).willReturn(Optional.empty());
 
+        //when
         FreeBoard foundEntity = freeBoardQueryService.readEntityById(appropriateId);
 
         //then
         assertThat(foundEntity).isEqualTo(testEntity.get());
-        assertThrows(RuntimeException.class, ()->freeBoardQueryService.readEntityById(inappropriateId));
+        assertThrows(RuntimeException.class, () -> freeBoardQueryService.readEntityById(inappropriateId));
+    }
+
+    @Test
+    @DisplayName("여러 개의 자유 게시글을 읽어온다.")
+    void testReadPagedEntity() {
+        //given
+        int fakePageNumber = 1;
+        Pageable fakePageable = PageRequest.ofSize(20).withPage(fakePageNumber);
+
+        Page<FreeBoard> fakePage = new PageImpl<>(List.of(
+                FreeBoard.builder().title("1").content("1").build(),
+                FreeBoard.builder().title("2").content("2").build(),
+                FreeBoard.builder().title("3").content("3").build(),
+                FreeBoard.builder().title("4").content("4").build(),
+                FreeBoard.builder().title("5").content("5").build()
+        ));
+
+        given((freeBoardRepository.findAll(fakePageable))).willReturn(fakePage);
+
+        //when
+        List<FreeBoard> foundList = freeBoardQueryService.readPagedEntity(fakePageNumber);
+
+        //then
+        assertThat(foundList).isEqualTo(fakePage.getContent());
     }
 }
