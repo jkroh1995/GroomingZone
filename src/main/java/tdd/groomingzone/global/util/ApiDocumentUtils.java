@@ -7,7 +7,11 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
 public interface ApiDocumentUtils {
     static OperationRequestPreprocessor getRequestPreProcessor() {
-        return preprocessRequest(prettyPrint());
+        return preprocessRequest(modifyUris()
+                        .scheme("https")
+                        .host("grooming-zone.com")
+                        .removePort(),
+                prettyPrint());
     }
 
     static OperationResponsePreprocessor getResponsePreProcessor() {
