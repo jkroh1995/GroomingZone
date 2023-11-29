@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.groomingzone.domain.board.recruitment.Recruitment;
 import tdd.groomingzone.domain.board.review.Review;
-import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;

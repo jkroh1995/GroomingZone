@@ -2,7 +2,7 @@ package tdd.groomingzone.domain.board.freeboard.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tdd.groomingzone.domain.board.freeboard.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
 

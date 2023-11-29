@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.board.freeboard;
+package tdd.groomingzone.domain.board.freeboard.entity;
 
 import lombok.*;
 import tdd.groomingzone.domain.board.Board;
