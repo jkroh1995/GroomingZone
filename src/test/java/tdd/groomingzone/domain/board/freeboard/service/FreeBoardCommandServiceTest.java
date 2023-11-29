@@ -10,7 +10,6 @@ import tdd.groomingzone.util.StubTime;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
-import tdd.groomingzone.domain.board.freeboard.service.FreeBoardCommandService;
 
 import java.time.LocalDateTime;
 

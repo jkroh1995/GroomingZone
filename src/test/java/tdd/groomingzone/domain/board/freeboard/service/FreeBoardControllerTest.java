@@ -12,7 +12,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.controller.FreeBoardController;
-import tdd.groomingzone.domain.board.freeboard.service.FreeBoardServiceManager;
 import tdd.groomingzone.util.StubTime;
 
 import java.time.LocalDateTime;
