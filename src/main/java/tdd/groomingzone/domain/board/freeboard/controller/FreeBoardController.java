@@ -8,6 +8,8 @@ import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
 import tdd.groomingzone.global.time.Time;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/free-board")
 public class FreeBoardController {
@@ -37,6 +39,12 @@ public class FreeBoardController {
     public ResponseEntity<FreeBoardDto.Response> getFreeBoard(@PathVariable("free-board-id") long freeBoardId){
         FreeBoardDto.Response responseDto = freeBoardService.getFreeBoard(freeBoardId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FreeBoardDto.Response>> getFreeBoardPage(@RequestParam(name = "page", defaultValue = "1") int pageNumber){
+        List<FreeBoardDto.Response> responseDtoList = freeBoardService.getFreeBoardPage(pageNumber);
+        return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 
     @DeleteMapping("/{free-board-id}")

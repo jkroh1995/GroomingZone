@@ -3,6 +3,7 @@ package tdd.groomingzone.domain.board.freeboard;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface FreeBoardService {
 
@@ -11,6 +12,8 @@ public interface FreeBoardService {
     FreeBoardDto.Response putFreeBoard(long id, FreeBoardDto.Put putDto, LocalDateTime modifiedAt);
 
     FreeBoardDto.Response getFreeBoard(long id);
+
+    List<FreeBoardDto.Response> getFreeBoardPage(int pageNumber);
 
     void deleteFreeBoard(long id);
 }
