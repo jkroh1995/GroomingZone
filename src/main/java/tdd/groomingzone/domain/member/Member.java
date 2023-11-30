@@ -26,19 +26,19 @@ public class Member extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "writer")
     private List<FreeBoard> freeBoards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "writer")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "writer")
     private List<Recruitment> recruitments = new ArrayList<>();
 
     public void writeFreeBoard(FreeBoard freeBoard) {
         this.freeBoards.add(freeBoard);
-        if (freeBoard.getMember() != this) {
-            freeBoard.setMember(this);
+        if (freeBoard.getWriter() != this) {
+            freeBoard.setWriter(this);
         }
     }
 

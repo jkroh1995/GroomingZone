@@ -10,6 +10,8 @@ import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
 
 import java.util.List;
 
+import static tdd.groomingzone.domain.board.utils.BoardEnums.PAGE_SIZE;
+
 @Service
 public class FreeBoardQueryService {
     private final FreeBoardRepository freeBoardRepository;
@@ -25,9 +27,16 @@ public class FreeBoardQueryService {
     }
 
     @Transactional(readOnly = true)
-    public List<FreeBoard> readPagedEntity(int page) {
-        Pageable pageable = PageRequest.ofSize(20).withPage(page);
+    public List<FreeBoard> readPagedEntity(int pageIndex) {
+        Pageable pageable = PageRequest.ofSize(PAGE_SIZE.getValue()).withPage(pageIndex);
         Page<FreeBoard>freeBoardPage = freeBoardRepository.findAll(pageable);
+        return freeBoardPage.getContent();
+    }
+
+    @Transactional(readOnly = true)
+    public List<FreeBoard> readFilteredEntityPage(String title, String content, String writer, int pageIndex) {
+        Pageable pageable = Pageable.ofSize(PAGE_SIZE.getValue()).withPage(pageIndex);
+        Page<FreeBoard>freeBoardPage = freeBoardRepository.findFilteredFreeBoards(title, content, writer, pageable);
         return freeBoardPage.getContent();
     }
 }
