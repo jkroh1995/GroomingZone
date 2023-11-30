@@ -1,32 +1,25 @@
 package tdd.groomingzone.domain.board.freeboard.dto;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 public class FreeBoardDto {
 
-    @Getter
-    @Setter
     public static class Post {
-        private String title;
-        private String content;
+        public String title;
+        public String content;
     }
 
-    @Getter
     @Builder
     public static class Response{
-        private long boardId;
-        private String title;
-        private String content;
-        private String createdAt;
-        private String modifiedAt;
+        public long boardId;
+        public String title;
+        public String content;
+        public String createdAt;
+        public String modifiedAt;
     }
 
-    @Getter
-    @Setter
     public static class Put {
-        private String title;
-        private String content;
+        public String title;
+        public String content;
     }
 }

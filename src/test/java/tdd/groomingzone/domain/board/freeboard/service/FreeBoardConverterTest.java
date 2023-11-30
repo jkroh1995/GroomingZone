@@ -16,13 +16,13 @@ class FreeBoardConverterTest {
         String testTitle = "test";
         String testContent = "content";
 
-        postDto.setTitle(testTitle);
-        postDto.setContent(testContent);
+        postDto.title = testTitle;
+        postDto.content = testContent;
 
         FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
 
-        assertThat(postDto.getTitle()).isEqualTo(entity.getTitle());
-        assertThat(postDto.getContent()).isEqualTo(entity.getContent());
+        assertThat(postDto.title).isEqualTo(entity.getTitle());
+        assertThat(postDto.content).isEqualTo(entity.getContent());
     }
 
     @Test
@@ -34,7 +34,7 @@ class FreeBoardConverterTest {
 
         FreeBoardDto.Response responseDto = freeBoardConverter.convertEntityToResponseDto(entity);
 
-        assertThat(entity.getTitle()).isEqualTo(responseDto.getTitle());
-        assertThat(entity.getContent()).isEqualTo(responseDto.getContent());
+        assertThat(entity.getTitle()).isEqualTo(responseDto.title);
+        assertThat(entity.getContent()).isEqualTo(responseDto.content);
     }
 }

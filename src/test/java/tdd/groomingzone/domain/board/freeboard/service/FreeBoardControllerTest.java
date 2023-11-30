@@ -57,8 +57,8 @@ class FreeBoardControllerTest {
         String testContent = "content";
 
         FreeBoardDto.Post testPost = new FreeBoardDto.Post();
-        testPost.setTitle(testTitle);
-        testPost.setContent(testContent);
+        testPost.title= testTitle;
+        testPost.content = testContent;
 
         FreeBoardDto.Response testResponse = FreeBoardDto.Response
                 .builder()
@@ -80,8 +80,8 @@ class FreeBoardControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value(testPost.getTitle()))
-                .andExpect(jsonPath("$.content").value(testPost.getContent()))
+                .andExpect(jsonPath("$.title").value(testPost.title))
+                .andExpect(jsonPath("$.content").value(testPost.content))
                 .andDo(document(
                         "post-free-board",
                         getRequestPreProcessor(),
@@ -113,8 +113,8 @@ class FreeBoardControllerTest {
         long testId = 1L;
 
         FreeBoardDto.Put testPut = new FreeBoardDto.Put();
-        testPut.setTitle(testTitle);
-        testPut.setContent(testContent);
+        testPut.title = testTitle;
+        testPut.content = testContent;
 
         FreeBoardDto.Response testResponse = FreeBoardDto.Response
                 .builder()
@@ -136,8 +136,8 @@ class FreeBoardControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(testPut.getTitle()))
-                .andExpect(jsonPath("$.content").value(testPut.getContent()))
+                .andExpect(jsonPath("$.title").value(testPut.title))
+                .andExpect(jsonPath("$.content").value(testPut.content))
                 .andDo(document("put-free-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
@@ -231,11 +231,11 @@ class FreeBoardControllerTest {
                                     .accept(MediaType.APPLICATION_JSON)
                                     .contentType(MediaType.APPLICATION_JSON)
                     ).andExpect(jsonPath("$", hasSize(fakeResponseList.size())))
-                    .andExpect(jsonPath("$[%d].boardId",i).value(fakeResponseList.get(i).getBoardId()))
-                    .andExpect(jsonPath("$[%d].title",i).value(fakeResponseList.get(i).getTitle()))
-                    .andExpect(jsonPath("$[%d].content",i).value(fakeResponseList.get(i).getContent()))
-                    .andExpect(jsonPath("$[%d].createdAt",i).value(fakeResponseList.get(i).getCreatedAt()))
-                    .andExpect(jsonPath("$[%d].modifiedAt",i).value(fakeResponseList.get(i).getModifiedAt()));
+                    .andExpect(jsonPath("$[%d].boardId",i).value(fakeResponseList.get(i).boardId))
+                    .andExpect(jsonPath("$[%d].title",i).value(fakeResponseList.get(i).title))
+                    .andExpect(jsonPath("$[%d].content",i).value(fakeResponseList.get(i).content))
+                    .andExpect(jsonPath("$[%d].createdAt",i).value(fakeResponseList.get(i).createdAt))
+                    .andExpect(jsonPath("$[%d].modifiedAt",i).value(fakeResponseList.get(i).modifiedAt));
         }
 
         mockMvc.perform(
