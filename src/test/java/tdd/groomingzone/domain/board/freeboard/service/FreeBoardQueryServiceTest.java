@@ -18,6 +18,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,6 +73,31 @@ class FreeBoardQueryServiceTest {
 
         //when
         List<FreeBoard> foundList = freeBoardQueryService.readPagedEntity(fakePageNumber);
+
+        //then
+        assertThat(foundList).isEqualTo(fakePage.getContent());
+    }
+
+    @Test
+    @DisplayName("검색 조건으로 지정한 게시글들을 읽어온다.")
+    void readFilteredFreeBoardsTest(){
+        int fakePageNumber = 1;
+        String fakeTitle = "title";
+        String fakeContent = "content";
+        String fakeWriter = "writer";
+
+        Page<FreeBoard> fakePage = new PageImpl<>(List.of(
+                FreeBoard.builder().title("1").content("1").build(),
+                FreeBoard.builder().title("2").content("2").build(),
+                FreeBoard.builder().title("3").content("3").build(),
+                FreeBoard.builder().title("4").content("4").build(),
+                FreeBoard.builder().title("5").content("5").build()
+        ));
+
+        given((freeBoardRepository.findFilteredFreeBoards(anyString(), anyString(), anyString(), any()))).willReturn(fakePage);
+
+        //when
+        List<FreeBoard> foundList = freeBoardQueryService.readFilteredEntityPage(fakeTitle, fakeContent, fakeWriter, fakePageNumber);
 
         //then
         assertThat(foundList).isEqualTo(fakePage.getContent());
