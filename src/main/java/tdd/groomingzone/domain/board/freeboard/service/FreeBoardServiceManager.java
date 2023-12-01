@@ -42,9 +42,10 @@ public class FreeBoardServiceManager implements FreeBoardService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public FreeBoardDto.Response getFreeBoard(long id) {
         FreeBoard entity = freeBoardQueryService.readEntityById(id);
+        entity.viewed();
         return freeBoardConverter.convertEntityToResponseDto(entity);
     }
 

@@ -14,6 +14,7 @@ public class FreeBoardDto {
         public long boardId;
         public String title;
         public String content;
+        public int viewCount;
         public String createdAt;
         public String modifiedAt;
     }
