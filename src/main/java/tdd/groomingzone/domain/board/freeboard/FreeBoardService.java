@@ -1,9 +1,9 @@
 package tdd.groomingzone.domain.board.freeboard;
 
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
+import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface FreeBoardService {
 
@@ -13,9 +13,9 @@ public interface FreeBoardService {
 
     FreeBoardDto.Response getFreeBoard(long id);
 
-    List<FreeBoardDto.Response> getFreeBoardPage(int pageNumber);
+    PagedResponseDto<FreeBoardDto.Response> getFreeBoardPage(int pageNumber);
 
-    List<FreeBoardDto.Response> getFilteredFreeBoardList(String title, String content, String writer, int pageNumber);
+    PagedResponseDto<FreeBoardDto.Response> getFilteredFreeBoardList(String title, String content, String writer, int pageNumber);
 
     void deleteFreeBoard(long id);
 }

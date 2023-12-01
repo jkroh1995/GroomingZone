@@ -1,10 +1,12 @@
 package tdd.groomingzone.domain.board.freeboard.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
+import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,23 +53,26 @@ public class FreeBoardServiceManager implements FreeBoardService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FreeBoardDto.Response> getFreeBoardPage(int pageNumber) {
+    public PagedResponseDto<FreeBoardDto.Response> getFreeBoardPage(int pageNumber) {
         verifyPageNumber(pageNumber);
         int pageIndex = pageNumber - 1;
-        List<FreeBoard> entityList = freeBoardQueryService.readPagedEntity(pageIndex);
-        return entityList.stream()
+        Page<FreeBoard> page = freeBoardQueryService.readPagedEntity(pageIndex);
+        List<FreeBoardDto.Response> responseList = page.stream()
                 .map(freeBoardConverter::convertEntityToResponseDto)
                 .collect(Collectors.toList());
+        return new PagedResponseDto<>(responseList, page);
     }
 
     @Override
-    public List<FreeBoardDto.Response> getFilteredFreeBoardList(String title, String content, String writer, int pageNumber) {
+    @Transactional(readOnly = true)
+    public PagedResponseDto<FreeBoardDto.Response> getFilteredFreeBoardList(String title, String content, String writer, int pageNumber) {
         verifyPageNumber(pageNumber);
         int pageIndex = pageNumber-1;
-        List<FreeBoard> entityList = freeBoardQueryService.readFilteredEntityPage(title, content, writer, pageIndex);
-        return entityList.stream()
+        Page<FreeBoard> page = freeBoardQueryService.readFilteredEntityPage(title, content, writer, pageIndex);
+        List<FreeBoardDto.Response> responseList =  page.stream()
                 .map(freeBoardConverter::convertEntityToResponseDto)
                 .collect(Collectors.toList());
+        return new PagedResponseDto<>(responseList, page);
     }
 
     private void verifyPageNumber(int pageNumber) {
