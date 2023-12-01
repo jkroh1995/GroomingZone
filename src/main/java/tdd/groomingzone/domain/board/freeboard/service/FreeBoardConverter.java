@@ -22,6 +22,7 @@ public class FreeBoardConverter {
                 .boardId(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
+                .viewCount(entity.getViewCount())
                 .createdAt(entity.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .modifiedAt(entity.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
                 .build();

@@ -6,9 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
+import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 import tdd.groomingzone.global.time.Time;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/free-board")
@@ -42,17 +41,17 @@ public class FreeBoardController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FreeBoardDto.Response>> getFreeBoardPage(@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
-        List<FreeBoardDto.Response> responseDtoList = freeBoardService.getFreeBoardPage(pageNumber);
+    public ResponseEntity<PagedResponseDto<FreeBoardDto.Response>> getFreeBoardPage(@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
+        PagedResponseDto<FreeBoardDto.Response> responseDtoList = freeBoardService.getFreeBoardPage(pageNumber);
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<FreeBoardDto.Response>> getFilteredFreeBoardPage(@RequestParam(name = "title", required = false) String title,
-                                                                                @RequestParam(name = "content", required = false) String content,
-                                                                                @RequestParam(name = "writer", required = false) String writer,
-                                                                                @RequestParam(name = "page", defaultValue = "1") int pageNumber) {
-        List<FreeBoardDto.Response> responseDtoList = freeBoardService.getFilteredFreeBoardList(title, content, writer, pageNumber);
+    public ResponseEntity<PagedResponseDto<FreeBoardDto.Response>> getFilteredFreeBoardPage(@RequestParam(name = "title", required = false) String title,
+                                                                                            @RequestParam(name = "content", required = false) String content,
+                                                                                            @RequestParam(name = "writer", required = false) String writer,
+                                                                                            @RequestParam(name = "page", defaultValue = "1") int pageNumber) {
+        PagedResponseDto<FreeBoardDto.Response> responseDtoList = freeBoardService.getFilteredFreeBoardList(title, content, writer, pageNumber);
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 

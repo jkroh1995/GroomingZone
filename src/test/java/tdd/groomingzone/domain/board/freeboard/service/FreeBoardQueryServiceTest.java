@@ -72,10 +72,10 @@ class FreeBoardQueryServiceTest {
         given((freeBoardRepository.findAll(fakePageable))).willReturn(fakePage);
 
         //when
-        List<FreeBoard> foundList = freeBoardQueryService.readPagedEntity(fakePageNumber);
+        Page<FreeBoard> foundPage = freeBoardQueryService.readPagedEntity(fakePageNumber);
 
         //then
-        assertThat(foundList).isEqualTo(fakePage.getContent());
+        assertThat(foundPage).isEqualTo(fakePage);
     }
 
     @Test
@@ -97,9 +97,9 @@ class FreeBoardQueryServiceTest {
         given((freeBoardRepository.findFilteredFreeBoards(anyString(), anyString(), anyString(), any()))).willReturn(fakePage);
 
         //when
-        List<FreeBoard> foundList = freeBoardQueryService.readFilteredEntityPage(fakeTitle, fakeContent, fakeWriter, fakePageNumber);
+        Page<FreeBoard> foundList = freeBoardQueryService.readFilteredEntityPage(fakeTitle, fakeContent, fakeWriter, fakePageNumber);
 
         //then
-        assertThat(foundList).isEqualTo(fakePage.getContent());
+        assertThat(foundList).isEqualTo(fakePage);
     }
 }

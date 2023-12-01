@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
 
-import java.util.List;
-
 import static tdd.groomingzone.domain.board.utils.BoardEnums.PAGE_SIZE;
 
 @Service
@@ -27,16 +25,14 @@ public class FreeBoardQueryService {
     }
 
     @Transactional(readOnly = true)
-    public List<FreeBoard> readPagedEntity(int pageIndex) {
+    public Page<FreeBoard> readPagedEntity(int pageIndex) {
         Pageable pageable = PageRequest.ofSize(PAGE_SIZE.getValue()).withPage(pageIndex);
-        Page<FreeBoard>freeBoardPage = freeBoardRepository.findAll(pageable);
-        return freeBoardPage.getContent();
+        return freeBoardRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
-    public List<FreeBoard> readFilteredEntityPage(String title, String content, String writer, int pageIndex) {
+    public Page<FreeBoard> readFilteredEntityPage(String title, String content, String writer, int pageIndex) {
         Pageable pageable = Pageable.ofSize(PAGE_SIZE.getValue()).withPage(pageIndex);
-        Page<FreeBoard>freeBoardPage = freeBoardRepository.findFilteredFreeBoards(title, content, writer, pageable);
-        return freeBoardPage.getContent();
+        return freeBoardRepository.findFilteredFreeBoards(title, content, writer, pageable);
     }
 }

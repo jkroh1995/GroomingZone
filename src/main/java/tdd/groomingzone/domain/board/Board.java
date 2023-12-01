@@ -34,6 +34,13 @@ public abstract class Board extends BaseEntity {
     @Column(name = "CONTENT")
     private String content;
 
+    @Column(name = "VIEW_COUNT")
+    private int viewCount = 0;
+
     @OneToMany(mappedBy = "board")
     private List<Comment> comments = new ArrayList<>();
+
+    public void viewed() {
+        viewCount++;
+    }
 }
