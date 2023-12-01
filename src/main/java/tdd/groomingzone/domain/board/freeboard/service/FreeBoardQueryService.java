@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
 
-import java.util.List;
-
 import static tdd.groomingzone.domain.board.utils.BoardEnums.PAGE_SIZE;
 
 @Service
