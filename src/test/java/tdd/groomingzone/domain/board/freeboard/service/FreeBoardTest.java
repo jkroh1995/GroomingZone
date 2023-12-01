@@ -3,7 +3,6 @@ package tdd.groomingzone.domain.board.freeboard.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import tdd.groomingzone.util.StubTime;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
