@@ -57,8 +57,8 @@ class FreeBoardControllerTest {
         String testContent = "content";
 
         FreeBoardDto.Post testPost = new FreeBoardDto.Post();
-        testPost.setTitle(testTitle);
-        testPost.setContent(testContent);
+        testPost.title = testTitle;
+        testPost.content = testContent;
 
         FreeBoardDto.Response testResponse = FreeBoardDto.Response
                 .builder()
@@ -80,8 +80,8 @@ class FreeBoardControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value(testPost.getTitle()))
-                .andExpect(jsonPath("$.content").value(testPost.getContent()))
+                .andExpect(jsonPath("$.title").value(testPost.title))
+                .andExpect(jsonPath("$.content").value(testPost.content))
                 .andDo(document(
                         "post-free-board",
                         getRequestPreProcessor(),
@@ -113,8 +113,8 @@ class FreeBoardControllerTest {
         long testId = 1L;
 
         FreeBoardDto.Put testPut = new FreeBoardDto.Put();
-        testPut.setTitle(testTitle);
-        testPut.setContent(testContent);
+        testPut.title = testTitle;
+        testPut.content = testContent;
 
         FreeBoardDto.Response testResponse = FreeBoardDto.Response
                 .builder()
@@ -136,8 +136,8 @@ class FreeBoardControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(testPut.getTitle()))
-                .andExpect(jsonPath("$.content").value(testPut.getContent()))
+                .andExpect(jsonPath("$.title").value(testPut.title))
+                .andExpect(jsonPath("$.content").value(testPut.content))
                 .andDo(document("put-free-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
@@ -225,17 +225,17 @@ class FreeBoardControllerTest {
         given(freeBoardService.getFreeBoardPage(anyInt())).willReturn(fakeResponseList);
 
         // when // then
-        for(int i = 0;i<fakeResponseList.size();i++){
+        for (int i = 0; i < fakeResponseList.size(); i++) {
             mockMvc.perform(
                             get("/free-board?page={page}", fakePage)
                                     .accept(MediaType.APPLICATION_JSON)
                                     .contentType(MediaType.APPLICATION_JSON)
                     ).andExpect(jsonPath("$", hasSize(fakeResponseList.size())))
-                    .andExpect(jsonPath("$[%d].boardId",i).value(fakeResponseList.get(i).getBoardId()))
-                    .andExpect(jsonPath("$[%d].title",i).value(fakeResponseList.get(i).getTitle()))
-                    .andExpect(jsonPath("$[%d].content",i).value(fakeResponseList.get(i).getContent()))
-                    .andExpect(jsonPath("$[%d].createdAt",i).value(fakeResponseList.get(i).getCreatedAt()))
-                    .andExpect(jsonPath("$[%d].modifiedAt",i).value(fakeResponseList.get(i).getModifiedAt()));
+                    .andExpect(jsonPath("$[%d].boardId", i).value(fakeResponseList.get(i).boardId))
+                    .andExpect(jsonPath("$[%d].title", i).value(fakeResponseList.get(i).title))
+                    .andExpect(jsonPath("$[%d].content", i).value(fakeResponseList.get(i).content))
+                    .andExpect(jsonPath("$[%d].createdAt", i).value(fakeResponseList.get(i).createdAt))
+                    .andExpect(jsonPath("$[%d].modifiedAt", i).value(fakeResponseList.get(i).modifiedAt));
         }
 
         mockMvc.perform(
@@ -261,6 +261,68 @@ class FreeBoardControllerTest {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("게시글 검색 요청 테스트")
+    void getFilteredFreeBoardPageTest() throws Exception {
+        // given
+        int fakePage = 1;
+        String fakeTitle = "title";
+        String fakeContent = "content";
+        String fakeWriter = "writer";
+
+        List<FreeBoardDto.Response> fakeResponseList = List.of(
+                FreeBoardDto.Response.builder().boardId(1).title("1").content("1").createdAt("1").modifiedAt("1").build(),
+                FreeBoardDto.Response.builder().boardId(2).title("2").content("2").createdAt("2").modifiedAt("2").build(),
+                FreeBoardDto.Response.builder().boardId(3).title("3").content("3").createdAt("3").modifiedAt("3").build(),
+                FreeBoardDto.Response.builder().boardId(4).title("4").content("4").createdAt("4").modifiedAt("4").build(),
+                FreeBoardDto.Response.builder().boardId(5).title("5").content("5").createdAt("5").modifiedAt("5").build(),
+                FreeBoardDto.Response.builder().boardId(5).title("6").content("6").createdAt("6").modifiedAt("6").build()
+        );
+
+        given(freeBoardService.getFilteredFreeBoardList(anyString(), anyString(), anyString(), anyInt())).willReturn(fakeResponseList);
+
+        // when // then
+        for (int i = 0; i < fakeResponseList.size(); i++) {
+            mockMvc.perform(
+                            get("/free-board/search?title={title}&content={content}&writer={writer}&page={page}", fakeTitle, fakeContent, fakeWriter, fakePage)
+                                    .accept(MediaType.APPLICATION_JSON)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                    ).andExpect(jsonPath("$", hasSize(fakeResponseList.size())))
+                    .andExpect(jsonPath("$[%d].boardId", i).value(fakeResponseList.get(i).boardId))
+                    .andExpect(jsonPath("$[%d].title", i).value(fakeResponseList.get(i).title))
+                    .andExpect(jsonPath("$[%d].content", i).value(fakeResponseList.get(i).content))
+                    .andExpect(jsonPath("$[%d].createdAt", i).value(fakeResponseList.get(i).createdAt))
+                    .andExpect(jsonPath("$[%d].modifiedAt", i).value(fakeResponseList.get(i).modifiedAt));
+        }
+
+        mockMvc.perform(
+                        get("/free-board/search?title={title}&content={content}&writer={writer}&page={page}", fakeTitle, fakeContent, fakeWriter, fakePage)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
+                .andDo(document(
+                        "get-filtered-paged-free-board",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestParameters(
+                                parameterWithName("title").description("글 제목"),
+                                parameterWithName("content").description("글 내용"),
+                                parameterWithName("writer").description("작성자 이름"),
+                                parameterWithName("page").description("페이지 번호")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("[].boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
+                                        fieldWithPath("[].title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                        fieldWithPath("[].modifiedAt").type(JsonFieldType.STRING).description("수정일")
+                                )
+                        )
+                ));
+    }
+
 
     @Test
     @DisplayName("정상적인 게시글 삭제 요청 테스트")

@@ -12,8 +12,8 @@ public class FreeBoardConverter {
 
     public FreeBoard convertPostDtoToEntity(FreeBoardDto.Post postDto) {
         return FreeBoard.builder()
-                .title(postDto.getTitle())
-                .content(postDto.getContent())
+                .title(postDto.title)
+                .content(postDto.content)
                 .build();
     }
 

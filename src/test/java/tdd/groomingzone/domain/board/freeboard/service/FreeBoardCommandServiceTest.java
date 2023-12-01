@@ -55,8 +55,8 @@ class FreeBoardCommandServiceTest {
         testEntity.setId(1L);
 
         FreeBoardDto.Put putDto = new FreeBoardDto.Put();
-        putDto.setTitle("modifiedTitle");
-        putDto.setContent("modifiedContent");
+        putDto.title = "modifiedTitle";
+        putDto.content = "modifiedContent";
 
         try(MockedStatic<StubTime> modifiedAt = mockStatic(StubTime.class)){
             LocalDateTime fakeModifiedTime = LocalDateTime.of(2023, 11, 28, 22, 30 ,10);
@@ -64,8 +64,8 @@ class FreeBoardCommandServiceTest {
 
             freeBoardCommandService.update(testEntity, putDto, fakeModifiedTime);
 
-            assertThat(testEntity.getTitle()).isEqualTo(putDto.getTitle());
-            assertThat(testEntity.getContent()).isEqualTo(putDto.getContent());
+            assertThat(testEntity.getTitle()).isEqualTo(putDto.title);
+            assertThat(testEntity.getContent()).isEqualTo(putDto.content);
             assertThat(testEntity.getModifiedAt()).isEqualTo(fakeModifiedTime);
         }
     }

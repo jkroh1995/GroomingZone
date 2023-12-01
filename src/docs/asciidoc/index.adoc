@@ -70,6 +70,19 @@ include::{snippets}/get-paged-free-board/request-parameters.adoc[]
 .http-response
 include::{snippets}/get-paged-free-board/http-response.adoc[]
 
+=== 자유 게시글 검색
+.curl-request
+include::{snippets}/get-filtered-paged-free-board/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-filtered-paged-free-board/http-request.adoc[]
+
+.request-parameters
+include::{snippets}/get-filtered-paged-free-board/request-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-filtered-paged-free-board/http-response.adoc[]
+
 === 자유 게시글 삭제
 .curl-request
 include::{snippets}/delete-free-board/curl-request.adoc[]

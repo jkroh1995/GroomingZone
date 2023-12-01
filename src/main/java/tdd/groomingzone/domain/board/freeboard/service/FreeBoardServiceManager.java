@@ -59,6 +59,16 @@ public class FreeBoardServiceManager implements FreeBoardService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<FreeBoardDto.Response> getFilteredFreeBoardList(String title, String content, String writer, int pageNumber) {
+        verifyPageNumber(pageNumber);
+        int pageIndex = pageNumber-1;
+        List<FreeBoard> entityList = freeBoardQueryService.readFilteredEntityPage(title, content, writer, pageIndex);
+        return entityList.stream()
+                .map(freeBoardConverter::convertEntityToResponseDto)
+                .collect(Collectors.toList());
+    }
+
     private void verifyPageNumber(int pageNumber) {
         if (pageNumber < MINIMUM_PAGE_NUMBER_VALUE.getValue()) {
             throw new RuntimeException("");

@@ -19,8 +19,8 @@ public class FreeBoard extends Board {
     }
 
     public void modify(FreeBoardDto.Put putDto, LocalDateTime modifiedAt) {
-        this.setTitle(putDto.getTitle());
-        this.setContent(putDto.getContent());
+        this.setTitle(putDto.title);
+        this.setContent(putDto.content);
         this.setModifiedAt(modifiedAt);
     }
 }

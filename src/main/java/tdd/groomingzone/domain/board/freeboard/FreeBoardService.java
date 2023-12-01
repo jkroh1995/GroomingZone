@@ -15,5 +15,7 @@ public interface FreeBoardService {
 
     List<FreeBoardDto.Response> getFreeBoardPage(int pageNumber);
 
+    List<FreeBoardDto.Response> getFilteredFreeBoardList(String title, String content, String writer, int pageNumber);
+
     void deleteFreeBoard(long id);
 }

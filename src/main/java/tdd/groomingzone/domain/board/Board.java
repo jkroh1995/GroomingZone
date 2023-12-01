@@ -24,7 +24,7 @@ public abstract class Board extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    private Member writer;
 
     @NotNull
     @Column(name = "TITLE")
