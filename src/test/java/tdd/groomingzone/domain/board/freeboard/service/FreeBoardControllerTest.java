@@ -97,6 +97,7 @@ class FreeBoardControllerTest {
                                         fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("viewCount").type(JsonFieldType.NUMBER).description("조회수"),
                                         fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
                                         fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
@@ -155,6 +156,7 @@ class FreeBoardControllerTest {
                                         fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("viewCount").type(JsonFieldType.NUMBER).description("조회수"),
                                         fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
                                         fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
@@ -200,6 +202,7 @@ class FreeBoardControllerTest {
                                         fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("viewCount").type(JsonFieldType.NUMBER).description("조회수"),
                                         fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일"),
                                         fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
@@ -214,12 +217,12 @@ class FreeBoardControllerTest {
         int fakePage = 1;
 
         List<FreeBoardDto.Response> fakeResponseList = List.of(
-                FreeBoardDto.Response.builder().boardId(1).title("1").content("1").createdAt("1").modifiedAt("1").build(),
-                FreeBoardDto.Response.builder().boardId(2).title("2").content("2").createdAt("2").modifiedAt("2").build(),
-                FreeBoardDto.Response.builder().boardId(3).title("3").content("3").createdAt("3").modifiedAt("3").build(),
-                FreeBoardDto.Response.builder().boardId(4).title("4").content("4").createdAt("4").modifiedAt("4").build(),
-                FreeBoardDto.Response.builder().boardId(5).title("5").content("5").createdAt("5").modifiedAt("5").build(),
-                FreeBoardDto.Response.builder().boardId(5).title("6").content("6").createdAt("6").modifiedAt("6").build()
+                FreeBoardDto.Response.builder().boardId(1).title("1").content("1").viewCount(1).createdAt("1").modifiedAt("1").build(),
+                FreeBoardDto.Response.builder().boardId(2).title("2").content("2").viewCount(1).createdAt("2").modifiedAt("2").build(),
+                FreeBoardDto.Response.builder().boardId(3).title("3").content("3").viewCount(1).createdAt("3").modifiedAt("3").build(),
+                FreeBoardDto.Response.builder().boardId(4).title("4").content("4").viewCount(1).createdAt("4").modifiedAt("4").build(),
+                FreeBoardDto.Response.builder().boardId(5).title("5").content("5").viewCount(1).createdAt("5").modifiedAt("5").build(),
+                FreeBoardDto.Response.builder().boardId(5).title("6").content("6").viewCount(1).createdAt("6").modifiedAt("6").build()
         );
 
         given(freeBoardService.getFreeBoardPage(anyInt())).willReturn(fakeResponseList);
@@ -234,6 +237,7 @@ class FreeBoardControllerTest {
                     .andExpect(jsonPath("$[%d].boardId", i).value(fakeResponseList.get(i).boardId))
                     .andExpect(jsonPath("$[%d].title", i).value(fakeResponseList.get(i).title))
                     .andExpect(jsonPath("$[%d].content", i).value(fakeResponseList.get(i).content))
+                    .andExpect(jsonPath("$[%d].viewCount", i).value(fakeResponseList.get(i).viewCount))
                     .andExpect(jsonPath("$[%d].createdAt", i).value(fakeResponseList.get(i).createdAt))
                     .andExpect(jsonPath("$[%d].modifiedAt", i).value(fakeResponseList.get(i).modifiedAt));
         }
@@ -255,6 +259,7 @@ class FreeBoardControllerTest {
                                         fieldWithPath("[].boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("[].content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("[].viewCount").type(JsonFieldType.NUMBER).description("조회수"),
                                         fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("작성일"),
                                         fieldWithPath("[].modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
@@ -272,12 +277,12 @@ class FreeBoardControllerTest {
         String fakeWriter = "writer";
 
         List<FreeBoardDto.Response> fakeResponseList = List.of(
-                FreeBoardDto.Response.builder().boardId(1).title("1").content("1").createdAt("1").modifiedAt("1").build(),
-                FreeBoardDto.Response.builder().boardId(2).title("2").content("2").createdAt("2").modifiedAt("2").build(),
-                FreeBoardDto.Response.builder().boardId(3).title("3").content("3").createdAt("3").modifiedAt("3").build(),
-                FreeBoardDto.Response.builder().boardId(4).title("4").content("4").createdAt("4").modifiedAt("4").build(),
-                FreeBoardDto.Response.builder().boardId(5).title("5").content("5").createdAt("5").modifiedAt("5").build(),
-                FreeBoardDto.Response.builder().boardId(5).title("6").content("6").createdAt("6").modifiedAt("6").build()
+                FreeBoardDto.Response.builder().boardId(1).title("1").content("1").viewCount(1).createdAt("1").modifiedAt("1").build(),
+                FreeBoardDto.Response.builder().boardId(2).title("2").content("2").viewCount(1).createdAt("2").modifiedAt("2").build(),
+                FreeBoardDto.Response.builder().boardId(3).title("3").content("3").viewCount(1).createdAt("3").modifiedAt("3").build(),
+                FreeBoardDto.Response.builder().boardId(4).title("4").content("4").viewCount(1).createdAt("4").modifiedAt("4").build(),
+                FreeBoardDto.Response.builder().boardId(5).title("5").content("5").viewCount(1).createdAt("5").modifiedAt("5").build(),
+                FreeBoardDto.Response.builder().boardId(5).title("6").content("6").viewCount(1).createdAt("6").modifiedAt("6").build()
         );
 
         given(freeBoardService.getFilteredFreeBoardList(anyString(), anyString(), anyString(), anyInt())).willReturn(fakeResponseList);
@@ -292,6 +297,7 @@ class FreeBoardControllerTest {
                     .andExpect(jsonPath("$[%d].boardId", i).value(fakeResponseList.get(i).boardId))
                     .andExpect(jsonPath("$[%d].title", i).value(fakeResponseList.get(i).title))
                     .andExpect(jsonPath("$[%d].content", i).value(fakeResponseList.get(i).content))
+                    .andExpect(jsonPath("$[%d].viewCount", i).value(fakeResponseList.get(i).viewCount))
                     .andExpect(jsonPath("$[%d].createdAt", i).value(fakeResponseList.get(i).createdAt))
                     .andExpect(jsonPath("$[%d].modifiedAt", i).value(fakeResponseList.get(i).modifiedAt));
         }
@@ -316,6 +322,7 @@ class FreeBoardControllerTest {
                                         fieldWithPath("[].boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("[].title").type(JsonFieldType.STRING).description("제목"),
                                         fieldWithPath("[].content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("[].viewCount").type(JsonFieldType.NUMBER).description("조회수"),
                                         fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("작성일"),
                                         fieldWithPath("[].modifiedAt").type(JsonFieldType.STRING).description("수정일")
                                 )
