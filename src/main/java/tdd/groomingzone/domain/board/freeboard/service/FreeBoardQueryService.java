@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardRepository;
+import tdd.groomingzone.global.exception.BusinessException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 
 import static tdd.groomingzone.domain.board.utils.BoardEnums.PAGE_SIZE;
 
@@ -21,7 +23,7 @@ public class FreeBoardQueryService {
     @Transactional(readOnly = true)
     public FreeBoard readEntityById(long id) {
         return freeBoardRepository.findById(id).orElseThrow(() ->
-                new RuntimeException());
+                new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)

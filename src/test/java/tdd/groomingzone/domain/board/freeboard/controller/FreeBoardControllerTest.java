@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.board.freeboard.service;
+package tdd.groomingzone.domain.board.freeboard.controller;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
-import tdd.groomingzone.domain.board.freeboard.controller.FreeBoardController;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
+import tdd.groomingzone.domain.board.freeboard.service.FreeBoardServiceManager;
 import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 import tdd.groomingzone.util.StubTime;
 
