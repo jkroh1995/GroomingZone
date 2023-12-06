@@ -2,10 +2,8 @@ package tdd.groomingzone.domain.member.entity;
 
 import lombok.*;
 import tdd.groomingzone.domain.barbershop.BarberShop;
-import tdd.groomingzone.domain.board.recruitment.Recruitment;
 import tdd.groomingzone.domain.board.review.Review;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
-import tdd.groomingzone.domain.member.VisitedBarberShop;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
@@ -35,17 +33,14 @@ public class Member extends BaseEntity {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WORK_PLACE_ID")
     private BarberShop workPlace;
 
-    @OneToMany(mappedBy = "visitor")
-    private List<VisitedBarberShop> visitedBarberShops = new ArrayList<>();
-
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private List<FreeBoard> freeBoards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
