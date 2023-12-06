@@ -46,7 +46,7 @@ public class QFreeBoard extends EntityPathBase<FreeBoard> {
     public final NumberPath<Integer> viewCount;
 
     // inherited
-    public final tdd.groomingzone.domain.member.QMember writer;
+    public final tdd.groomingzone.domain.member.entity.QMember writer;
 
     public QFreeBoard(String variable) {
         this(FreeBoard.class, forVariable(variable), INITS);

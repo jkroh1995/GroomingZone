@@ -1,11 +1,9 @@
 package tdd.groomingzone.util;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
 import tdd.groomingzone.global.time.Time;
 
 import java.time.LocalDateTime;
 
-@MockBean
 public class StubTime implements Time {
 
     private final LocalDateTime currentTime;

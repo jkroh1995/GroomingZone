@@ -18,24 +18,37 @@ public class QBarberShop extends EntityPathBase<BarberShop> {
 
     private static final long serialVersionUID = 1208275116L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QBarberShop barberShop = new QBarberShop("barberShop");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
 
+    public final tdd.groomingzone.domain.member.entity.QMember owner;
+
     public final ListPath<tdd.groomingzone.domain.board.review.Review, tdd.groomingzone.domain.board.review.QReview> reviews = this.<tdd.groomingzone.domain.board.review.Review, tdd.groomingzone.domain.board.review.QReview>createList("reviews", tdd.groomingzone.domain.board.review.Review.class, tdd.groomingzone.domain.board.review.QReview.class, PathInits.DIRECT2);
 
     public QBarberShop(String variable) {
-        super(BarberShop.class, forVariable(variable));
+        this(BarberShop.class, forVariable(variable), INITS);
     }
 
     public QBarberShop(Path<? extends BarberShop> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QBarberShop(PathMetadata metadata) {
-        super(BarberShop.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QBarberShop(PathMetadata metadata, PathInits inits) {
+        this(BarberShop.class, metadata, inits);
+    }
+
+    public QBarberShop(Class<? extends BarberShop> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.owner = inits.isInitialized("owner") ? new tdd.groomingzone.domain.member.entity.QMember(forProperty("owner"), inits.get("owner")) : null;
     }
 
 }

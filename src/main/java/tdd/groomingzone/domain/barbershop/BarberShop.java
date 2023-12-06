@@ -2,6 +2,7 @@ package tdd.groomingzone.domain.barbershop;
 
 import lombok.Getter;
 import tdd.groomingzone.domain.board.review.Review;
+import tdd.groomingzone.domain.member.entity.Member;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,4 +21,7 @@ public class BarberShop {
 
     @OneToMany(mappedBy = "barberShop")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToOne
+    private Member owner;
 }
