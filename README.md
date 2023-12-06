@@ -22,3 +22,5 @@ TDD 연습을 위한 프로젝트입니다.
 - [Pull Request 017. 자유 게시글 여러 개 조회 기능 TDD로 구현하기](https://random-topic.tistory.com/175)
 - [Pull Request 018. 자유 게시글 검색 기능 구현 - Querydsl 사용해보기](https://random-topic.tistory.com/180)
 - [Pull Request 019. 페이징 처리 시 페이지 정보도 Response에 함께 담아주기](https://random-topic.tistory.com/181)
+- [Pull Request 020. 회원 가입 및 로그인 기능 TDD로 구현하기 - 회원 가입 Service 계층 구현](https://random-topic.tistory.com/183)
+- [Pull Request 021. 로그인 기능 TDD로 구현하기 - Spring Security / JWT 적용하기](https://random-topic.tistory.com/188)
