@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
@@ -36,7 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.util.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.util.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(FreeBoardController.class)
+@WebMvcTest(controllers = FreeBoardController.class,
+        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @AutoConfigureRestDocs
 class FreeBoardControllerTest {
 
