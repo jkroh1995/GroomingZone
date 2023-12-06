@@ -4,7 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import tdd.groomingzone.domain.comment.Comment;
-import tdd.groomingzone.domain.member.Member;
+import tdd.groomingzone.domain.member.entity.Member;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;

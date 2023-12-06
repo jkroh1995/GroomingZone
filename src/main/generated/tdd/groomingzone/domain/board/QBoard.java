@@ -40,7 +40,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Integer> viewCount = createNumber("viewCount", Integer.class);
 
-    public final tdd.groomingzone.domain.member.QMember writer;
+    public final tdd.groomingzone.domain.member.entity.QMember writer;
 
     public QBoard(String variable) {
         this(Board.class, forVariable(variable), INITS);
@@ -60,7 +60,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public QBoard(Class<? extends Board> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.writer = inits.isInitialized("writer") ? new tdd.groomingzone.domain.member.QMember(forProperty("writer")) : null;
+        this.writer = inits.isInitialized("writer") ? new tdd.groomingzone.domain.member.entity.QMember(forProperty("writer"), inits.get("writer")) : null;
     }
 
 }

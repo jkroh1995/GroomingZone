@@ -48,7 +48,7 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
     public final NumberPath<Integer> viewCount;
 
     // inherited
-    public final tdd.groomingzone.domain.member.QMember writer;
+    public final tdd.groomingzone.domain.member.entity.QMember writer;
 
     public QRecruitment(String variable) {
         this(Recruitment.class, forVariable(variable), INITS);

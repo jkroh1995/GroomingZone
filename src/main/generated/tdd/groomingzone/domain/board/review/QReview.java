@@ -48,7 +48,7 @@ public class QReview extends EntityPathBase<Review> {
     public final NumberPath<Integer> viewCount;
 
     // inherited
-    public final tdd.groomingzone.domain.member.QMember writer;
+    public final tdd.groomingzone.domain.member.entity.QMember writer;
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
@@ -69,7 +69,7 @@ public class QReview extends EntityPathBase<Review> {
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this._super = new tdd.groomingzone.domain.board.QBoard(type, metadata, inits);
-        this.barberShop = inits.isInitialized("barberShop") ? new tdd.groomingzone.domain.barbershop.QBarberShop(forProperty("barberShop")) : null;
+        this.barberShop = inits.isInitialized("barberShop") ? new tdd.groomingzone.domain.barbershop.QBarberShop(forProperty("barberShop"), inits.get("barberShop")) : null;
         this.comments = _super.comments;
         this.content = _super.content;
         this.createdAt = _super.createdAt;
