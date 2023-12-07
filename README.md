@@ -1,15 +1,21 @@
 # GroomingZone
 TDD 연습을 위한 프로젝트입니다.
-
-## 🏁 Progress
-
 <details>
 <summary> ✏ Study </summary>
 <div markdown="1">
 
+- [public 함수와 private 함수의 배치 위치](https://random-topic.tistory.com/159)
+- [HTTP PUT 메서드로 자원을 수정할 때의 응답 : 200 vs 201 vs 202](https://random-topic.tistory.com/169)
+- [Querydsl 사용해보기 - 검색 기능 만들기](https://random-topic.tistory.com/179)
+- [PasswordEncoder의 작동 원리와 테스트하기 어려운 이유](https://random-topic.tistory.com/182)
+- [Spring Security를 사용할 때 csrf.disable()을 사용해도 되는 이유 - 토큰 사용 / 그래서 토큰은 어떻게 저장할건가?](https://random-topic.tistory.com/185)
+- [Spring Security의 인증 처리 흐름](https://random-topic.tistory.com/187)
+- [테스트를 실행은 하고 싶은데 빌드에서는 제외하고 싶을 때](https://random-topic.tistory.com/190)
 
 </div>
 </details>
+
+## 🏁 Progress
 
 - [Pull Request 000 - 시작하기에 앞서](https://random-topic.tistory.com/114)
 - [Pull Request 001 - 요구 사항 분석](https://random-topic.tistory.com/120)
@@ -33,3 +39,4 @@ TDD 연습을 위한 프로젝트입니다.
 - [Pull Request 019. 페이징 처리 시 페이지 정보도 Response에 함께 담아주기](https://random-topic.tistory.com/181)
 - [Pull Request 020. 회원 가입 및 로그인 기능 TDD로 구현하기 - 회원 가입 Service 계층 구현](https://random-topic.tistory.com/183)
 - [Pull Request 021. 로그인 기능 TDD로 구현하기 - Spring Security / JWT 적용하기](https://random-topic.tistory.com/188)
+- [Pull Request 022. 사용자 인증 및 권한 확인 기능 TDD로 구현하기 - Spring Security 설정 마무리](https://random-topic.tistory.com/191)
