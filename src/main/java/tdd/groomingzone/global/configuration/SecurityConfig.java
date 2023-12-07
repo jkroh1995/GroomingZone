@@ -2,11 +2,13 @@ package tdd.groomingzone.global.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -20,7 +22,7 @@ import tdd.groomingzone.domain.auth.handler.MemberAuthenticationFailureHandler;
 import tdd.groomingzone.domain.auth.handler.MemberAuthenticationSuccessHandler;
 import tdd.groomingzone.domain.auth.service.MemberDetailsService;
 import tdd.groomingzone.domain.auth.utils.CustomAuthorityUtils;
-import tdd.groomingzone.domain.auth.utils.JwtTokenizer;
+import tdd.groomingzone.domain.auth.utils.JwtManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,13 +30,13 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final JwtTokenizer jwtTokenizer;
+    private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
     private final RedisService redisService;
 
-    public SecurityConfig(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisService redisService) {
-        this.jwtTokenizer = jwtTokenizer;
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisService redisService) {
+        this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
         this.redisService = redisService;
@@ -45,7 +47,6 @@ public class SecurityConfig {
         http
                 .headers().frameOptions().sameOrigin()
                 .and()
-                .userDetailsService(memberDetailsService)
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
@@ -54,12 +55,20 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
                 .accessDeniedHandler(new MemberAccessDeniedHandler())
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**").hasRole("CUSTOMER")
+                        .antMatchers(HttpMethod.PUT, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
+                        .antMatchers(HttpMethod.DELETE, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
+
+                        .antMatchers(HttpMethod.POST, "/barber-shop/**").hasRole("BARBER")
+                        .antMatchers(HttpMethod.PUT, "/barber-shop/**").hasRole("BARBER")
+                        .antMatchers(HttpMethod.DELETE, "/barber-shop/**").hasRole("BARBER")
+
                         .anyRequest().permitAll()
                 );
 
@@ -85,7 +94,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/sign-in");
 
@@ -93,7 +102,7 @@ public class SecurityConfig {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisService);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, redisService, memberDetailsService);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

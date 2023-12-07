@@ -124,3 +124,17 @@ bootJar {
         into 'static/docs'
     }
 }
+
+test {
+    systemProperty 'spring.profiles.active', 'test'
+    useJUnitPlatform()
+    doFirst {
+        // build 시에는 slow-test 를 제외하고 test 를 수행한다.
+        // 그러나 개별 test 수행 시에는 slow-test 도 수행할 수 있게 한다.
+        if (filter.commandLineIncludePatterns.empty) {
+            useJUnitPlatform {
+                excludeTags("integration-test")
+            }
+        }
+    }
+}
