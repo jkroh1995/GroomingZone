@@ -1,7 +1,6 @@
 package tdd.groomingzone.domain.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import tdd.groomingzone.domain.auth.utils.ErrorResponder;
