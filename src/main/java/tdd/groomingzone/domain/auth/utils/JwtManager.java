@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Getter
 @Component
-public class JwtTokenizer {
+public class JwtManager {
 
     @Value("${jwt.key}")
     private String secretKey;
@@ -63,6 +63,15 @@ public class JwtTokenizer {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws);
+    }
+
+    public void verifyToken(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+
+        Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jws);

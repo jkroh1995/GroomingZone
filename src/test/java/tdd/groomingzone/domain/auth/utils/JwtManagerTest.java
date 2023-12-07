@@ -7,11 +7,11 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JwtTokenizerTest {
+class JwtManagerTest {
 
-    private final JwtTokenizer jwtTokenizer = new JwtTokenizer();
+    private final JwtManager jwtManager = new JwtManager();
     private final String secretKey = "kevin1234123412341234123412341234";
-    private final String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(secretKey);
+    private final String base64EncodedSecretKey = jwtManager.encodeBase64SecretKey(secretKey);
 
     @Test
     public void encodeBase64SecretKeyTest() {
@@ -31,7 +31,7 @@ class JwtTokenizerTest {
         calendar.add(Calendar.MINUTE, 10);
         Date expiration = calendar.getTime();
 
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+        String accessToken = jwtManager.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
         System.out.println(accessToken);
 
@@ -45,7 +45,7 @@ class JwtTokenizerTest {
         calendar.add(Calendar.HOUR, 24);
         Date expiration = calendar.getTime();
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+        String refreshToken = jwtManager.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
         System.out.println(refreshToken);
 
