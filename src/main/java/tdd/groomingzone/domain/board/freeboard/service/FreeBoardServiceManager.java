@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
+import tdd.groomingzone.domain.member.entity.Member;
 import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 
 import java.time.LocalDateTime;
@@ -29,8 +30,9 @@ public class FreeBoardServiceManager implements FreeBoardService {
 
     @Override
     @Transactional
-    public FreeBoardDto.Response postFreeBoard(FreeBoardDto.Post postDto) {
+    public FreeBoardDto.Response postFreeBoard(Member writer, FreeBoardDto.Post postDto) {
         FreeBoard entity = freeBoardConverter.convertPostDtoToEntity(postDto);
+        writer.writeFreeBoard(entity);
         FreeBoard savedEntity = freeBoardCommandService.create(entity);
         return freeBoardConverter.convertEntityToResponseDto(savedEntity);
     }

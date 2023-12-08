@@ -3,9 +3,12 @@ package tdd.groomingzone.domain.board.freeboard.controller;
 import com.fasterxml.jackson.databind.annotation.NoClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
 import tdd.groomingzone.domain.board.freeboard.FreeBoardService;
+import tdd.groomingzone.domain.member.entity.Member;
 import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 import tdd.groomingzone.global.time.Time;
 
@@ -22,13 +25,15 @@ public class FreeBoardController {
     }
 
     @PostMapping
-    public ResponseEntity<FreeBoardDto.Response> postFreeBoard(@RequestBody FreeBoardDto.Post dto) {
-        FreeBoardDto.Response responseDto = freeBoardService.postFreeBoard(dto);
+    public ResponseEntity<FreeBoardDto.Response> postFreeBoard(@AuthenticationPrincipal Member writer,
+                                                               @RequestBody FreeBoardDto.Post dto) {
+        FreeBoardDto.Response responseDto = freeBoardService.postFreeBoard(writer, dto);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{free-board-id}")
-    public ResponseEntity<FreeBoardDto.Response> putFreeBoard(@PathVariable("free-board-id") long freeBoardId,
+    public ResponseEntity<FreeBoardDto.Response> putFreeBoard(@AuthenticationPrincipal Member writer,
+                                                              @PathVariable("free-board-id") long freeBoardId,
                                                               @RequestBody FreeBoardDto.Put dto) {
         FreeBoardDto.Response responseDto = freeBoardService.putFreeBoard(freeBoardId, dto, time.now());
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
