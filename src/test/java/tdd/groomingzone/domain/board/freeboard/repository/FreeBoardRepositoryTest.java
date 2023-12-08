@@ -3,17 +3,18 @@ package tdd.groomingzone.domain.board.freeboard.repository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
+import tdd.groomingzone.domain.member.entity.Member;
+import tdd.groomingzone.util.RepositoryTest;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@RepositoryTest
 class FreeBoardRepositoryTest {
 
     @Autowired
@@ -49,5 +50,26 @@ class FreeBoardRepositoryTest {
 
         assertThat(filteredByContentFreeBoards.getContent().size()).isEqualTo(1);
         assertThat(filteredByContentFreeBoards.getContent().get(0).getTitle()).isEqualTo("non-target");
+    }
+
+    @Test
+    @DisplayName("게시글 등록 테스트")
+    void testPostFreeBoard(){
+        Member member = Member.builder()
+                .name("name")
+                .build();
+        member.setId(1L);
+
+        FreeBoard entity = FreeBoard.builder()
+                .title("title")
+                .content("content")
+                .build();
+        member.writeFreeBoard(entity);
+
+        FreeBoard savedEntity = freeBoardRepository.save(entity);
+
+        assertThat(savedEntity.getTitle()).isEqualTo(entity.getTitle());
+        assertThat(savedEntity.getContent()).isEqualTo(entity.getContent());
+        assertThat(savedEntity.getWriter()).isEqualTo(member);
     }
 }
