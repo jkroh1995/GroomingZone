@@ -17,6 +17,8 @@ public class FreeBoardDto {
         public int viewCount;
         public String createdAt;
         public String modifiedAt;
+        public long writerId;
+        public String writerName;
     }
 
     public static class Put {

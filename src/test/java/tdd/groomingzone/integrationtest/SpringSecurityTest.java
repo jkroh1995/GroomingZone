@@ -77,6 +77,7 @@ class SpringSecurityTest {
     }
 
     @Test
+    @DisplayName("등록된 사용자가 로그인 요청을 보내면 성공한다")
     void testSignIn() throws Exception {
         String email = "jk@gmail.com";
         String password = "123";
@@ -109,7 +110,7 @@ class SpringSecurityTest {
     }
 
     @Test
-    @DisplayName("인증되지 않은 사용자가 조회 요청을 보내면 성공한다.")
+    @DisplayName("인증되지 않은 사용자가 인증을 요구하지 않는 요청을 보내면 성공한다.")
     @WithAnonymousUser
     void testUnauthorizedRequestUnauthorizedMethod() throws Exception {
         mockMvc.perform(
@@ -120,7 +121,7 @@ class SpringSecurityTest {
     }
 
     @Test
-    @DisplayName("인증되지 않은 사용자가 등록 요청을 보내면 실패한다.")
+    @DisplayName("인증되지 않은 사용자가 인증을 요구하는 요청을 보내면 실패한다.")
     @WithAnonymousUser
     void testUnauthorizedUserRequestAuthorizedMethod() throws Exception {
         String testTitle = "title";
@@ -136,11 +137,11 @@ class SpringSecurityTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content)
-        ).andExpect(status().isUnauthorized());
+        ).andExpect(status().isForbidden());
     }
 
     @Test
-    @DisplayName("인증된 사용자가 등록 요청을 보내면 성공한다.")
+    @DisplayName("인증된 사용자가 인증을 요구하는 요청을 보내면 성공한다.")
     @WithUserDetails(value = "jk@gmail.com", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void testAuthorizedUserRequestAuthorizedMethod() throws Exception {
         String testTitle = "title";

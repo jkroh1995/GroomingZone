@@ -54,6 +54,7 @@ public class Member extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.roles = roles;
     }
+
     public void writeFreeBoard(FreeBoard freeBoard) {
         this.freeBoards.add(freeBoard);
         if (freeBoard.getWriter() != this) {
