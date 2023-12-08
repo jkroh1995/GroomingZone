@@ -11,6 +11,8 @@ TDD 연습을 위한 프로젝트입니다.
 - [Spring Security를 사용할 때 csrf.disable()을 사용해도 되는 이유 - 토큰 사용 / 그래서 토큰은 어떻게 저장할건가?](https://random-topic.tistory.com/185)
 - [Spring Security의 인증 처리 흐름](https://random-topic.tistory.com/187)
 - [테스트를 실행은 하고 싶은데 빌드에서는 제외하고 싶을 때](https://random-topic.tistory.com/190)
+- [@BeforeEach vs @BeforeAll - 한 테스트 클래스에 여러 개의 테스트가 있으면 반드시 동시에 돌려봐야 하는 이유 / @TestInstace](https://random-topic.tistory.com/192)
+- [Querydsl 적용한 Repository에 @DataJpaTest 적용하기](https://random-topic.tistory.com/193)
 
 </div>
 </details>
@@ -40,3 +42,4 @@ TDD 연습을 위한 프로젝트입니다.
 - [Pull Request 020. 회원 가입 및 로그인 기능 TDD로 구현하기 - 회원 가입 Service 계층 구현](https://random-topic.tistory.com/183)
 - [Pull Request 021. 로그인 기능 TDD로 구현하기 - Spring Security / JWT 적용하기](https://random-topic.tistory.com/188)
 - [Pull Request 022. 사용자 인증 및 권한 확인 기능 TDD로 구현하기 - Spring Security 설정 마무리](https://random-topic.tistory.com/191)
+- [Pull Request 023. 인증된 사용자 객체 사용 TDD로 구현하기 - 자유 게시판 등록 시 작성자 등록하기](https://random-topic.tistory.com/194)
