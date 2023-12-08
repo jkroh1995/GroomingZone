@@ -1,6 +1,5 @@
 package tdd.groomingzone.util;
 
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.TestComponent;
 import tdd.groomingzone.global.time.Time;
 
