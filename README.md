@@ -13,6 +13,8 @@ TDD 연습을 위한 프로젝트입니다.
 - [테스트를 실행은 하고 싶은데 빌드에서는 제외하고 싶을 때](https://random-topic.tistory.com/190)
 - [@BeforeEach vs @BeforeAll - 한 테스트 클래스에 여러 개의 테스트가 있으면 반드시 동시에 돌려봐야 하는 이유 / @TestInstace](https://random-topic.tistory.com/192)
 - [Querydsl 적용한 Repository에 @DataJpaTest 적용하기](https://random-topic.tistory.com/193)
+- [임피던스 불일치 문제 해결을 위한 생각 + 현재 코드 개선할 점 찾기](https://random-topic.tistory.com/195)
+- [헥사고날 아키텍처 얕게 공부한 뒤 느낀점 - 기본이나 잘하라](https://random-topic.tistory.com/198)
 
 </div>
 </details>
