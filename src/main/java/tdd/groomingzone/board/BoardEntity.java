@@ -1,10 +1,9 @@
-package tdd.groomingzone.domain.board;
+package tdd.groomingzone.board;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import tdd.groomingzone.domain.comment.Comment;
-import tdd.groomingzone.domain.member.entity.Member;
+import tdd.groomingzone.board.comment.Comment;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
@@ -15,16 +14,15 @@ import java.util.List;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Board extends BaseEntity {
+public abstract class BoardEntity extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOARD_ID")
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member writer;
+    @Column(name = "MEMBER_ID")
+    private long memberId;
 
     @NotNull
     @Column(name = "TITLE")
@@ -37,10 +35,6 @@ public abstract class Board extends BaseEntity {
     @Column(name = "VIEW_COUNT")
     private int viewCount = 0;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "boardEntity")
     private List<Comment> comments = new ArrayList<>();
-
-    public void viewed() {
-        viewCount++;
-    }
 }
