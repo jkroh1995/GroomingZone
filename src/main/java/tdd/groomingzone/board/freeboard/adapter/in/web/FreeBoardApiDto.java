@@ -5,19 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 import tdd.groomingzone.board.common.WriterInfo;
 
-public class FreeBoardApiDto {
+public final class FreeBoardApiDto {
 
     @Getter
-    @Setter
-    public static class Post {
-        private String title;
-        private String content;
+    @Builder
+    public final static class Post {
+        private final String title;
+        private final String content;
     }
 
     @Getter
-    @Setter
     @Builder
-    public static class Response{
+    public final static class Response{
         private long boardId;
         private String title;
         private String content;
@@ -28,9 +27,9 @@ public class FreeBoardApiDto {
     }
 
     @Getter
-    @Setter
-    public static class Put {
-        private String title;
-        private String content;
+    @Builder
+    public final static class Put {
+        private final String title;
+        private final String content;
     }
 }
