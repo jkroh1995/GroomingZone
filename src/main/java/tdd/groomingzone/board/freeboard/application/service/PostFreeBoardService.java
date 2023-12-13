@@ -7,11 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.board.common.WriterInfo;
 
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardResult;
+import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
+
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardQuery;
+import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardQueryResult;
 
 @Service
 public class PostFreeBoardService implements PostFreeBoardUseCase {
@@ -24,20 +26,15 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
 
     @Override
     @Transactional
-    public PostFreeBoardResult postFreeBoard(PostFreeBoardCommand command) {
-        FreeBoard freeBoard = FreeBoard.builder()
-                .writer(command.getWriter())
-                .title(command.getTitle())
-                .content(command.getContent())
-                .build();
-
-        FreeBoard savedFreeBoard = saveFreeBoardPort.save(freeBoard);
-        return PostFreeBoardResult.of(savedFreeBoard.getId(),
-                savedFreeBoard.getTitle(),
-                savedFreeBoard.getContent(),
-                savedFreeBoard.getViewCount(),
-                savedFreeBoard.getCreatedAt(),
-                savedFreeBoard.getModifiedAt(),
-                WriterInfo.of(freeBoard.getWriter()));
+    public PostFreeBoardResponse postFreeBoard(PostFreeBoardCommand command) {
+        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(command.getWriter().getId(), command.getTitle(), command.getContent());
+        FreeBoardQueryResult queryResult = saveFreeBoardPort.save(saveFreeBoardQuery);
+        return PostFreeBoardResponse.of(queryResult.getBoardId(),
+                queryResult.getTitle(),
+                queryResult.getContent(),
+                queryResult.getViewCount(),
+                queryResult.getCreatedAt(),
+                queryResult.getModifiedAt(),
+                WriterInfo.of(command.getWriter()));
     }
 }

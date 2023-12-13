@@ -5,34 +5,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardDtoConverter;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardResult;
+import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
 
 import tdd.groomingzone.member.entity.Member;
 import tdd.groomingzone.global.time.Time;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 @RestController
 @RequestMapping("/free-board")
 public class PostFreeBoardController {
 
     private final PostFreeBoardUseCase postFreeBoardUseCase;
-    private final FreeBoardDtoConverter freeBoardDtoConverter;
     private final Time time;
 
-    public PostFreeBoardController(PostFreeBoardUseCase postFreeBoardUseCase, FreeBoardDtoConverter freeBoardDtoConverter, Time time) {
+    public PostFreeBoardController(PostFreeBoardUseCase postFreeBoardUseCase,Time time) {
         this.postFreeBoardUseCase = postFreeBoardUseCase;
-        this.freeBoardDtoConverter = freeBoardDtoConverter;
         this.time = time;
     }
 
     @PostMapping
     public ResponseEntity<FreeBoardApiDto.Response> postFreeBoard(@AuthenticationPrincipal Member writer,
                                                                   @RequestBody FreeBoardApiDto.Post postDto) {
-        PostFreeBoardCommand postFreeBoardCommand = freeBoardDtoConverter.convertApiPostDtoToCommand(writer, postDto);
-        PostFreeBoardResult commandResult = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
-        FreeBoardApiDto.Response responseDto = freeBoardDtoConverter.convertCommandResultToApiResponseDto(commandResult);
+        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer, postDto.getTitle(), postDto.getContent());
+        PostFreeBoardResponse commandResult = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
+        FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
+                .boardId(commandResult.getBoardId())
+                .title(commandResult.getTitle())
+                .content(commandResult.getContent())
+                .createdAt(commandResult.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(commandResult.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .writerInfo(commandResult.getWriterInfo())
+                .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 

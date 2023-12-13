@@ -2,10 +2,10 @@ package tdd.groomingzone.board.freeboard.adapter.out.persistence;
 
 import org.springframework.stereotype.Repository;
 
-import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardMapper;
+import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardQuery;
 
 @Repository
 public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort {
@@ -18,11 +18,10 @@ public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort {
         this.freeBoardMapper = freeBoardMapper;
     }
 
-
     @Override
-    public FreeBoard save(FreeBoard freeBoard) {
-        FreeBoardEntity freeBoardEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
+    public FreeBoardQueryResult save(SaveFreeBoardQuery query) {
+        FreeBoardEntity freeBoardEntity = freeBoardMapper.mapToDatabaseEntity(query);
         FreeBoardEntity savedFreeBoardEntity =  freeBoardEntityRepository.save(freeBoardEntity);
-        return freeBoardMapper.mapToDomainEntity(freeBoard, savedFreeBoardEntity);
+        return freeBoardMapper.mapToQueryResult(savedFreeBoardEntity);
     }
 }
