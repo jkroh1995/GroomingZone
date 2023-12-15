@@ -15,6 +15,7 @@ TDD 연습을 위한 프로젝트입니다.
 - [Querydsl 적용한 Repository에 @DataJpaTest 적용하기](https://random-topic.tistory.com/193)
 - [임피던스 불일치 문제 해결을 위한 생각 + 현재 코드 개선할 점 찾기](https://random-topic.tistory.com/195)
 - [헥사고날 아키텍처 얕게 공부한 뒤 느낀점 - 기본이나 잘하라](https://random-topic.tistory.com/198)
+- [계층별로 분리해서 DTO를 사용하기로 한 이유와 결과](https://random-topic.tistory.com/200)
 
 </div>
 </details>
@@ -45,3 +46,4 @@ TDD 연습을 위한 프로젝트입니다.
 - [Pull Request 021. 로그인 기능 TDD로 구현하기 - Spring Security / JWT 적용하기](https://random-topic.tistory.com/188)
 - [Pull Request 022. 사용자 인증 및 권한 확인 기능 TDD로 구현하기 - Spring Security 설정 마무리](https://random-topic.tistory.com/191)
 - [Pull Request 023. 인증된 사용자 객체 사용 TDD로 구현하기 - 자유 게시판 등록 시 작성자 등록하기](https://random-topic.tistory.com/194)
+- [Pull Request 024. 아키텍처 리팩토링 및 패키징 수정 - 자유 게시글 등록 기능에 헥사고날 아키텍처 적용하기](https://random-topic.tistory.com/199)
