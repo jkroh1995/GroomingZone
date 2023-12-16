@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
 
-import tdd.groomingzone.member.entity.Member;
+import tdd.groomingzone.member.entity.MemberEntity;
 import tdd.groomingzone.global.time.Time;
 
 import java.time.format.DateTimeFormatter;
@@ -20,25 +20,23 @@ import java.time.format.FormatStyle;
 public class PostFreeBoardController {
 
     private final PostFreeBoardUseCase postFreeBoardUseCase;
-    private final Time time;
 
-    public PostFreeBoardController(PostFreeBoardUseCase postFreeBoardUseCase,Time time) {
+    public PostFreeBoardController(PostFreeBoardUseCase postFreeBoardUseCase) {
         this.postFreeBoardUseCase = postFreeBoardUseCase;
-        this.time = time;
     }
 
     @PostMapping
-    public ResponseEntity<FreeBoardApiDto.Response> postFreeBoard(@AuthenticationPrincipal Member writer,
+    public ResponseEntity<FreeBoardApiDto.Response> postFreeBoard(@AuthenticationPrincipal MemberEntity writer,
                                                                   @RequestBody FreeBoardApiDto.Post postDto) {
         PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer, postDto.getTitle(), postDto.getContent());
-        PostFreeBoardResponse commandResult = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
+        FreeBoardCommandResponse commandResponse = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
-                .boardId(commandResult.getBoardId())
-                .title(commandResult.getTitle())
-                .content(commandResult.getContent())
-                .createdAt(commandResult.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                .modifiedAt(commandResult.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                .writerInfo(commandResult.getWriterInfo())
+                .boardId(commandResponse.getBoardId())
+                .title(commandResponse.getTitle())
+                .content(commandResponse.getContent())
+                .createdAt(commandResponse.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(commandResponse.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .writerInfo(commandResponse.getWriterInfo())
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }

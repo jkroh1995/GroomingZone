@@ -7,17 +7,20 @@ import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.board.common.WriterInfo;
 
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
 
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
-import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardQuery;
-import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardQueryResult;
+import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.utils.BoardEnums;
+import tdd.groomingzone.member.LoadMemberPort;
+import tdd.groomingzone.member.Member;
+
+import java.util.ArrayList;
 
 @Service
 public class PostFreeBoardService implements PostFreeBoardUseCase {
-
     private final SaveFreeBoardPort saveFreeBoardPort;
 
     public PostFreeBoardService(SaveFreeBoardPort saveFreeBoardPort) {
@@ -26,15 +29,20 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
 
     @Override
     @Transactional
-    public PostFreeBoardResponse postFreeBoard(PostFreeBoardCommand command) {
-        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(command.getWriter().getId(), command.getTitle(), command.getContent());
-        FreeBoardQueryResult queryResult = saveFreeBoardPort.save(saveFreeBoardQuery);
-        return PostFreeBoardResponse.of(queryResult.getBoardId(),
-                queryResult.getTitle(),
-                queryResult.getContent(),
-                queryResult.getViewCount(),
-                queryResult.getCreatedAt(),
-                queryResult.getModifiedAt(),
-                WriterInfo.of(command.getWriter()));
+    public FreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
+        FreeBoard freeBoard = FreeBoard.builder()
+                .id(BoardEnums.NEW_INSTANCE.getValue())
+                .title(command.getTitle())
+                .content(command.getContent())
+                .build();
+        FreeBoard savedFreeBoard = saveFreeBoardPort.save(command.getWriter().getId(), freeBoard);
+        return FreeBoardCommandResponse.of(savedFreeBoard.getId(),
+                savedFreeBoard.getTitle(),
+                savedFreeBoard.getContent(),
+                savedFreeBoard.getViewCount(),
+                savedFreeBoard.getCreatedAt(),
+                savedFreeBoard.getModifiedAt(),
+                WriterInfo.of(command.getWriter()),
+                new ArrayList<>());
     }
 }
