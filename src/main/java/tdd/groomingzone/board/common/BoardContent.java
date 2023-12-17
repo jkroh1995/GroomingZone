@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class BoardContent {
     private final long id;
 
-    private final Member writer;
+    private Member writer;
 
     private Title title;
 
@@ -47,5 +47,9 @@ public class BoardContent {
 
     public void setModifiedAt(LocalDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
+    }
+
+    public void setWriter(Member writer) {
+        this.writer = writer;
     }
 }

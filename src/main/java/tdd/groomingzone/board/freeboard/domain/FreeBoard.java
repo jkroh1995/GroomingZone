@@ -68,9 +68,16 @@ public class FreeBoard {
         return getWriter().getMemberId();
     }
 
-    public void checkMemberAuthority(long requestMemberId) {
-        if(getWriterId() != requestMemberId){
+    public void checkMemberAuthority(Member member) {
+        if(member.isAdmin()){
+            return;
+        }
+        if(getWriterId() != member.getMemberId()){
             throw new BusinessException(ExceptionCode.UNAUTHORIZED);
         }
+    }
+
+    public void setWriter(Member writer) {
+        boardContent.setWriter(writer);
     }
 }

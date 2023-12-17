@@ -48,6 +48,10 @@ public class Member {
         return phoneNumber.getPhoneNumber();
     }
 
+    public boolean isAdmin() {
+        return role.equals(Role.ADMIN);
+    }
+
     @Getter
     public enum Role {
         ADMIN("관리자"),

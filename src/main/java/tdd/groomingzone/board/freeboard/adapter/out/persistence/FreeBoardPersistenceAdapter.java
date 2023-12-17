@@ -8,38 +8,38 @@ import tdd.groomingzone.board.freeboard.application.port.out.*;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.member.application.port.out.LoadMemberPort;
-import tdd.groomingzone.member.domain.Member;
 
 @Repository
-public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeBoardPort {
-    private final LoadMemberPort loadMemberPort;
+public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeBoardPort, DeleteFreeBoardPort {
     private final FreeBoardEntityRepository freeBoardEntityRepository;
     private final FreeBoardMapper freeBoardMapper;
 
-    public FreeBoardPersistenceAdapter(LoadMemberPort loadMemberPort, FreeBoardEntityRepository freeBoardEntityRepository, FreeBoardMapper freeBoardMapper) {
-        this.loadMemberPort = loadMemberPort;
+    public FreeBoardPersistenceAdapter(FreeBoardEntityRepository freeBoardEntityRepository, FreeBoardMapper freeBoardMapper) {
         this.freeBoardEntityRepository = freeBoardEntityRepository;
         this.freeBoardMapper = freeBoardMapper;
     }
 
     @Override
-    public FreeBoard save(long writerId, FreeBoard freeBoard) {
-        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(writerId, freeBoard);
+    public FreeBoardQueryResult save(FreeBoard freeBoard) {
+        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
         FreeBoardEntity savedFreeBoardEntity =  freeBoardEntityRepository.save(databaseEntity);
-        Member writer = loadMemberPort.findMemberById(writerId);
-        return freeBoardMapper.mapToDomainEntity(writer, savedFreeBoardEntity);
+        return freeBoardMapper.mapToQueryResult(savedFreeBoardEntity);
     }
 
     @Override
-    public FreeBoard loadFreeBoardById(long freeBoardId) {
+    public FreeBoardQueryResult loadFreeBoardById(long freeBoardId) {
         FreeBoardEntity findFreeBoardEntity = findFreeBoardByIdOrElseThrowException(freeBoardId);
-        Member writer = loadMemberPort.findMemberById(findFreeBoardEntity.getMemberId());
-        return freeBoardMapper.mapToDomainEntity(writer, findFreeBoardEntity);
+        return freeBoardMapper.mapToQueryResult(findFreeBoardEntity);
     }
 
     private FreeBoardEntity findFreeBoardByIdOrElseThrowException(long freeBoardId) {
         return freeBoardEntityRepository.findById(freeBoardId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
+    }
+
+    @Override
+    public void delete(FreeBoard freeBoard) {
+        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
+        freeBoardEntityRepository.delete(databaseEntity);
     }
 }
