@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
 
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 

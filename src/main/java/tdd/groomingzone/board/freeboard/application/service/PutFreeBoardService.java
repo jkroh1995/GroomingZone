@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.board.common.WriterInfo;
 import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
-import tdd.groomingzone.board.freeboard.application.port.in.PutFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.PutFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
 import tdd.groomingzone.board.freeboard.application.port.out.*;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;

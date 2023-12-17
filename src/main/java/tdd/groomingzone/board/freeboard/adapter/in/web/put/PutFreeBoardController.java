@@ -6,8 +6,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
-import tdd.groomingzone.board.freeboard.application.port.in.PutFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.PutFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 

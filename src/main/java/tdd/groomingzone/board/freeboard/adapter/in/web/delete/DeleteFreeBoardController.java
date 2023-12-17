@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tdd.groomingzone.board.freeboard.application.port.in.DeleteFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.DeleteFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.command.DeleteFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.DeleteFreeBoardUseCase;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 @RestController

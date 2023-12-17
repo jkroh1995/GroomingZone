@@ -1,8 +1,8 @@
 package tdd.groomingzone.board.freeboard.application.service;
 
 import org.springframework.stereotype.Service;
-import tdd.groomingzone.board.freeboard.application.port.in.DeleteFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.DeleteFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.command.DeleteFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.DeleteFreeBoardUseCase;
 import tdd.groomingzone.board.freeboard.application.port.out.DeleteFreeBoardPort;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;

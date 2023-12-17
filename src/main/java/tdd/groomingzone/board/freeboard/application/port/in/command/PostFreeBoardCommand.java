@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.freeboard.application.port.in;
+package tdd.groomingzone.board.freeboard.application.port.in.command;
 
 import lombok.Data;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;

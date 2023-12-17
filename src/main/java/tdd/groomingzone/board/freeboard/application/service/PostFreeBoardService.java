@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tdd.groomingzone.board.common.WriterInfo;
 
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;

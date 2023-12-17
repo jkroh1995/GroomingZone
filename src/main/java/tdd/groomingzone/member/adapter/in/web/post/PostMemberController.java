@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tdd.groomingzone.member.application.port.in.PostMemberCommand;
+import tdd.groomingzone.member.application.port.in.command.PostMemberCommand;
 import tdd.groomingzone.member.application.port.in.MemberCommandResponse;
 import tdd.groomingzone.member.adapter.dto.MemberApiDto;
-import tdd.groomingzone.member.application.port.in.PostMemberUseCase;
+import tdd.groomingzone.member.application.port.in.usecase.PostMemberUseCase;
 
 @RestController
 @RequestMapping("/member")
