@@ -1,4 +1,4 @@
-package tdd.groomingzone.member.application;
+package tdd.groomingzone.member.application.port.in;
 
 import lombok.Data;
 
