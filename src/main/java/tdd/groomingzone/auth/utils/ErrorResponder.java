@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.utils;
+package tdd.groomingzone.auth.utils;
 
 import com.google.gson.Gson;
 import org.springframework.http.MediaType;

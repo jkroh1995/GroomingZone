@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.dto;
+package tdd.groomingzone.auth.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.utils;
+package tdd.groomingzone.auth.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

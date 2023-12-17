@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.filter;
+package tdd.groomingzone.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -7,9 +7,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tdd.groomingzone.domain.auth.utils.JwtManager;
-import tdd.groomingzone.domain.auth.dto.SignInDto;
-import tdd.groomingzone.domain.member.entity.Member;
+import tdd.groomingzone.auth.dto.SignInDto;
+import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -48,32 +48,32 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        Member member = (Member) authResult.getPrincipal();
+        MemberEntity memberEntity = (MemberEntity) authResult.getPrincipal();
 
-        String accessToken = getAccessTokenFromJwtTokenizer(member);
-        String refreshToken = getRefreshTokenFromJwtTokenizer(member);
+        String accessToken = getAccessTokenFromJwtTokenizer(memberEntity);
+        String refreshToken = getRefreshTokenFromJwtTokenizer(memberEntity);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-        response.setIntHeader("MemberId", (int) member.getId());
+        response.setIntHeader("MemberId", (int) memberEntity.getId());
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
-    private String getAccessTokenFromJwtTokenizer(Member member) {
+    private String getAccessTokenFromJwtTokenizer(MemberEntity memberEntity) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", member.getEmail());
-        claims.put("roles", member.getRoles());
+        claims.put("email", memberEntity.getEmail());
+        claims.put("roles", memberEntity.getRoles());
 
-        String subject = member.getEmail();
+        String subject = memberEntity.getEmail();
         Date expiration = jwtManager.getTokenExpiration(jwtManager.getAccessTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey());
 
         return jwtManager.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
     }
 
-    private String getRefreshTokenFromJwtTokenizer(Member member) {
-        String subject = member.getEmail();
+    private String getRefreshTokenFromJwtTokenizer(MemberEntity memberEntity) {
+        String subject = memberEntity.getEmail();
         Date expiration = jwtManager.getTokenExpiration(jwtManager.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey());
 

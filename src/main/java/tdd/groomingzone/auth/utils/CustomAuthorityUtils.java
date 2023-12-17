@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.utils;
+package tdd.groomingzone.auth.utils;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

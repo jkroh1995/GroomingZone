@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.filter;
+package tdd.groomingzone.auth.filter;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -9,10 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tdd.groomingzone.domain.auth.service.MemberDetailsService;
-import tdd.groomingzone.domain.auth.utils.CustomAuthorityUtils;
-import tdd.groomingzone.domain.auth.utils.JwtManager;
-import tdd.groomingzone.domain.auth.RedisService;
+import tdd.groomingzone.auth.RedisService;
+import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.auth.service.MemberDetailsService;
+import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
