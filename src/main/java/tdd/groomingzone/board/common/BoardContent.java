@@ -2,7 +2,7 @@ package tdd.groomingzone.board.common;
 
 import lombok.Builder;
 import lombok.Getter;
-import tdd.groomingzone.member.entity.Member;
+import tdd.groomingzone.member.domain.Member;
 
 import java.time.LocalDateTime;
 
@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 public class BoardContent {
     private final long id;
 
-    private final Member member;
+    private final Member writer;
 
-    private String title;
+    private Title title;
 
     private String content;
 
@@ -23,10 +23,10 @@ public class BoardContent {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public BoardContent(long id, Member member, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public BoardContent(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
-        this.member = member;
-        this.title = title;
+        this.writer = writer;
+        this.title = Title.of(title);
         this.content = content;
         this.viewCount = viewCount;
         this.createdAt = createdAt;
@@ -38,7 +38,7 @@ public class BoardContent {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = Title.of(title);
     }
 
     public void setContent(String content) {

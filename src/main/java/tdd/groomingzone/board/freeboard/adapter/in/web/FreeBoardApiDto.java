@@ -2,8 +2,10 @@ package tdd.groomingzone.board.freeboard.adapter.in.web;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import tdd.groomingzone.board.comment.CommentApiDto;
 import tdd.groomingzone.board.common.WriterInfo;
+
+import java.util.List;
 
 public final class FreeBoardApiDto {
 
@@ -17,13 +19,14 @@ public final class FreeBoardApiDto {
     @Getter
     @Builder
     public final static class Response{
-        private long boardId;
-        private String title;
-        private String content;
-        private int viewCount;
-        private String createdAt;
-        private String modifiedAt;
-        private WriterInfo writerInfo;
+        private final long boardId;
+        private final String title;
+        private final String content;
+        private final int viewCount;
+        private final String createdAt;
+        private final String modifiedAt;
+        private final WriterInfo writerInfo;
+        private final List<CommentApiDto> comments;
     }
 
     @Getter

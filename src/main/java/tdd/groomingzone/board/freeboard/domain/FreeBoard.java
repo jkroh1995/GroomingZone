@@ -3,30 +3,28 @@ package tdd.groomingzone.board.freeboard.domain;
 import lombok.Builder;
 
 import tdd.groomingzone.board.common.BoardContent;
-import tdd.groomingzone.board.comment.Comment;
-import tdd.groomingzone.member.entity.Member;
+
+import tdd.groomingzone.global.exception.BusinessException;
+import tdd.groomingzone.global.exception.ExceptionCode;
+import tdd.groomingzone.member.domain.Member;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class FreeBoard {
     private final BoardContent boardContent;
-    private final List<Comment> comments;
 
     @Builder
-    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, List<Comment> comments){
+    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.boardContent = BoardContent.builder()
                 .id(id)
-                .member(writer)
+                .writer(writer)
                 .title(title)
                 .content(content)
                 .createdAt(createdAt)
                 .modifiedAt(modifiedAt)
                 .viewCount(viewCount)
                 .build();
-        this.comments = comments;
     }
-
 
     public void modify(String title, String content, LocalDateTime modifiedAt){
         boardContent.setTitle(title);
@@ -42,12 +40,12 @@ public class FreeBoard {
         return boardContent.getId();
     }
 
-    public String getTitle() {
-        return boardContent.getTitle();
+    public String getTitleValue() {
+        return boardContent.getTitle().getTitle();
     }
 
     public Member getWriter() {
-        return boardContent.getMember();
+        return boardContent.getWriter();
     }
 
     public String getContent() {
@@ -64,5 +62,15 @@ public class FreeBoard {
 
     public LocalDateTime getModifiedAt() {
         return boardContent.getModifiedAt();
+    }
+
+    public long getWriterId() {
+        return getWriter().getMemberId();
+    }
+
+    public void checkMemberAuthority(long requestMemberId) {
+        if(getWriterId() != requestMemberId){
+            throw new BusinessException(ExceptionCode.UNAUTHORIZED);
+        }
     }
 }

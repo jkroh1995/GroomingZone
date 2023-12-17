@@ -7,6 +7,7 @@ import tdd.groomingzone.board.BoardEntity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,7 +15,8 @@ import javax.persistence.Entity;
 public class FreeBoardEntity extends BoardEntity {
 
     @Builder
-    public FreeBoardEntity(long memberId, String title, String content){
+    public FreeBoardEntity(Long boardId, Long memberId, String title, String content){
+        this.setId(boardId);
         this.setMemberId(memberId);
         this.setTitle(title);
         this.setContent(content);

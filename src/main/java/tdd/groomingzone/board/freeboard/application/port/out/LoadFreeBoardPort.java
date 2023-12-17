@@ -2,7 +2,7 @@ package tdd.groomingzone.board.freeboard.application.port.out;
 
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 
-public interface SaveFreeBoardPort {
+public interface LoadFreeBoardPort {
 
-    FreeBoard save(long writerId, FreeBoard freeBoard);
+    FreeBoard loadFreeBoardById(long freeBoardId);
 }
