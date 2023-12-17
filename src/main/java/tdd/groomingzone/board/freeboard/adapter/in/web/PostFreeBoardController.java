@@ -9,8 +9,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResp
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
 import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
 
-import tdd.groomingzone.member.entity.MemberEntity;
-import tdd.groomingzone.global.time.Time;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -41,14 +40,6 @@ public class PostFreeBoardController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
-//    @PutMapping("/{free-board-id}")
-//    public ResponseEntity<FreeBoardDto.Response> putFreeBoard(@AuthenticationPrincipal Member requestMember,
-//                                                              @PathVariable("free-board-id") long freeBoardId,
-//                                                              @RequestBody FreeBoardDto.Put dto) {
-//        FreeBoardDto.Response responseDto = freeBoardServiceManager.putFreeBoard(requestMember, freeBoardId, dto, time.now());
-//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
-//    }
-//
 //    @DeleteMapping("/{free-board-id}")
 //    public ResponseEntity<NoClass> deleteFreeBoard(@AuthenticationPrincipal Member requestMember,
 //                                                   @PathVariable("free-board-id") long freeBoardId) {

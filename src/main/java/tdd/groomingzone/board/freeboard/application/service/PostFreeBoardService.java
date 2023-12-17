@@ -13,9 +13,6 @@ import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
-import tdd.groomingzone.board.utils.BoardEnums;
-import tdd.groomingzone.member.LoadMemberPort;
-import tdd.groomingzone.member.Member;
 
 import java.util.ArrayList;
 
@@ -31,13 +28,12 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     @Transactional
     public FreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
         FreeBoard freeBoard = FreeBoard.builder()
-                .id(BoardEnums.NEW_INSTANCE.getValue())
                 .title(command.getTitle())
                 .content(command.getContent())
                 .build();
         FreeBoard savedFreeBoard = saveFreeBoardPort.save(command.getWriter().getId(), freeBoard);
         return FreeBoardCommandResponse.of(savedFreeBoard.getId(),
-                savedFreeBoard.getTitle(),
+                savedFreeBoard.getTitleValue(),
                 savedFreeBoard.getContent(),
                 savedFreeBoard.getViewCount(),
                 savedFreeBoard.getCreatedAt(),

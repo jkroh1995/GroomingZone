@@ -1,7 +1,7 @@
 package tdd.groomingzone.board.freeboard.application.port.in;
 
 import lombok.Data;
-import tdd.groomingzone.member.entity.MemberEntity;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import java.time.LocalDateTime;
 

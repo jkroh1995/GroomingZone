@@ -8,7 +8,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResp
 import tdd.groomingzone.board.freeboard.application.port.in.PutFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.PutFreeBoardUseCase;
 import tdd.groomingzone.global.time.Time;
-import tdd.groomingzone.member.entity.MemberEntity;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
