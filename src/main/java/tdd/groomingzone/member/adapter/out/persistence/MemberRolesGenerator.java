@@ -1,4 +1,4 @@
-package tdd.groomingzone.member.application;
+package tdd.groomingzone.member.adapter.out.persistence;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

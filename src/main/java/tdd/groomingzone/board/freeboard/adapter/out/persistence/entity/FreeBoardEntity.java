@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.freeboard.adapter.out.persistence;
+package tdd.groomingzone.board.freeboard.adapter.out.persistence.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;

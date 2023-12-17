@@ -5,11 +5,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.member.application.port.LoadMemberPort;
-import tdd.groomingzone.member.application.port.PostMemberUseCase;
-import tdd.groomingzone.member.application.port.PostMemberCommand;
-import tdd.groomingzone.member.application.MemberCommandResponse;
-import tdd.groomingzone.member.application.port.SaveMemberPort;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.member.application.port.in.PostMemberUseCase;
+import tdd.groomingzone.member.application.port.in.PostMemberCommand;
+import tdd.groomingzone.member.application.port.in.MemberCommandResponse;
+import tdd.groomingzone.member.application.port.out.SaveMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
 @Service

@@ -2,6 +2,7 @@ package tdd.groomingzone.board.freeboard.adapter.out.persistence;
 
 import org.springframework.stereotype.Component;
 
+import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.domain.Member;
 

@@ -1,4 +1,4 @@
-package tdd.groomingzone.member.adapter.in.web;
+package tdd.groomingzone.member.adapter.in.web.post;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tdd.groomingzone.member.application.port.PostMemberCommand;
-import tdd.groomingzone.member.application.MemberCommandResponse;
+import tdd.groomingzone.member.application.port.in.PostMemberCommand;
+import tdd.groomingzone.member.application.port.in.MemberCommandResponse;
 import tdd.groomingzone.member.adapter.dto.MemberApiDto;
-import tdd.groomingzone.member.application.port.PostMemberUseCase;
+import tdd.groomingzone.member.application.port.in.PostMemberUseCase;
 
 @RestController
 @RequestMapping("/member")

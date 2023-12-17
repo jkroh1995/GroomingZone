@@ -1,6 +1,7 @@
-package tdd.groomingzone.member.adapter.out.persistence;
+package tdd.groomingzone.member.adapter.out.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import java.util.Optional;
 

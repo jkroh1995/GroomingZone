@@ -1,4 +1,4 @@
-package tdd.groomingzone.member.application.port;
+package tdd.groomingzone.member.application.port.out;
 
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 import tdd.groomingzone.member.domain.Member;

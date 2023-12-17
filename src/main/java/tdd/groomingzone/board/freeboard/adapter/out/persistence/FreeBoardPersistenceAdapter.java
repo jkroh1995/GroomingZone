@@ -2,11 +2,13 @@ package tdd.groomingzone.board.freeboard.adapter.out.persistence;
 
 import org.springframework.stereotype.Repository;
 
+import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
+import tdd.groomingzone.board.freeboard.adapter.out.persistence.repository.FreeBoardEntityRepository;
 import tdd.groomingzone.board.freeboard.application.port.out.*;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.member.application.port.LoadMemberPort;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
 @Repository
