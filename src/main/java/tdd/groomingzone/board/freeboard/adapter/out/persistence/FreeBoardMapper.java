@@ -3,9 +3,7 @@ package tdd.groomingzone.board.freeboard.adapter.out.persistence;
 import org.springframework.stereotype.Component;
 
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
-import tdd.groomingzone.member.Member;
-import tdd.groomingzone.member.MemberMapper;
-import tdd.groomingzone.member.MemberPersistenceAdapter;
+import tdd.groomingzone.member.domain.Member;
 
 @Component
 public class FreeBoardMapper {
@@ -13,7 +11,7 @@ public class FreeBoardMapper {
         return FreeBoardEntity.builder()
                 .boardId(freeBoard.getId())
                 .memberId(writerId)
-                .title(freeBoard.getTitle())
+                .title(freeBoard.getTitleValue())
                 .content(freeBoard.getContent())
                 .build();
     }

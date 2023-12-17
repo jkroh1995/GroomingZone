@@ -6,7 +6,7 @@ import tdd.groomingzone.board.common.BoardContent;
 
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.member.Member;
+import tdd.groomingzone.member.domain.Member;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ public class FreeBoard {
     private final BoardContent boardContent;
 
     @Builder
-    private FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.boardContent = BoardContent.builder()
                 .id(id)
                 .writer(writer)
@@ -40,8 +40,8 @@ public class FreeBoard {
         return boardContent.getId();
     }
 
-    public String getTitle() {
-        return boardContent.getTitle();
+    public String getTitleValue() {
+        return boardContent.getTitle().getTitle();
     }
 
     public Member getWriter() {
@@ -65,7 +65,7 @@ public class FreeBoard {
     }
 
     public long getWriterId() {
-        return getWriter().getId();
+        return getWriter().getMemberId();
     }
 
     public void checkMemberAuthority(long requestMemberId) {
