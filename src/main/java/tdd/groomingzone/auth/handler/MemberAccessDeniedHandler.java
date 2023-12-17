@@ -1,9 +1,9 @@
-package tdd.groomingzone.domain.auth.handler;
+package tdd.groomingzone.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import tdd.groomingzone.domain.auth.utils.ErrorResponder;
+import tdd.groomingzone.auth.utils.ErrorResponder;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
 import javax.servlet.ServletException;

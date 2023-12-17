@@ -1,13 +1,13 @@
-package tdd.groomingzone.domain.auth.service;
+package tdd.groomingzone.auth.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import tdd.groomingzone.domain.auth.utils.CustomAuthorityUtils;
-import tdd.groomingzone.domain.member.entity.Member;
-import tdd.groomingzone.domain.member.repository.MemberRepository;
+import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberRepository;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
@@ -27,20 +27,20 @@ public class MemberDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Member> member = memberRepository.findByEmail(username);
-        Member findMember = member.orElseThrow(() -> new CustomAuthenticationException(ExceptionCode.MEMBER_NOT_FOUND));
+        Optional<MemberEntity> member = memberRepository.findByEmail(username);
+        MemberEntity findMemberEntity = member.orElseThrow(() -> new CustomAuthenticationException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        return new MemberDetails(findMember);
+        return new MemberEntityDetails(findMemberEntity);
     }
 
-    public final class MemberDetails extends Member implements UserDetails {
+    public final class MemberEntityDetails extends MemberEntity implements UserDetails {
 
-        MemberDetails(Member member) {
-            setId(member.getId());
-            setEmail(member.getEmail());
-            setName(member.getName());
-            setPassword(member.getPassword());
-            setRoles(member.getRoles());
+        MemberEntityDetails(MemberEntity memberEntity) {
+            setId(memberEntity.getId());
+            setEmail(memberEntity.getEmail());
+            setNickName(memberEntity.getNickName());
+            setPassword(memberEntity.getPassword());
+            setRoles(memberEntity.getRoles());
         }
 
         @Override

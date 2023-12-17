@@ -1,11 +1,11 @@
-package tdd.groomingzone.domain.auth.handler;
+package tdd.groomingzone.auth.handler;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import tdd.groomingzone.domain.member.dto.MemberDto;
-import tdd.groomingzone.domain.member.entity.Member;
+import tdd.groomingzone.member.adapter.dto.MemberApiDto;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +21,12 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request
             , HttpServletResponse response
             , Authentication authentication) throws IOException, ServletException {
-        Member member = (Member) authentication.getPrincipal();
-        MemberDto.Response dto  = MemberDto.Response.builder()
-                .email(member.getEmail())
-                .name(member.getName())
-                .role(member.getRoles().get(0))
-                .phoneNumber(member.getPhoneNumber())
+        MemberEntity memberEntity = (MemberEntity) authentication.getPrincipal();
+        MemberApiDto.Response dto  = MemberApiDto.Response.builder()
+                .email(memberEntity.getEmail())
+                .nickName(memberEntity.getNickName())
+                .role(memberEntity.getRoles().get(0))
+                .phoneNumber(memberEntity.getPhoneNumber())
                 .build();
 
         response.setContentType("application/json");
