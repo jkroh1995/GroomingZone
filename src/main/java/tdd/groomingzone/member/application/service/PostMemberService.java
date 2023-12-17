@@ -44,7 +44,7 @@ public class PostMemberService implements PostMemberUseCase {
     }
 
     private void verifyEmailDuplicate(String requestEmail) {
-        if(loadMemberPort.findMemberByEmail(requestEmail).isPresent()){
+        if(loadMemberPort.findOptionalMemberByEmail(requestEmail).isPresent()){
             throw new BusinessException(ExceptionCode.EMAIL_ALREADY_EXISTS);
         }
     }
