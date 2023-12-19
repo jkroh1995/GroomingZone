@@ -27,6 +27,9 @@ public class DeleteFreeBoardService implements DeleteFreeBoardUseCase {
     public void deleteFreeBoard(DeleteFreeBoardCommand command) {
         FreeBoardQueryResult queryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
         FreeBoard freeBoard = queryResult.getFreeBoard();
+        Member writer = loadMemberPort.findMemberById(queryResult.getWriterId());
+        freeBoard.setWriter(writer);
+
         Member requestMember = loadMemberPort.findMemberById(command.getRequestMemberId());
         freeBoard.checkMemberAuthority(requestMember);
 
