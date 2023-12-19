@@ -28,7 +28,7 @@ public class PostFreeBoardController {
     @PostMapping
     public ResponseEntity<FreeBoardApiDto.Response> postFreeBoard(@AuthenticationPrincipal MemberEntity writer,
                                                                   @RequestBody FreeBoardApiDto.Post postDto) {
-        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer, postDto.getTitle(), postDto.getContent());
+        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer.getId(), postDto.getTitle(), postDto.getContent());
         FreeBoardCommandResponse commandResponse = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
                 .boardId(commandResponse.getBoardId())
@@ -40,32 +40,4 @@ public class PostFreeBoardController {
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
-
-//    @DeleteMapping("/{free-board-id}")
-//    public ResponseEntity<NoClass> deleteFreeBoard(@AuthenticationPrincipal Member requestMember,
-//                                                   @PathVariable("free-board-id") long freeBoardId) {
-//        freeBoardServiceManager.deleteFreeBoard(requestMember, freeBoardId);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-//
-//    @GetMapping("/{free-board-id}")
-//    public ResponseEntity<FreeBoardDto.Response> getFreeBoard(@PathVariable("free-board-id") long freeBoardId) {
-//        FreeBoardDto.Response responseDto = freeBoardServiceManager.getFreeBoard(freeBoardId);
-//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<PagedResponseDto<FreeBoardDto.Response>> getFreeBoardPage(@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
-//        PagedResponseDto<FreeBoardDto.Response> responseDtoList = freeBoardServiceManager.getFreeBoardPage(pageNumber);
-//        return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/search")
-//    public ResponseEntity<PagedResponseDto<FreeBoardDto.Response>> getFilteredFreeBoardPage(@RequestParam(name = "title", required = false) String title,
-//                                                                                            @RequestParam(name = "content", required = false) String content,
-//                                                                                            @RequestParam(name = "writer", required = false) String writer,
-//                                                                                            @RequestParam(name = "page", defaultValue = "1") int pageNumber) {
-//        PagedResponseDto<FreeBoardDto.Response> responseDtoList = freeBoardServiceManager.getFilteredFreeBoardList(title, content, writer, pageNumber);
-//        return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
-//    }
 }

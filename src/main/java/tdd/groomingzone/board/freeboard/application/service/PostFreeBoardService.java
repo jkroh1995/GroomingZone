@@ -32,7 +32,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     @Override
     @Transactional
     public FreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
-        Member writer = loadMemberPort.findMemberById(command.getWriter().getId());
+        Member writer = loadMemberPort.findMemberById(command.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
                 .writer(writer)
                 .title(command.getTitle())

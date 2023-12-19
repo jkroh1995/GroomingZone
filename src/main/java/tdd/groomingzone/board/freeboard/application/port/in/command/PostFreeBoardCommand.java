@@ -6,17 +6,17 @@ import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 @Data
 public final class PostFreeBoardCommand {
 
-    private final MemberEntity writer;
+    private final Long writerId;
     private final String title;
     private final String content;
 
-    private PostFreeBoardCommand(MemberEntity writer, String title, String content) {
-        this.writer = writer;
+    private PostFreeBoardCommand(Long writerId, String title, String content) {
+        this.writerId = writerId;
         this.title = title;
         this.content = content;
     }
 
-    public static PostFreeBoardCommand of(MemberEntity writer, String title, String content) {
-        return new PostFreeBoardCommand(writer, title, content);
+    public static PostFreeBoardCommand of(Long writerId, String title, String content) {
+        return new PostFreeBoardCommand(writerId, title, content);
     }
 }
