@@ -32,14 +32,14 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     @Override
     @Transactional
     public FreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
+        Member writer = loadMemberPort.findMemberById(command.getWriter().getId());
         FreeBoard freeBoard = FreeBoard.builder()
-                .writer(Member.builder().memberId(command.getWriter().getId()).build())
+                .writer(writer)
                 .title(command.getTitle())
                 .content(command.getContent())
                 .build();
         FreeBoardQueryResult queryResult = saveFreeBoardPort.save(freeBoard);
         FreeBoard savedFreeBoard = queryResult.getFreeBoard();
-        Member writer = loadMemberPort.findMemberById(command.getWriter().getId());
 
         return FreeBoardCommandResponse.of(savedFreeBoard.getId(),
                 savedFreeBoard.getTitleValue(),
