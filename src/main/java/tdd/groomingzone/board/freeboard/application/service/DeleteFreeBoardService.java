@@ -29,6 +29,7 @@ public class DeleteFreeBoardService implements DeleteFreeBoardUseCase {
         FreeBoard freeBoard = queryResult.getFreeBoard();
         Member requestMember = loadMemberPort.findMemberById(command.getRequestMemberId());
         freeBoard.checkMemberAuthority(requestMember);
+
         deleteFreeBoardPort.delete(freeBoard);
     }
 }

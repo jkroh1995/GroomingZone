@@ -31,11 +31,14 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
     @Transactional
     public FreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
         FreeBoardQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
-        FreeBoard freeBoard = findQueryResult.getFreeBoard();
         Member writer = loadMemberPort.findMemberById(findQueryResult.getWriterId());
+        FreeBoard freeBoard = findQueryResult.getFreeBoard();
         freeBoard.setWriter(writer);
-        freeBoard.checkMemberAuthority(loadMemberPort.findMemberById(command.getWriter().getId()));
+
+        Member requestMember = loadMemberPort.findMemberById(command.getWriter().getId());
+        freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
+
         FreeBoardQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
         FreeBoard updatedFreeBoard = savedQueryResult.getFreeBoard();
         return FreeBoardCommandResponse.of(updatedFreeBoard.getId(),
