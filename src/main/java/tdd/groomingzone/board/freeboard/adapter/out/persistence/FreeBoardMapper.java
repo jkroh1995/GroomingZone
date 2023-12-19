@@ -17,17 +17,6 @@ public class FreeBoardMapper {
                 .build();
     }
 
-    public FreeBoard mapToDomainEntity(FreeBoardEntity freeBoardDatabaseEntity) {
-        return FreeBoard.builder()
-                .id(freeBoardDatabaseEntity.getId())
-                .title(freeBoardDatabaseEntity.getTitle())
-                .content(freeBoardDatabaseEntity.getContent())
-                .viewCount(freeBoardDatabaseEntity.getViewCount())
-                .createdAt(freeBoardDatabaseEntity.getCreatedAt())
-                .modifiedAt(freeBoardDatabaseEntity.getModifiedAt())
-                .build();
-    }
-
     public FreeBoardQueryResult mapToQueryResult(FreeBoardEntity freeBoardDatabaseEntity) {
         FreeBoard freeBoard = FreeBoard.builder()
                 .id(freeBoardDatabaseEntity.getId())

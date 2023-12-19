@@ -1,7 +1,6 @@
 package tdd.groomingzone.board.common;
 
 import lombok.Getter;
-import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 import tdd.groomingzone.member.domain.Member;
 
 @Getter

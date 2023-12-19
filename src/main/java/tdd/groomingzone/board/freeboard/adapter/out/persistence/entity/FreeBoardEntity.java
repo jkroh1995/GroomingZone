@@ -7,7 +7,6 @@ import tdd.groomingzone.board.BoardEntity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
