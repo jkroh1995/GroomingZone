@@ -17,7 +17,8 @@ public enum ExceptionCode {
     INVALID_PHONE_NUMBER(409, "올바른 전화번호 형식이 아닙니다."),
     INVALID_BOARD_TITLE(409, "게시글 제목은 빈 칸이면 안됩니다."),
     INVALID_ROLE(409, "바버, 고객 중 역할을 선택해주세요."),
-    INVALID_REQUEST(409, "잘못된 요청입니다.");
+    INVALID_REQUEST(409, "잘못된 요청입니다."),
+    INVALID_BOARD_CONTENT(409, "글 내용은 빈 칸이면 안됩니다.");
 
     private final int status;
     private final String message;
