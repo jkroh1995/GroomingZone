@@ -6,39 +6,45 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tdd.groomingzone.board.common.WriterInfo;
 
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
-import tdd.groomingzone.board.freeboard.application.port.in.PostFreeBoardUseCase;
+import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 
+import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
-
-import java.util.ArrayList;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.member.domain.Member;
 
 @Service
 public class PostFreeBoardService implements PostFreeBoardUseCase {
+    private final LoadMemberPort loadMemberPort;
     private final SaveFreeBoardPort saveFreeBoardPort;
 
-    public PostFreeBoardService(SaveFreeBoardPort saveFreeBoardPort) {
+    public PostFreeBoardService(LoadMemberPort loadMemberPort, SaveFreeBoardPort saveFreeBoardPort) {
+        this.loadMemberPort = loadMemberPort;
         this.saveFreeBoardPort = saveFreeBoardPort;
     }
 
     @Override
     @Transactional
-    public FreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
+    public FreeBoardEntityCommandResponse postFreeBoard(PostFreeBoardCommand command) {
+        Member writer = loadMemberPort.findMemberById(command.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
+                .writer(writer)
                 .title(command.getTitle())
                 .content(command.getContent())
                 .build();
-        FreeBoard savedFreeBoard = saveFreeBoardPort.save(command.getWriter().getId(), freeBoard);
-        return FreeBoardCommandResponse.of(savedFreeBoard.getId(),
+        FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(freeBoard);
+        FreeBoard savedFreeBoard = queryResult.getFreeBoard();
+
+        return FreeBoardEntityCommandResponse.of(savedFreeBoard.getId(),
                 savedFreeBoard.getTitleValue(),
                 savedFreeBoard.getContent(),
                 savedFreeBoard.getViewCount(),
                 savedFreeBoard.getCreatedAt(),
                 savedFreeBoard.getModifiedAt(),
-                WriterInfo.of(command.getWriter()),
-                new ArrayList<>());
+                WriterInfo.of(writer));
     }
 }

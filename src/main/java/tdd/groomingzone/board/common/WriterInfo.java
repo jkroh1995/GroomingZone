@@ -1,7 +1,7 @@
 package tdd.groomingzone.board.common;
 
 import lombok.Getter;
-import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
+import tdd.groomingzone.member.domain.Member;
 
 @Getter
 public final class WriterInfo {
@@ -13,7 +13,7 @@ public final class WriterInfo {
         this.writerNickName = writerNickName;
     }
 
-    public static WriterInfo of(MemberEntity writer){
-        return new WriterInfo(writer.getId(), writer.getNickName());
+    public static WriterInfo of(Member writer){
+        return new WriterInfo(writer.getMemberId(), writer.getNickName());
     }
 }

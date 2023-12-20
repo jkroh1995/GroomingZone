@@ -3,7 +3,6 @@ package tdd.groomingzone.member.adapter.out.persistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import tdd.groomingzone.member.application.MemberRolesGenerator;
 import tdd.groomingzone.member.domain.Member;
 
 @Component

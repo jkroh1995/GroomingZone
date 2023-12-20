@@ -2,8 +2,6 @@ package tdd.groomingzone.member.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import tdd.groomingzone.global.exception.BusinessException;
-import tdd.groomingzone.global.exception.ExceptionCode;
 
 @Getter
 public class Member {
@@ -46,6 +44,10 @@ public class Member {
 
     public String getPhoneNumberValue() {
         return phoneNumber.getPhoneNumber();
+    }
+
+    public boolean isAdmin() {
+        return role.equals(Role.ADMIN);
     }
 
     @Getter

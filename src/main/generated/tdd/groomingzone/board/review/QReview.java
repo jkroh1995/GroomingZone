@@ -27,9 +27,6 @@ public class QReview extends EntityPathBase<Review> {
     public final tdd.groomingzone.barbershop.QBarberShop barberShop;
 
     //inherited
-    public final ListPath<tdd.groomingzone.board.comment.Comment, tdd.groomingzone.board.comment.QComment> comments = _super.comments;
-
-    //inherited
     public final StringPath content = _super.content;
 
     //inherited
@@ -39,9 +36,6 @@ public class QReview extends EntityPathBase<Review> {
     public final NumberPath<Long> id = _super.id;
 
     //inherited
-    public final NumberPath<Long> memberId = _super.memberId;
-
-    //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     //inherited
@@ -49,6 +43,12 @@ public class QReview extends EntityPathBase<Review> {
 
     //inherited
     public final NumberPath<Integer> viewCount = _super.viewCount;
+
+    //inherited
+    public final NumberPath<Long> writerId = _super.writerId;
+
+    //inherited
+    public final StringPath writerNickName = _super.writerNickName;
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);

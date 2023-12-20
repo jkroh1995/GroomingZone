@@ -1,20 +1,16 @@
 package tdd.groomingzone.global.pagedresponse;
 
 import lombok.Getter;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Getter
-public class PagedResponseDto<T> {
+public final class PagedResponseDto<T> {
     private final List<T> data;
     private final PageInfo pageInfo;
 
-    public PagedResponseDto(List<T> data, Page<?> page) {
+    public PagedResponseDto(List<T> data, PageInfo pageInfo) {
         this.data = data;
-        this.pageInfo = new PageInfo(page.getNumber() + 1,
-                page.getSize(),
-                page.getTotalElements(),
-                page.getTotalPages());
+        this.pageInfo = pageInfo;
     }
 }

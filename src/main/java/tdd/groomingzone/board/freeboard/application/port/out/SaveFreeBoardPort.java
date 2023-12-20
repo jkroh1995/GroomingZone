@@ -4,5 +4,5 @@ import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 
 public interface SaveFreeBoardPort {
 
-    FreeBoard save(long writerId, FreeBoard freeBoard);
+    FreeBoardEntityQueryResult save(FreeBoard freeBoard);
 }

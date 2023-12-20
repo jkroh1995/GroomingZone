@@ -5,11 +5,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.member.application.port.LoadMemberPort;
-import tdd.groomingzone.member.application.port.PostMemberUseCase;
-import tdd.groomingzone.member.application.port.PostMemberCommand;
-import tdd.groomingzone.member.application.MemberCommandResponse;
-import tdd.groomingzone.member.application.port.SaveMemberPort;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.member.application.port.in.usecase.PostMemberUseCase;
+import tdd.groomingzone.member.application.port.in.command.PostMemberCommand;
+import tdd.groomingzone.member.application.port.in.MemberCommandResponse;
+import tdd.groomingzone.member.application.port.out.SaveMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
 @Service
@@ -44,7 +44,7 @@ public class PostMemberService implements PostMemberUseCase {
     }
 
     private void verifyEmailDuplicate(String requestEmail) {
-        if(loadMemberPort.findMemberByEmail(requestEmail).isPresent()){
+        if(loadMemberPort.findOptionalMemberByEmail(requestEmail).isPresent()){
             throw new BusinessException(ExceptionCode.EMAIL_ALREADY_EXISTS);
         }
     }

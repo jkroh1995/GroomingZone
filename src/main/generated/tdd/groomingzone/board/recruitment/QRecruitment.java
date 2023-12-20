@@ -22,9 +22,6 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
     public final tdd.groomingzone.board.QBoardEntity _super = new tdd.groomingzone.board.QBoardEntity(this);
 
     //inherited
-    public final ListPath<tdd.groomingzone.board.comment.Comment, tdd.groomingzone.board.comment.QComment> comments = _super.comments;
-
-    //inherited
     public final StringPath content = _super.content;
 
     //inherited
@@ -32,9 +29,6 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
 
     //inherited
     public final NumberPath<Long> id = _super.id;
-
-    //inherited
-    public final NumberPath<Long> memberId = _super.memberId;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
@@ -46,6 +40,12 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
 
     //inherited
     public final NumberPath<Integer> viewCount = _super.viewCount;
+
+    //inherited
+    public final NumberPath<Long> writerId = _super.writerId;
+
+    //inherited
+    public final StringPath writerNickName = _super.writerNickName;
 
     public QRecruitment(String variable) {
         super(Recruitment.class, forVariable(variable));

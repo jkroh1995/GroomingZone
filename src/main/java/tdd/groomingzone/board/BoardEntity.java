@@ -19,8 +19,11 @@ public abstract class BoardEntity extends BaseEntity {
     @Column(name = "BOARD_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
+    @Column(name = "WRITE_MEMBER_ID")
+    private Long writerId;
+
+    @Column(name = "WRITE_MEMBER_NICKNAME")
+    private String writerNickName;
 
     @NotNull
     @Column(name = "TITLE")

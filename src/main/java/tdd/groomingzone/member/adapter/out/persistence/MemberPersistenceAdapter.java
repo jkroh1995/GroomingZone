@@ -3,8 +3,9 @@ package tdd.groomingzone.member.adapter.out.persistence;
 import org.springframework.stereotype.Repository;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.member.application.port.LoadMemberPort;
-import tdd.groomingzone.member.application.port.SaveMemberPort;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberRepository;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.member.application.port.out.SaveMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort 
     }
 
     @Override
-    public Optional<MemberEntity> findMemberByEmail(String email) {
+    public Optional<MemberEntity> findOptionalMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
