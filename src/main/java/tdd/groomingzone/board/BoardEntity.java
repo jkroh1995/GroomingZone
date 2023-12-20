@@ -3,11 +3,9 @@ package tdd.groomingzone.board;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import tdd.groomingzone.board.comment.CommentEntity;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
