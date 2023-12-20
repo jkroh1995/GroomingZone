@@ -3,9 +3,11 @@ package tdd.groomingzone.board;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import tdd.groomingzone.board.comment.CommentEntity;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,8 +21,8 @@ public abstract class BoardEntity extends BaseEntity {
     @Column(name = "BOARD_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
+    @Column(name = "WRITE_MEMBER_ID")
+    private Long writerId;
 
     @NotNull
     @Column(name = "TITLE")
