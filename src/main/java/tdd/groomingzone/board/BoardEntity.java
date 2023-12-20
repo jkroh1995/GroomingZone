@@ -24,6 +24,9 @@ public abstract class BoardEntity extends BaseEntity {
     @Column(name = "WRITE_MEMBER_ID")
     private Long writerId;
 
+    @Column(name = "WRITE_MEMBER_NICKNAME")
+    private String writerNickName;
+
     @NotNull
     @Column(name = "TITLE")
     private String title;
