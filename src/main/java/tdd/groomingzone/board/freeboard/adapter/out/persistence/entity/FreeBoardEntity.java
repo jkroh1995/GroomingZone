@@ -14,9 +14,10 @@ import javax.persistence.Entity;
 public class FreeBoardEntity extends BoardEntity {
 
     @Builder
-    public FreeBoardEntity(Long boardId, Long writerId, String title, String content){
+    public FreeBoardEntity(Long boardId, Long writerId, String writerNickName, String title, String content){
         this.setId(boardId);
         this.setWriterId(writerId);
+        this.setWriterNickName(writerNickName);
         this.setTitle(title);
         this.setContent(content);
     }

@@ -68,6 +68,10 @@ public class FreeBoard {
         return getWriter().getMemberId();
     }
 
+    public String getWriterNickName() {
+        return getWriter().getNickName();
+    }
+
     public void checkMemberAuthority(Member member) {
         if(member.isAdmin()){
             return;

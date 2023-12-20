@@ -3,7 +3,7 @@ package tdd.groomingzone.board.freeboard.adapter.in.web.dto;
 import lombok.Builder;
 import lombok.Getter;
 import tdd.groomingzone.board.common.WriterInfo;
-import tdd.groomingzone.board.freeboard.application.port.in.SingleFreeBoardCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -19,7 +19,7 @@ public final class FreeBoardApiDto {
 
     @Getter
     @Builder
-    public final static class Response{
+    public final static class Response {
         private final long boardId;
         private final String title;
         private final String content;
@@ -28,7 +28,7 @@ public final class FreeBoardApiDto {
         private final String modifiedAt;
         private final WriterInfo writerInfo;
 
-        public static Response of(SingleFreeBoardCommandResponse commandResponse){
+        public static Response of(FreeBoardEntityCommandResponse commandResponse) {
             return Response.builder()
                     .boardId(commandResponse.getBoardId())
                     .title(commandResponse.getTitle())
@@ -45,5 +45,23 @@ public final class FreeBoardApiDto {
     public final static class Put {
         private final String title;
         private final String content;
+    }
+
+    @Getter
+    @Builder
+    public final static class SimpleResponse {
+        private final long boardId;
+        private final String title;
+        private final int viewCount;
+        private final WriterInfo writerInfo;
+
+        public static SimpleResponse of(FreeBoardEntityCommandResponse commandResponse) {
+            return SimpleResponse.builder()
+                    .boardId(commandResponse.getBoardId())
+                    .title(commandResponse.getTitle())
+                    .viewCount(commandResponse.getViewCount())
+                    .writerInfo(commandResponse.getWriterInfo())
+                    .build();
+        }
     }
 }

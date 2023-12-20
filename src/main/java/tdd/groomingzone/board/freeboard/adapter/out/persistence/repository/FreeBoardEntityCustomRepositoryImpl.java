@@ -11,7 +11,7 @@ import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoard
 
 import java.util.List;
 
-import static tdd.groomingzone.board.freeboard.adapter.out.persistence.QFreeBoardEntity.freeBoardEntity;
+import static tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.QFreeBoardEntity.freeBoardEntity;
 
 @Repository
 public class FreeBoardEntityCustomRepositoryImpl implements FreeBoardEntityCustomRepository {
@@ -26,8 +26,8 @@ public class FreeBoardEntityCustomRepositoryImpl implements FreeBoardEntityCusto
     public Page<FreeBoardEntity> findFilteredFreeBoards(String title, String content, String writer, Pageable pageable) {
         List<FreeBoardEntity> foundEntities = jpaQueryFactory.selectFrom(freeBoardEntity)
                 .where(containTitle(title),
-                        containContent(content))
-//                        containWriter(writer))
+                        containContent(content),
+                        containWriter(writer))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -53,10 +53,10 @@ public class FreeBoardEntityCustomRepositoryImpl implements FreeBoardEntityCusto
         return freeBoardEntity.content.contains(content);
     }
 
-//    private BooleanExpression containWriter(String writer) {
-//        if (!StringUtils.hasText(writer)) {
-//            return null;
-//        }
-//        return freeBoardEntity.name.contains(writer);
-//    }
+    private BooleanExpression containWriter(String writer) {
+        if (!StringUtils.hasText(writer)) {
+            return null;
+        }
+        return freeBoardEntity.writerNickName.contains(writer);
+    }
 }
