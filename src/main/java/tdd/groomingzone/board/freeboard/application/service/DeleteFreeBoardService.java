@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import tdd.groomingzone.board.freeboard.application.port.in.command.DeleteFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.DeleteFreeBoardUseCase;
 import tdd.groomingzone.board.freeboard.application.port.out.DeleteFreeBoardPort;
-import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardQueryResult;
+import tdd.groomingzone.board.freeboard.application.port.out.SingleFreeBoardQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -25,7 +25,7 @@ public class DeleteFreeBoardService implements DeleteFreeBoardUseCase {
 
     @Override
     public void deleteFreeBoard(DeleteFreeBoardCommand command) {
-        FreeBoardQueryResult queryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+        SingleFreeBoardQueryResult queryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
         FreeBoard freeBoard = queryResult.getFreeBoard();
         Member writer = loadMemberPort.findMemberById(queryResult.getWriterId());
         freeBoard.setWriter(writer);

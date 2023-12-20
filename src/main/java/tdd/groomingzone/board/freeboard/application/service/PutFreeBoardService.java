@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.board.common.WriterInfo;
-import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
@@ -12,8 +12,6 @@ import tdd.groomingzone.board.freeboard.application.port.out.*;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
-
-import java.util.ArrayList;
 
 @Service
 public class PutFreeBoardService implements PutFreeBoardUseCase {
@@ -29,8 +27,8 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
 
     @Override
     @Transactional
-    public FreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
-        FreeBoardQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+    public SingleFreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
+        SingleFreeBoardQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
         Member writer = loadMemberPort.findMemberById(findQueryResult.getWriterId());
         FreeBoard freeBoard = findQueryResult.getFreeBoard();
         freeBoard.setWriter(writer);
@@ -39,15 +37,14 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
         freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
 
-        FreeBoardQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
+        SingleFreeBoardQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
         FreeBoard updatedFreeBoard = savedQueryResult.getFreeBoard();
-        return FreeBoardCommandResponse.of(updatedFreeBoard.getId(),
+        return SingleFreeBoardCommandResponse.of(updatedFreeBoard.getId(),
                 updatedFreeBoard.getTitleValue(),
                 updatedFreeBoard.getContent(),
                 updatedFreeBoard.getViewCount(),
                 updatedFreeBoard.getCreatedAt(),
                 updatedFreeBoard.getModifiedAt(),
-                WriterInfo.of(writer),
-                new ArrayList<>());
+                WriterInfo.of(writer));
     }
 }

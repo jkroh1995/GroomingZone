@@ -20,14 +20,14 @@ public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeB
     }
 
     @Override
-    public FreeBoardQueryResult save(FreeBoard freeBoard) {
+    public SingleFreeBoardQueryResult save(FreeBoard freeBoard) {
         FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
         FreeBoardEntity savedFreeBoardEntity =  freeBoardEntityRepository.save(databaseEntity);
         return freeBoardMapper.mapToQueryResult(savedFreeBoardEntity);
     }
 
     @Override
-    public FreeBoardQueryResult loadFreeBoardById(long freeBoardId) {
+    public SingleFreeBoardQueryResult loadFreeBoardById(long freeBoardId) {
         FreeBoardEntity findFreeBoardEntity = freeBoardEntityRepository.findById(freeBoardId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
         return freeBoardMapper.mapToQueryResult(findFreeBoardEntity);

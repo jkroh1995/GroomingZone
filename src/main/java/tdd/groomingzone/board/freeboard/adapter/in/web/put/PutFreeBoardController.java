@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 import tdd.groomingzone.global.time.Time;
@@ -31,7 +31,7 @@ public class PutFreeBoardController {
                                                                  @PathVariable("free-board-id") long freeBoardId,
                                                                  @RequestBody FreeBoardApiDto.Put putDto) {
         PutFreeBoardCommand putFreeBoardCommand = PutFreeBoardCommand.of(requestMemberEntity, freeBoardId, putDto.getTitle(), putDto.getContent(), time.now());
-        FreeBoardCommandResponse commandResult = putFreeBoardUseCase.putFreeBoard(putFreeBoardCommand);
+        SingleFreeBoardCommandResponse commandResult = putFreeBoardUseCase.putFreeBoard(putFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
                 .boardId(commandResult.getBoardId())
                 .title(commandResult.getTitle())

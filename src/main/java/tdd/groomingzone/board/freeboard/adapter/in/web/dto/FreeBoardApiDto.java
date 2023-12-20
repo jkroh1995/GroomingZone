@@ -3,7 +3,7 @@ package tdd.groomingzone.board.freeboard.adapter.in.web.dto;
 import lombok.Builder;
 import lombok.Getter;
 import tdd.groomingzone.board.common.WriterInfo;
-import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -28,7 +28,7 @@ public final class FreeBoardApiDto {
         private final String modifiedAt;
         private final WriterInfo writerInfo;
 
-        public static Response of(FreeBoardCommandResponse commandResponse){
+        public static Response of(SingleFreeBoardCommandResponse commandResponse){
             return Response.builder()
                     .boardId(commandResponse.getBoardId())
                     .title(commandResponse.getTitle())
