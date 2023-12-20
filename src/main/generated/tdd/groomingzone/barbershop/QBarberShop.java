@@ -26,7 +26,7 @@ public class QBarberShop extends EntityPathBase<BarberShop> {
 
     public final StringPath name = createString("name");
 
-    public final tdd.groomingzone.member.entity.QMember owner;
+    public final tdd.groomingzone.member.adapter.out.persistence.QMemberEntity owner;
 
     public final ListPath<tdd.groomingzone.board.review.Review, tdd.groomingzone.board.review.QReview> reviews = this.<tdd.groomingzone.board.review.Review, tdd.groomingzone.board.review.QReview>createList("reviews", tdd.groomingzone.board.review.Review.class, tdd.groomingzone.board.review.QReview.class, PathInits.DIRECT2);
 
@@ -48,7 +48,7 @@ public class QBarberShop extends EntityPathBase<BarberShop> {
 
     public QBarberShop(Class<? extends BarberShop> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.owner = inits.isInitialized("owner") ? new tdd.groomingzone.member.entity.QMember(forProperty("owner")) : null;
+        this.owner = inits.isInitialized("owner") ? new tdd.groomingzone.member.adapter.out.persistence.QMemberEntity(forProperty("owner")) : null;
     }
 
 }

@@ -16,7 +16,8 @@ public enum ExceptionCode {
     INVALID_PASSWORD(409, "비밀번호는 영어 대소문자, 특수문자, 숫자를 포함한 8 ~ 16글자 사이로 이루어져야 합니다."),
     INVALID_PHONE_NUMBER(409, "올바른 전화번호 형식이 아닙니다."),
     INVALID_BOARD_TITLE(409, "게시글 제목은 빈 칸이면 안됩니다."),
-    INVALID_ROLE(409, "바버, 고객 중 역할을 선택해주세요.");
+    INVALID_ROLE(409, "바버, 고객 중 역할을 선택해주세요."),
+    INVALID_REQUEST(409, "잘못된 요청입니다.");
 
     private final int status;
     private final String message;

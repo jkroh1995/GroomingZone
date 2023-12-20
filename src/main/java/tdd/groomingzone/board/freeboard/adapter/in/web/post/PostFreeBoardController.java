@@ -6,7 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.board.freeboard.application.port.in.SingleFreeBoardCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
 
@@ -26,7 +26,7 @@ public class PostFreeBoardController {
     public ResponseEntity<FreeBoardApiDto.Response> postFreeBoard(@AuthenticationPrincipal MemberEntity writer,
                                                                   @RequestBody FreeBoardApiDto.Post postDto) {
         PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer.getId(), postDto.getTitle(), postDto.getContent());
-        SingleFreeBoardCommandResponse commandResponse = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
+        FreeBoardEntityCommandResponse commandResponse = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.of(commandResponse);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }

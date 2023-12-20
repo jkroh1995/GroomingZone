@@ -4,16 +4,16 @@ import lombok.Data;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 
 @Data
-public final class SingleFreeBoardQueryResult {
+public final class FreeBoardEntityQueryResult {
     private final FreeBoard freeBoard;
     private final long writerId;
 
-    private SingleFreeBoardQueryResult(FreeBoard freeBoard, long writerId) {
+    private FreeBoardEntityQueryResult(FreeBoard freeBoard, long writerId) {
         this.freeBoard = freeBoard;
         this.writerId = writerId;
     }
 
-    public static SingleFreeBoardQueryResult of(FreeBoard freeBoard, long writerId){
-        return new SingleFreeBoardQueryResult(freeBoard, writerId);
+    public static FreeBoardEntityQueryResult of(FreeBoard freeBoard, long writerId){
+        return new FreeBoardEntityQueryResult(freeBoard, writerId);
     }
 }

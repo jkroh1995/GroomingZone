@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.board.common.WriterInfo;
-import tdd.groomingzone.board.freeboard.application.port.in.SingleFreeBoardCommandResponse;
+import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
@@ -27,8 +27,8 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
 
     @Override
     @Transactional
-    public SingleFreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
-        SingleFreeBoardQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+    public FreeBoardEntityCommandResponse putFreeBoard(PutFreeBoardCommand command) {
+        FreeBoardEntityQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
         Member writer = loadMemberPort.findMemberById(findQueryResult.getWriterId());
         FreeBoard freeBoard = findQueryResult.getFreeBoard();
         freeBoard.setWriter(writer);
@@ -37,9 +37,9 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
         freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
 
-        SingleFreeBoardQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
+        FreeBoardEntityQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
         FreeBoard updatedFreeBoard = savedQueryResult.getFreeBoard();
-        return SingleFreeBoardCommandResponse.of(updatedFreeBoard.getId(),
+        return FreeBoardEntityCommandResponse.of(updatedFreeBoard.getId(),
                 updatedFreeBoard.getTitleValue(),
                 updatedFreeBoard.getContent(),
                 updatedFreeBoard.getViewCount(),

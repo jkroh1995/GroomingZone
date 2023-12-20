@@ -6,7 +6,7 @@ import tdd.groomingzone.board.common.WriterInfo;
 import java.time.LocalDateTime;
 
 @Data
-public final class SingleFreeBoardCommandResponse {
+public final class FreeBoardEntityCommandResponse {
     private final long boardId;
     private final String title;
     private final String content;
@@ -15,7 +15,7 @@ public final class SingleFreeBoardCommandResponse {
     private final LocalDateTime modifiedAt;
     private final WriterInfo writerInfo;
 
-    private SingleFreeBoardCommandResponse(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo) {
+    private FreeBoardEntityCommandResponse(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo) {
         this.boardId = boardId;
         this.title = title;
         this.content = content;
@@ -25,7 +25,7 @@ public final class SingleFreeBoardCommandResponse {
         this.writerInfo = writerInfo;
     }
 
-    public static SingleFreeBoardCommandResponse of(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo) {
-        return new SingleFreeBoardCommandResponse(boardId, title, content, viewCount, createdAt, modifiedAt, writerInfo);
+    public static FreeBoardEntityCommandResponse of(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo) {
+        return new FreeBoardEntityCommandResponse(boardId, title, content, viewCount, createdAt, modifiedAt, writerInfo);
     }
 }
