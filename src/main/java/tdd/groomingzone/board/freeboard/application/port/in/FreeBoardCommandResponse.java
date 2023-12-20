@@ -16,9 +16,8 @@ public final class FreeBoardCommandResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
     private final WriterInfo writerInfo;
-    private final List<CommentCommandResponse> comments;
 
-    private FreeBoardCommandResponse(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo, List<CommentCommandResponse> comments) {
+    private FreeBoardCommandResponse(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo) {
         this.boardId = boardId;
         this.title = title;
         this.content = content;
@@ -26,10 +25,9 @@ public final class FreeBoardCommandResponse {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.writerInfo = writerInfo;
-        this.comments = comments;
     }
 
-    public static FreeBoardCommandResponse of(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo, List<CommentCommandResponse> comments) {
-        return new FreeBoardCommandResponse(boardId, title, content, viewCount, createdAt, modifiedAt, writerInfo, comments);
+    public static FreeBoardCommandResponse of(long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo) {
+        return new FreeBoardCommandResponse(boardId, title, content, viewCount, createdAt, modifiedAt, writerInfo);
     }
 }
