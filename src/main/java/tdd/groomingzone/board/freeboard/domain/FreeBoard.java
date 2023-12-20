@@ -49,7 +49,7 @@ public class FreeBoard {
     }
 
     public String getContent() {
-        return boardContent.getContent();
+        return boardContent.getContent().getContent();
     }
 
     public int getViewCount() {

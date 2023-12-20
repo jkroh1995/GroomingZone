@@ -14,7 +14,7 @@ public class BoardContent {
 
     private Title title;
 
-    private String content;
+    private Content content;
 
     private int viewCount;
 
@@ -27,7 +27,7 @@ public class BoardContent {
         this.id = id;
         this.writer = writer;
         this.title = Title.of(title);
-        this.content = content;
+        this.content = Content.of(content);
         this.viewCount = viewCount;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
@@ -42,7 +42,7 @@ public class BoardContent {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = Content.of(content);
     }
 
     public void setModifiedAt(LocalDateTime modifiedAt) {
