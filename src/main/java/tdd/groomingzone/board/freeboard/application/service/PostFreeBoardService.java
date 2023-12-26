@@ -33,6 +33,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     public FreeBoardEntityCommandResponse postFreeBoard(PostFreeBoardCommand command) {
         Member writer = loadMemberPort.findMemberById(command.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
+                .id(BoardEnums.NEW_INSTANCE.getValue())
                 .writer(writer)
                 .title(command.getTitle())
                 .content(command.getContent())
