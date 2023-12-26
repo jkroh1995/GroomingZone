@@ -14,6 +14,7 @@ import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQuer
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.utils.BoardEnums;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
@@ -32,6 +33,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     public FreeBoardEntityCommandResponse postFreeBoard(PostFreeBoardCommand command) {
         Member writer = loadMemberPort.findMemberById(command.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
+                .id((long) BoardEnums.NEW_INSTANCE.getValue())
                 .writer(writer)
                 .title(command.getTitle())
                 .content(command.getContent())
