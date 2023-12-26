@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 @Getter
 public class BoardInfo {
 
-    private Title title;
+    private final Title title;
 
-    private Content content;
+    private final Content content;
 
     private int viewCount;
 
-    private LocalDateTime modifiedAt;
+    private final LocalDateTime modifiedAt;
 
     @Builder
     public BoardInfo(String title, String content, int viewCount, LocalDateTime modifiedAt) {
@@ -22,10 +22,6 @@ public class BoardInfo {
         this.content = Content.of(content);
         this.viewCount = viewCount;
         this.modifiedAt = modifiedAt;
-    }
-
-    public void setTitle(String title) {
-        this.title = Title.of(title);
     }
 
     public void setViewCount(int viewCount) {
