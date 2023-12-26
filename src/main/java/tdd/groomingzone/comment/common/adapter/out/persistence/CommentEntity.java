@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.comment;
+package tdd.groomingzone.comment.common.adapter.out.persistence;
 
 import lombok.*;
 
@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "COMMENT")
 public class CommentEntity extends BaseEntity {
 
     @Id
@@ -22,13 +23,17 @@ public class CommentEntity extends BaseEntity {
     @Column(name = "WRITE_MEMBER_ID")
     private Long writerId;
 
+    @Column(name = "WRITE_MEMBER_NICK_NAME")
+    private String writerNickName;
+
     @Column(name = "CONTENT")
     private String content;
 
     @Builder
-    public CommentEntity(Long boardId, Long writerId, String content){
+    public CommentEntity(Long boardId, Long writerId, String writerNickName, String content){
         this.boardId = boardId;
         this.writerId = writerId;
+        this.writerNickName = writerNickName;
         this.content = content;
     }
 }
