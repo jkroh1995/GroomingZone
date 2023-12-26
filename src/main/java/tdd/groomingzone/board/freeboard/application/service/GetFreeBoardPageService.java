@@ -8,7 +8,6 @@ import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardPageCommand
 import tdd.groomingzone.board.freeboard.application.port.in.command.GetFreeBoardPageCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.GetFreeBoardPageUseCase;
 
-import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardPageQueryResult;

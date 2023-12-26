@@ -1,7 +1,6 @@
 package tdd.groomingzone.board.freeboard.application.port.out;
 
 import lombok.Data;
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 
 import java.time.LocalDateTime;
 
