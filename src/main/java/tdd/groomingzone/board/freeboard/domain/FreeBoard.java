@@ -16,7 +16,7 @@ public class FreeBoard {
     private BoardInfo boardInfo;
 
     @Builder
-    public FreeBoard(Long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.boardVO = BoardVO.builder()
                 .id(id)
                 .writer(writer)

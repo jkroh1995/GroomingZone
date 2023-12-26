@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public final class BoardVO {
-    private final Long id;
+    private final long id;
 
     private final Member writer;
 
