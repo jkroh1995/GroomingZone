@@ -1,4 +1,4 @@
-package tdd.groomingzone.board;
+package tdd.groomingzone.board.common;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;

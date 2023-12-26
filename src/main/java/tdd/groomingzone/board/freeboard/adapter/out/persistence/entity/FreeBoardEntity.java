@@ -3,7 +3,7 @@ package tdd.groomingzone.board.freeboard.adapter.out.persistence.entity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import tdd.groomingzone.board.BoardEntity;
+import tdd.groomingzone.board.common.BoardEntity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
