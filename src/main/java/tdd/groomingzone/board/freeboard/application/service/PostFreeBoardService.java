@@ -36,8 +36,18 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 .title(command.getTitle())
                 .content(command.getContent())
                 .build();
+
         FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(freeBoard);
-        FreeBoard savedFreeBoard = queryResult.getFreeBoard();
+
+        FreeBoard savedFreeBoard = FreeBoard.builder()
+                .id(queryResult.getId())
+                .writer(writer)
+                .title(queryResult.getTitle())
+                .content(queryResult.getContent())
+                .viewCount(queryResult.getViewCount())
+                .createdAt(queryResult.getCreatedAt())
+                .modifiedAt(queryResult.getModifiedAt())
+                .build();
 
         return FreeBoardEntityCommandResponse.of(savedFreeBoard.getId(),
                 savedFreeBoard.getTitleValue(),

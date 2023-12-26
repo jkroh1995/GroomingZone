@@ -24,15 +24,13 @@ public class FreeBoardMapper {
     }
 
     public FreeBoardEntityQueryResult mapToQueryResult(FreeBoardEntity freeBoardDatabaseEntity) {
-        FreeBoard freeBoard = FreeBoard.builder()
-                .id(freeBoardDatabaseEntity.getId())
-                .title(freeBoardDatabaseEntity.getTitle())
-                .content(freeBoardDatabaseEntity.getContent())
-                .viewCount(freeBoardDatabaseEntity.getViewCount())
-                .createdAt(freeBoardDatabaseEntity.getCreatedAt())
-                .modifiedAt(freeBoardDatabaseEntity.getModifiedAt())
-                .build();
-        return FreeBoardEntityQueryResult.of(freeBoard, freeBoardDatabaseEntity.getWriterId());
+        return FreeBoardEntityQueryResult.of(freeBoardDatabaseEntity.getId(),
+                freeBoardDatabaseEntity.getTitle(),
+                freeBoardDatabaseEntity.getContent(),
+                freeBoardDatabaseEntity.getViewCount(),
+                freeBoardDatabaseEntity.getCreatedAt(),
+                freeBoardDatabaseEntity.getModifiedAt(),
+                freeBoardDatabaseEntity.getWriterId());
     }
 
     public FreeBoardPageQueryResult mapToMultiQueryResult(Page<FreeBoardEntity> page) {

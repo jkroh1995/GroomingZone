@@ -33,18 +33,24 @@ public class GetFreeBoardService implements GetFreeBoardUseCase {
     public FreeBoardEntityCommandResponse getFreeBoard(GetFreeBoardCommand getFreeBoardCommand) {
         FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(getFreeBoardCommand.getFreeBoardId());
         Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
-        FreeBoard freeBoard = selectQueryResult.getFreeBoard();
-        freeBoard.setWriter(writer);
+        FreeBoard freeBoard = FreeBoard.builder()
+                .id(selectQueryResult.getId())
+                .writer(writer)
+                .title(selectQueryResult.getTitle())
+                .content(selectQueryResult.getContent())
+                .viewCount(selectQueryResult.getViewCount())
+                .createdAt(selectQueryResult.getCreatedAt())
+                .modifiedAt(selectQueryResult.getModifiedAt()).build();
         freeBoard.viewed();
 
-        FreeBoardEntityQueryResult updateQueryResult = saveFreeBoardPort.save(freeBoard);
-        FreeBoard readFreeBoard = updateQueryResult.getFreeBoard();
-        return FreeBoardEntityCommandResponse.of(readFreeBoard.getId(),
-                readFreeBoard.getTitleValue(),
-                readFreeBoard.getContent(),
-                readFreeBoard.getViewCount(),
-                readFreeBoard.getCreatedAt(),
-                readFreeBoard.getModifiedAt(),
+        saveFreeBoardPort.save(freeBoard);
+
+        return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
+                freeBoard.getTitleValue(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt(),
                 WriterInfo.of(writer));
     }
 }

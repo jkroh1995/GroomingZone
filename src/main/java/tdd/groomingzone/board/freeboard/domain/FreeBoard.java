@@ -2,7 +2,8 @@ package tdd.groomingzone.board.freeboard.domain;
 
 import lombok.Builder;
 
-import tdd.groomingzone.board.common.BoardContent;
+import tdd.groomingzone.board.common.BoardInfo;
+import tdd.groomingzone.board.common.BoardVO;
 
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
@@ -11,57 +12,64 @@ import tdd.groomingzone.member.domain.Member;
 import java.time.LocalDateTime;
 
 public class FreeBoard {
-    private final BoardContent boardContent;
+    private final BoardVO boardVO;
+    private BoardInfo boardInfo;
 
     @Builder
-    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
-        this.boardContent = BoardContent.builder()
+    public FreeBoard(Long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
+        this.boardVO = BoardVO.builder()
                 .id(id)
                 .writer(writer)
+                .createdAt(createdAt)
+                .build();
+
+        this.boardInfo = BoardInfo.builder()
                 .title(title)
                 .content(content)
-                .createdAt(createdAt)
                 .modifiedAt(modifiedAt)
                 .viewCount(viewCount)
                 .build();
     }
 
     public void modify(String title, String content, LocalDateTime modifiedAt){
-        boardContent.setTitle(title);
-        boardContent.setContent(content);
-        boardContent.setModifiedAt(modifiedAt);
+        this.boardInfo = BoardInfo.builder()
+                .title(title)
+                .content(content)
+                .modifiedAt(modifiedAt)
+                .viewCount(boardInfo.getViewCount())
+                .build();
     }
 
     public void viewed(){
-        boardContent.setViewCount(boardContent.getViewCount()+1);
+        boardInfo.setViewCount(boardInfo.getViewCount()+1);
     }
 
     public long getId() {
-        return boardContent.getId();
+        return boardVO.getId();
     }
 
     public String getTitleValue() {
-        return boardContent.getTitle().getTitle();
+        return boardInfo.getTitle().getTitle();
     }
 
     public Member getWriter() {
-        return boardContent.getWriter();
+        return boardVO.getWriter();
     }
 
     public String getContent() {
-        return boardContent.getContent().getContent();
+        return boardInfo.getContent().getContent();
     }
 
     public int getViewCount() {
-        return boardContent.getViewCount();
+        return boardInfo.getViewCount();
     }
 
     public LocalDateTime getCreatedAt() {
-        return boardContent.getCreatedAt();
+        return boardVO.getCreatedAt();
     }
 
     public LocalDateTime getModifiedAt() {
-        return boardContent.getModifiedAt();
+        return boardInfo.getModifiedAt();
     }
 
     public long getWriterId() {
@@ -79,9 +87,5 @@ public class FreeBoard {
         if(getWriterId() != member.getMemberId()){
             throw new BusinessException(ExceptionCode.UNAUTHORIZED);
         }
-    }
-
-    public void setWriter(Member writer) {
-        boardContent.setWriter(writer);
     }
 }

@@ -8,6 +8,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardPageCommand
 import tdd.groomingzone.board.freeboard.application.port.in.command.GetFreeBoardPageCommand;
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.GetFreeBoardPageUseCase;
 
+import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardPageQueryResult;
@@ -39,9 +40,17 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
                 freeBoardPage);
 
         List<FreeBoardEntityCommandResponse> pageResponse = selectQueryResult.getQueryResults().stream()
-                .map(databaseEntity -> {
-                   FreeBoard freeBoard = databaseEntity.getFreeBoard();
-                   Member writer = loadMemberPort.findMemberById(databaseEntity.getWriterId());
+                .map(eachQueryResult -> {
+                    Member writer = loadMemberPort.findMemberById(eachQueryResult.getWriterId());
+                    FreeBoard freeBoard = FreeBoard.builder()
+                            .id(eachQueryResult.getId())
+                            .writer(writer)
+                            .title(eachQueryResult.getTitle())
+                            .content(eachQueryResult.getContent())
+                            .viewCount(eachQueryResult.getViewCount())
+                            .createdAt(eachQueryResult.getCreatedAt())
+                            .modifiedAt(eachQueryResult.getModifiedAt())
+                            .build();
                    return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
                            freeBoard.getTitleValue(),
                            freeBoard.getContent(),

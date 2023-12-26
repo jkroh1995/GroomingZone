@@ -28,23 +28,29 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
     @Override
     @Transactional
     public FreeBoardEntityCommandResponse putFreeBoard(PutFreeBoardCommand command) {
-        FreeBoardEntityQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
-        Member writer = loadMemberPort.findMemberById(findQueryResult.getWriterId());
-        FreeBoard freeBoard = findQueryResult.getFreeBoard();
-        freeBoard.setWriter(writer);
+        FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+        Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
+        FreeBoard freeBoard = FreeBoard.builder()
+                .id(selectQueryResult.getId())
+                .writer(writer)
+                .title(selectQueryResult.getTitle())
+                .content(selectQueryResult.getContent())
+                .viewCount(selectQueryResult.getViewCount())
+                .createdAt(selectQueryResult.getCreatedAt())
+                .modifiedAt(selectQueryResult.getModifiedAt()).build();
 
         Member requestMember = loadMemberPort.findMemberById(command.getWriter().getId());
         freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
 
-        FreeBoardEntityQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
-        FreeBoard updatedFreeBoard = savedQueryResult.getFreeBoard();
-        return FreeBoardEntityCommandResponse.of(updatedFreeBoard.getId(),
-                updatedFreeBoard.getTitleValue(),
-                updatedFreeBoard.getContent(),
-                updatedFreeBoard.getViewCount(),
-                updatedFreeBoard.getCreatedAt(),
-                updatedFreeBoard.getModifiedAt(),
+        saveFreeBoardPort.save(freeBoard);
+
+        return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
+                freeBoard.getTitleValue(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt(),
                 WriterInfo.of(writer));
     }
 }
