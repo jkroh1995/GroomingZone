@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.freeboard.adapter.in.web.put;
+package tdd.groomingzone.board.freeboard.adapter.in.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

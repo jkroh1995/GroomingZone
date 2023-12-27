@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.freeboard.adapter.in.web.delete;
+package tdd.groomingzone.board.freeboard.adapter.in.web;
 
 import com.fasterxml.jackson.databind.annotation.NoClass;
 import org.springframework.http.HttpStatus;
