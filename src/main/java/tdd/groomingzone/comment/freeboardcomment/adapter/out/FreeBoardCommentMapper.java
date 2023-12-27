@@ -3,9 +3,9 @@ package tdd.groomingzone.comment.freeboardcomment.adapter.out;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import tdd.groomingzone.comment.common.adapter.out.persistence.CommentEntity;
-import tdd.groomingzone.comment.common.application.port.out.CommentEntityQueryResult;
-import tdd.groomingzone.comment.common.application.port.out.CommentPageQueryResult;
+import tdd.groomingzone.comment.common.CommentEntity;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageResult;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
 
 import java.util.List;
@@ -21,16 +21,16 @@ public class FreeBoardCommentMapper {
                 .build();
     }
 
-    public CommentPageQueryResult mapToMultiQueryResult(Page<CommentEntity> page) {
-        List<CommentEntityQueryResult> queryResults = page.getContent().stream()
+    public FreeBoardCommentPageResult mapToMultiQueryResult(Page<CommentEntity> page) {
+        List<FreeBoardCommentEntityResult> queryResults = page.getContent().stream()
                 .map(this::mapToQueryResult)
                 .collect(Collectors.toList());
 
-        return CommentPageQueryResult.of(queryResults, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
+        return FreeBoardCommentPageResult.of(queryResults, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
     }
 
-    private CommentEntityQueryResult mapToQueryResult(CommentEntity databaseEntity) {
-        return CommentEntityQueryResult.of(databaseEntity.getId(),
+    private FreeBoardCommentEntityResult mapToQueryResult(CommentEntity databaseEntity) {
+        return FreeBoardCommentEntityResult.of(databaseEntity.getId(),
                 databaseEntity.getWriterId(),
                 databaseEntity.getBoardId(),
                 databaseEntity.getContent(),

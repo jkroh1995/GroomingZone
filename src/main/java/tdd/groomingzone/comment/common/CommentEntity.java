@@ -1,4 +1,4 @@
-package tdd.groomingzone.comment.common.adapter.out.persistence;
+package tdd.groomingzone.comment.common;
 
 import lombok.*;
 

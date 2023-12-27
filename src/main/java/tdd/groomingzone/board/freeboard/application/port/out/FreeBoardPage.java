@@ -3,11 +3,11 @@ package tdd.groomingzone.board.freeboard.application.port.out;
 import lombok.Getter;
 
 import org.springframework.data.domain.Pageable;
-import tdd.groomingzone.board.utils.BoardEnums;
+import tdd.groomingzone.global.utils.CommonEnums;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
-import static tdd.groomingzone.board.utils.BoardEnums.PAGE_SIZE;
+import static tdd.groomingzone.global.utils.CommonEnums.PAGE_SIZE;
 
 @Getter
 public class FreeBoardPage {
@@ -19,7 +19,7 @@ public class FreeBoardPage {
     }
 
     private void verifyPageNumber(int pageNumber) {
-        if(pageNumber < BoardEnums.MINIMUM_PAGE_NUMBER_VALUE.getValue()){
+        if(pageNumber < CommonEnums.MINIMUM_PAGE_NUMBER_VALUE.getValue()){
             throw new BusinessException(ExceptionCode.INVALID_REQUEST);
         }
     }

@@ -2,12 +2,12 @@ package tdd.groomingzone.comment.freeboardcomment.adapter.out;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
-import tdd.groomingzone.comment.common.adapter.out.persistence.CommentEntity;
-import tdd.groomingzone.comment.common.adapter.out.persistence.CommentEntityRepository;
-import tdd.groomingzone.comment.common.application.port.out.CommentPage;
-import tdd.groomingzone.comment.common.application.port.out.CommentPageQueryResult;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.LoadFreeBoardCommentPort;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.SaveFreeBoardCommentPort;
+import tdd.groomingzone.comment.common.CommentEntity;
+import tdd.groomingzone.comment.common.CommentEntityRepository;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageable;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageResult;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.LoadFreeBoardCommentPort;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.SaveFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
 
 @Repository
@@ -27,8 +27,8 @@ public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentP
     }
 
     @Override
-    public CommentPageQueryResult loadFreeBoardCommentPage(CommentPage commentPage) {
-        Page<CommentEntity> databaseEntityPage = commentEntityRepository.findCommentPageByBoardId(commentPage.getBoardId(), commentPage.getPageable());
+    public FreeBoardCommentPageResult loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable) {
+        Page<CommentEntity> databaseEntityPage = commentEntityRepository.findCommentPageByBoardId(freeBoardCommentPageable.getBoardId(), freeBoardCommentPageable.getPageable());
         return freeBoardCommentMapper.mapToMultiQueryResult(databaseEntityPage);
     }
 }

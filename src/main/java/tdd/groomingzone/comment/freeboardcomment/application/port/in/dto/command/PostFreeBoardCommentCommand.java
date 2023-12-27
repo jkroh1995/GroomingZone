@@ -1,4 +1,4 @@
-package tdd.groomingzone.comment.freeboardcomment.application.port.in.command;
+package tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command;
 
 import lombok.Data;
 

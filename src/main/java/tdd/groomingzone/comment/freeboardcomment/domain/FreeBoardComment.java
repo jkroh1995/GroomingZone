@@ -2,8 +2,8 @@ package tdd.groomingzone.comment.freeboardcomment.domain;
 
 import lombok.Builder;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
-import tdd.groomingzone.comment.common.domain.CommentInfo;
-import tdd.groomingzone.comment.common.domain.CommentVO;
+import tdd.groomingzone.comment.common.CommentInfo;
+import tdd.groomingzone.comment.common.CommentVO;
 import tdd.groomingzone.member.domain.Member;
 
 import java.time.LocalDateTime;

@@ -3,10 +3,9 @@ package tdd.groomingzone.comment.freeboardcomment.adapter.in.web;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tdd.groomingzone.comment.common.application.port.in.command.MultiCommentCommandResponse;
-import tdd.groomingzone.comment.common.adapter.in.web.CommentApiDto;
-import tdd.groomingzone.comment.common.application.port.in.command.GetCommentCommand;
-import tdd.groomingzone.comment.common.application.port.in.usecase.GetCommentUseCase;
+import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.MultiFreeBoardCommentResponse;
+import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.GetFreeBoardCommentPageCommand;
+import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.GetFreeBoardCommentUseCase;
 import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
 
 import java.util.List;
@@ -16,21 +15,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/free-board/comment")
 public class GetFreeBoardCommentController {
 
-    private final GetCommentUseCase getCommentUseCase;
+    private final GetFreeBoardCommentUseCase getFreeBoardCommentUseCase;
 
-    public GetFreeBoardCommentController(GetCommentUseCase getCommentUseCase) {
-        this.getCommentUseCase = getCommentUseCase;
+    public GetFreeBoardCommentController(GetFreeBoardCommentUseCase getFreeBoardCommentUseCase) {
+        this.getFreeBoardCommentUseCase = getFreeBoardCommentUseCase;
     }
 
     @GetMapping("/{free-board-id}")
-    public ResponseEntity<PagedResponseDto<CommentApiDto.Response>> getFreeBoardCommentList(@PathVariable("free-board-id") long boardId,
-                                                                                            @RequestParam(name = "page", defaultValue = "1") int pageNumber){
-        GetCommentCommand command = GetCommentCommand.of(boardId, pageNumber);
-        MultiCommentCommandResponse commandResponse = getCommentUseCase.getFreeBoardComment(command);
-        List<CommentApiDto.Response> responseDtoList = commandResponse.getPageResponse().stream()
-                .map(CommentApiDto.Response::of)
+    public ResponseEntity<PagedResponseDto<FreeBoardCommentApiDto.Response>> getFreeBoardCommentList(@PathVariable("free-board-id") long boardId,
+                                                                                                     @RequestParam(name = "page", defaultValue = "1") int pageNumber){
+        GetFreeBoardCommentPageCommand command = GetFreeBoardCommentPageCommand.of(boardId, pageNumber);
+        MultiFreeBoardCommentResponse commandResponse = getFreeBoardCommentUseCase.getFreeBoardComment(command);
+        List<FreeBoardCommentApiDto.Response> responseDtoList = commandResponse.getPageResponse().stream()
+                .map(FreeBoardCommentApiDto.Response::of)
                 .collect(Collectors.toList());
-        PagedResponseDto<CommentApiDto.Response> response = new PagedResponseDto<>(responseDtoList, commandResponse.getPageInfo());
+        PagedResponseDto<FreeBoardCommentApiDto.Response> response = new PagedResponseDto<>(responseDtoList, commandResponse.getPageInfo());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

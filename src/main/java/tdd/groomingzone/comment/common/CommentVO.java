@@ -1,4 +1,4 @@
-package tdd.groomingzone.comment.common.domain;
+package tdd.groomingzone.comment.common;
 
 import lombok.Getter;
 import tdd.groomingzone.member.domain.Member;

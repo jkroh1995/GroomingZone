@@ -1,9 +1,9 @@
-package tdd.groomingzone.board.utils;
+package tdd.groomingzone.global.utils;
 
 import lombok.Getter;
 
 @Getter
-public enum BoardEnums {
+public enum CommonEnums {
 
     NEW_INSTANCE(0),
     MINIMUM_PAGE_NUMBER_VALUE(1),
@@ -11,7 +11,7 @@ public enum BoardEnums {
 
     private final int value;
 
-    BoardEnums(int value) {
+    CommonEnums(int value) {
         this.value = value;
     }
 }
