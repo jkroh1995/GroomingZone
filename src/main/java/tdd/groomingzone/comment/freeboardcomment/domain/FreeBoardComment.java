@@ -6,6 +6,8 @@ import tdd.groomingzone.comment.common.domain.CommentInfo;
 import tdd.groomingzone.comment.common.domain.CommentVO;
 import tdd.groomingzone.member.domain.Member;
 
+import java.time.LocalDateTime;
+
 public class FreeBoardComment {
 
     private final CommentVO commentVO;
@@ -13,8 +15,8 @@ public class FreeBoardComment {
     private final FreeBoard freeBoard;
 
     @Builder
-    public FreeBoardComment(Member writer, FreeBoard freeBoard, String content) {
-        this.commentVO = CommentVO.of(writer);
+    public FreeBoardComment(long id, Member writer, FreeBoard freeBoard, String content) {
+        this.commentVO = CommentVO.of(id, writer);
         this.commentInfo = CommentInfo.builder()
                 .content(content)
                 .build();
@@ -35,5 +37,13 @@ public class FreeBoardComment {
 
     public String getContent() {
         return commentInfo.getContent();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return commentVO.getCreatedAt();
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return commentInfo.getModifiedAt();
     }
 }
