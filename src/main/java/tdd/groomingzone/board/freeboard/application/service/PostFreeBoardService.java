@@ -19,6 +19,8 @@ import tdd.groomingzone.global.utils.CommonEnums;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PostFreeBoardService implements PostFreeBoardUseCase {
     private final LoadMemberPort loadMemberPort;
@@ -38,6 +40,8 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 .writer(writer)
                 .title(command.getTitle())
                 .content(command.getContent())
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
 
         SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(writer.getMemberId(),
