@@ -8,11 +8,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.board.freeboard.application.port.in.command.GetFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
-import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
