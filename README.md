@@ -47,3 +47,5 @@ TDD 연습을 위한 프로젝트입니다.
 - [Pull Request 022. 사용자 인증 및 권한 확인 기능 TDD로 구현하기 - Spring Security 설정 마무리](https://random-topic.tistory.com/191)
 - [Pull Request 023. 인증된 사용자 객체 사용 TDD로 구현하기 - 자유 게시판 등록 시 작성자 등록하기](https://random-topic.tistory.com/194)
 - [Pull Request 024. 아키텍처 리팩토링 및 패키징 수정 - 자유 게시글 등록 기능에 헥사고날 아키텍처 적용하기](https://random-topic.tistory.com/199)
+- [Pull Request 025. 회원 도메인을 향한 의존은 어디에 존재해야 할까? - 게시글 수정 기능 리팩토링](https://random-topic.tistory.com/201)
+- [Pull Request 026. 자유 게시글 테스트 코드를 리팩토링하며 느낀 점](https://random-topic.tistory.com/203)
