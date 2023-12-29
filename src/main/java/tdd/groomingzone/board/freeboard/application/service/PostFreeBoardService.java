@@ -13,7 +13,9 @@ import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoar
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.global.utils.CommonEnums;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
@@ -32,15 +34,35 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     public FreeBoardEntityCommandResponse postFreeBoard(PostFreeBoardCommand command) {
         Member writer = loadMemberPort.findMemberById(command.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
+                .id(CommonEnums.NEW_INSTANCE.getValue())
                 .writer(writer)
                 .title(command.getTitle())
                 .content(command.getContent())
                 .build();
-        FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(freeBoard);
-        FreeBoard savedFreeBoard = queryResult.getFreeBoard();
+
+        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(writer.getMemberId(),
+                writer.getNickName(),
+                freeBoard.getId(),
+                freeBoard.getTitle(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt());
+
+        FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(saveFreeBoardQuery);
+
+        FreeBoard savedFreeBoard = FreeBoard.builder()
+                .id(queryResult.getId())
+                .writer(writer)
+                .title(queryResult.getTitle())
+                .content(queryResult.getContent())
+                .viewCount(queryResult.getViewCount())
+                .createdAt(queryResult.getCreatedAt())
+                .modifiedAt(queryResult.getModifiedAt())
+                .build();
 
         return FreeBoardEntityCommandResponse.of(savedFreeBoard.getId(),
-                savedFreeBoard.getTitleValue(),
+                savedFreeBoard.getTitle(),
                 savedFreeBoard.getContent(),
                 savedFreeBoard.getViewCount(),
                 savedFreeBoard.getCreatedAt(),

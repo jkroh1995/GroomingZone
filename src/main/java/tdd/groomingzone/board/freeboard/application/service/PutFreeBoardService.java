@@ -9,6 +9,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoard
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
 import tdd.groomingzone.board.freeboard.application.port.out.*;
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
@@ -28,23 +29,39 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
     @Override
     @Transactional
     public FreeBoardEntityCommandResponse putFreeBoard(PutFreeBoardCommand command) {
-        FreeBoardEntityQueryResult findQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
-        Member writer = loadMemberPort.findMemberById(findQueryResult.getWriterId());
-        FreeBoard freeBoard = findQueryResult.getFreeBoard();
-        freeBoard.setWriter(writer);
+        FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+        Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
+        FreeBoard freeBoard = FreeBoard.builder()
+                .id(selectQueryResult.getId())
+                .writer(writer)
+                .title(selectQueryResult.getTitle())
+                .content(selectQueryResult.getContent())
+                .viewCount(selectQueryResult.getViewCount())
+                .createdAt(selectQueryResult.getCreatedAt())
+                .modifiedAt(selectQueryResult.getModifiedAt()).build();
 
-        Member requestMember = loadMemberPort.findMemberById(command.getWriter().getId());
+        Member requestMember = loadMemberPort.findMemberById(command.getWriterId());
         freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
 
-        FreeBoardEntityQueryResult savedQueryResult = saveFreeBoardPort.save(freeBoard);
-        FreeBoard updatedFreeBoard = savedQueryResult.getFreeBoard();
-        return FreeBoardEntityCommandResponse.of(updatedFreeBoard.getId(),
-                updatedFreeBoard.getTitleValue(),
-                updatedFreeBoard.getContent(),
-                updatedFreeBoard.getViewCount(),
-                updatedFreeBoard.getCreatedAt(),
-                updatedFreeBoard.getModifiedAt(),
+        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(
+                writer.getMemberId(),
+                writer.getNickName(),
+                freeBoard.getId(),
+                freeBoard.getTitle(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt());
+
+        saveFreeBoardPort.save(saveFreeBoardQuery);
+
+        return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
+                freeBoard.getTitle(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt(),
                 WriterInfo.of(writer));
     }
 }

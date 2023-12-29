@@ -39,11 +39,19 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
                 freeBoardPage);
 
         List<FreeBoardEntityCommandResponse> pageResponse = selectQueryResult.getQueryResults().stream()
-                .map(databaseEntity -> {
-                   FreeBoard freeBoard = databaseEntity.getFreeBoard();
-                   Member writer = loadMemberPort.findMemberById(databaseEntity.getWriterId());
+                .map(eachQueryResult -> {
+                    Member writer = loadMemberPort.findMemberById(eachQueryResult.getWriterId());
+                    FreeBoard freeBoard = FreeBoard.builder()
+                            .id(eachQueryResult.getId())
+                            .writer(writer)
+                            .title(eachQueryResult.getTitle())
+                            .content(eachQueryResult.getContent())
+                            .viewCount(eachQueryResult.getViewCount())
+                            .createdAt(eachQueryResult.getCreatedAt())
+                            .modifiedAt(eachQueryResult.getModifiedAt())
+                            .build();
                    return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
-                           freeBoard.getTitleValue(),
+                           freeBoard.getTitle(),
                            freeBoard.getContent(),
                            freeBoard.getViewCount(),
                            freeBoard.getCreatedAt(),
@@ -51,8 +59,12 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
                            WriterInfo.of(writer));
                 })
                 .collect(Collectors.toList());
-        PageInfo pageInfo = PageInfo.of(selectQueryResult.getPageNumber() + 1, selectQueryResult.getPageSize(), selectQueryResult.getTotalElements(), selectQueryResult.getTotalPages());
+        PageInfo pageInfo = PageInfo.of(convertPageIndexToPageNumber(selectQueryResult), selectQueryResult.getPageSize(), selectQueryResult.getTotalElements(), selectQueryResult.getTotalPages());
 
         return FreeBoardPageCommandResponse.of(pageResponse, pageInfo);
+    }
+
+    private static int convertPageIndexToPageNumber(FreeBoardPageQueryResult selectQueryResult) {
+        return selectQueryResult.getPageIndex() + 1;
     }
 }

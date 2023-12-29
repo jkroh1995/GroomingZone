@@ -6,6 +6,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.usecase.DeleteFreeBo
 import tdd.groomingzone.board.freeboard.application.port.out.DeleteFreeBoardPort;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
+import tdd.groomingzone.board.freeboard.application.port.out.query.DeleteFreeBoardQuery;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
@@ -25,14 +26,21 @@ public class DeleteFreeBoardService implements DeleteFreeBoardUseCase {
 
     @Override
     public void deleteFreeBoard(DeleteFreeBoardCommand command) {
-        FreeBoardEntityQueryResult queryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
-        FreeBoard freeBoard = queryResult.getFreeBoard();
-        Member writer = loadMemberPort.findMemberById(queryResult.getWriterId());
-        freeBoard.setWriter(writer);
+        FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+        Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
+        FreeBoard freeBoard = FreeBoard.builder()
+                .id(selectQueryResult.getId())
+                .writer(writer)
+                .title(selectQueryResult.getTitle())
+                .content(selectQueryResult.getContent())
+                .viewCount(selectQueryResult.getViewCount())
+                .createdAt(selectQueryResult.getCreatedAt())
+                .modifiedAt(selectQueryResult.getModifiedAt()).build();
 
         Member requestMember = loadMemberPort.findMemberById(command.getRequestMemberId());
         freeBoard.checkMemberAuthority(requestMember);
 
-        deleteFreeBoardPort.delete(freeBoard);
+        DeleteFreeBoardQuery deleteFreeBoardQuery = DeleteFreeBoardQuery.of(freeBoard.getId());
+        deleteFreeBoardPort.delete(deleteFreeBoardQuery);
     }
 }

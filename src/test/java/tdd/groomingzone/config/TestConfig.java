@@ -3,7 +3,7 @@ package tdd.groomingzone.config;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import tdd.groomingzone.domain.board.freeboard.repository.FreeBoardCustomRepositoryImpl;
+import tdd.groomingzone.board.freeboard.adapter.out.persistence.repository.FreeBoardEntityCustomRepositoryImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +19,7 @@ public class TestConfig {
     }
 
     @Bean
-    public FreeBoardCustomRepositoryImpl adminRepository() {
-        return new FreeBoardCustomRepositoryImpl(jpaQueryFactory());
+    public FreeBoardEntityCustomRepositoryImpl adminRepository() {
+        return new FreeBoardEntityCustomRepositoryImpl(jpaQueryFactory());
     }
 }
