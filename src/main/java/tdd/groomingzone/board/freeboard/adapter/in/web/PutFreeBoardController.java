@@ -30,7 +30,7 @@ public class PutFreeBoardController {
     public ResponseEntity<FreeBoardApiDto.Response> putFreeBoard(@AuthenticationPrincipal MemberEntity requestMemberEntity,
                                                                  @PathVariable("free-board-id") long freeBoardId,
                                                                  @RequestBody FreeBoardApiDto.Put putDto) {
-        PutFreeBoardCommand putFreeBoardCommand = PutFreeBoardCommand.of(requestMemberEntity, freeBoardId, putDto.getTitle(), putDto.getContent(), time.now());
+        PutFreeBoardCommand putFreeBoardCommand = PutFreeBoardCommand.of(requestMemberEntity.getId(), freeBoardId, putDto.getTitle(), putDto.getContent(), time.now());
         FreeBoardEntityCommandResponse commandResult = putFreeBoardUseCase.putFreeBoard(putFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
                 .boardId(commandResult.getBoardId())

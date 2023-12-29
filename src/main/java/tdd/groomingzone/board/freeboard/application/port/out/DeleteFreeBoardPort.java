@@ -1,8 +1,8 @@
 package tdd.groomingzone.board.freeboard.application.port.out;
 
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.freeboard.application.port.out.query.DeleteFreeBoardQuery;
 
 public interface DeleteFreeBoardPort {
 
-    void delete(FreeBoard freeBoard);
+    void delete(DeleteFreeBoardQuery query);
 }

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Column(name = "CREATED_AT")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @Column(name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();
+    private LocalDateTime modifiedAt;
 }

@@ -6,20 +6,22 @@ import org.springframework.stereotype.Component;
 import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardPageQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class FreeBoardMapper {
-    public FreeBoardEntity mapToDatabaseEntity(FreeBoard freeBoard) {
+    public FreeBoardEntity mapToDatabaseEntity(SaveFreeBoardQuery query) {
         return FreeBoardEntity.builder()
-                .boardId(freeBoard.getId())
-                .writerId(freeBoard.getWriterId())
-                .writerNickName(freeBoard.getWriterNickName())
-                .title(freeBoard.getTitleValue())
-                .content(freeBoard.getContent())
+                .boardId(query.getBoardId())
+                .writerId(query.getWriterId())
+                .writerNickName(query.getWriterNickName())
+                .title(query.getTitle())
+                .content(query.getContent())
+                .createdAt(query.getCreatedAt())
+                .modifiedAt(query.getModifiedAt())
                 .build();
     }
 

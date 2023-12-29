@@ -8,7 +8,8 @@ import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoard
 import tdd.groomingzone.board.freeboard.adapter.out.persistence.repository.FreeBoardEntityRepository;
 import tdd.groomingzone.board.freeboard.application.port.out.*;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardPage;
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.board.freeboard.application.port.out.query.DeleteFreeBoardQuery;
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
@@ -23,8 +24,8 @@ public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeB
     }
 
     @Override
-    public FreeBoardEntityQueryResult save(FreeBoard freeBoard) {
-        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
+    public FreeBoardEntityQueryResult save(SaveFreeBoardQuery query) {
+        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(query);
         FreeBoardEntity savedFreeBoardEntity =  freeBoardEntityRepository.save(databaseEntity);
         return freeBoardMapper.mapToQueryResult(savedFreeBoardEntity);
     }
@@ -44,8 +45,10 @@ public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeB
     }
 
     @Override
-    public void delete(FreeBoard freeBoard) {
-        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
+    public void delete(DeleteFreeBoardQuery query) {
+        long boardId = query.getBoardId();
+        FreeBoardEntity databaseEntity = freeBoardEntityRepository.findById(boardId).orElseThrow(() ->
+                new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
         freeBoardEntityRepository.delete(databaseEntity);
     }
 }

@@ -13,6 +13,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoar
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
 
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.global.utils.CommonEnums;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -39,7 +40,16 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 .content(command.getContent())
                 .build();
 
-        FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(freeBoard);
+        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(writer.getMemberId(),
+                writer.getNickName(),
+                freeBoard.getId(),
+                freeBoard.getTitle(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt());
+
+        FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(saveFreeBoardQuery);
 
         FreeBoard savedFreeBoard = FreeBoard.builder()
                 .id(queryResult.getId())
@@ -52,7 +62,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 .build();
 
         return FreeBoardEntityCommandResponse.of(savedFreeBoard.getId(),
-                savedFreeBoard.getTitleValue(),
+                savedFreeBoard.getTitle(),
                 savedFreeBoard.getContent(),
                 savedFreeBoard.getViewCount(),
                 savedFreeBoard.getCreatedAt(),

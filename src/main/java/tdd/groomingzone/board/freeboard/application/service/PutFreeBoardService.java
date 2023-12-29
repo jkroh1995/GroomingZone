@@ -9,6 +9,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.command.PutFreeBoard
 import tdd.groomingzone.board.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
 import tdd.groomingzone.board.freeboard.application.port.out.*;
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
@@ -39,14 +40,24 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
                 .createdAt(selectQueryResult.getCreatedAt())
                 .modifiedAt(selectQueryResult.getModifiedAt()).build();
 
-        Member requestMember = loadMemberPort.findMemberById(command.getWriter().getId());
+        Member requestMember = loadMemberPort.findMemberById(command.getWriterId());
         freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
 
-        saveFreeBoardPort.save(freeBoard);
+        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(
+                writer.getMemberId(),
+                writer.getNickName(),
+                freeBoard.getId(),
+                freeBoard.getTitle(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt());
+
+        saveFreeBoardPort.save(saveFreeBoardQuery);
 
         return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
-                freeBoard.getTitleValue(),
+                freeBoard.getTitle(),
                 freeBoard.getContent(),
                 freeBoard.getViewCount(),
                 freeBoard.getCreatedAt(),

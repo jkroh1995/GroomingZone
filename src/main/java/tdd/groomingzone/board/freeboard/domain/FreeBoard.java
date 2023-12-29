@@ -16,7 +16,7 @@ public class FreeBoard {
     private BoardInfo boardInfo;
 
     @Builder
-    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.boardVO = BoardVO.builder()
                 .id(id)
                 .writer(writer)
@@ -31,7 +31,7 @@ public class FreeBoard {
                 .build();
     }
 
-    public void modify(String title, String content, LocalDateTime modifiedAt){
+    public void modify(String title, String content, LocalDateTime modifiedAt) {
         this.boardInfo = BoardInfo.builder()
                 .title(title)
                 .content(content)
@@ -40,15 +40,24 @@ public class FreeBoard {
                 .build();
     }
 
-    public void viewed(){
-        boardInfo.setViewCount(boardInfo.getViewCount()+1);
+    public void viewed() {
+        boardInfo.setViewCount(boardInfo.getViewCount() + 1);
+    }
+
+    public void checkMemberAuthority(Member member) {
+        if (member.isAdmin()) {
+            return;
+        }
+        if (getWriterId() != member.getMemberId()) {
+            throw new BusinessException(ExceptionCode.UNAUTHORIZED);
+        }
     }
 
     public long getId() {
         return boardVO.getId();
     }
 
-    public String getTitleValue() {
+    public String getTitle() {
         return boardInfo.getTitle().getTitle();
     }
 
@@ -78,14 +87,5 @@ public class FreeBoard {
 
     public String getWriterNickName() {
         return getWriter().getNickName();
-    }
-
-    public void checkMemberAuthority(Member member) {
-        if(member.isAdmin()){
-            return;
-        }
-        if(getWriterId() != member.getMemberId()){
-            throw new BusinessException(ExceptionCode.UNAUTHORIZED);
-        }
     }
 }

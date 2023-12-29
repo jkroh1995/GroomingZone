@@ -10,6 +10,7 @@ import tdd.groomingzone.board.freeboard.application.port.in.usecase.GetFreeBoard
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.board.freeboard.application.port.out.SaveFreeBoardPort;
+import tdd.groomingzone.board.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -43,10 +44,20 @@ public class GetFreeBoardService implements GetFreeBoardUseCase {
                 .modifiedAt(selectQueryResult.getModifiedAt()).build();
         freeBoard.viewed();
 
-        saveFreeBoardPort.save(freeBoard);
+        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(
+                writer.getMemberId(),
+                writer.getNickName(),
+                freeBoard.getId(),
+                freeBoard.getTitle(),
+                freeBoard.getContent(),
+                freeBoard.getViewCount(),
+                freeBoard.getCreatedAt(),
+                freeBoard.getModifiedAt());
+
+        saveFreeBoardPort.save(saveFreeBoardQuery);
 
         return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
-                freeBoard.getTitleValue(),
+                freeBoard.getTitle(),
                 freeBoard.getContent(),
                 freeBoard.getViewCount(),
                 freeBoard.getCreatedAt(),
