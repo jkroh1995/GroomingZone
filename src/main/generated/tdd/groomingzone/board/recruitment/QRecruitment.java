@@ -19,7 +19,7 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
 
     public static final QRecruitment recruitment = new QRecruitment("recruitment");
 
-    public final tdd.groomingzone.board.QBoardEntity _super = new tdd.groomingzone.board.QBoardEntity(this);
+    public final tdd.groomingzone.board.common.QBoardEntity _super = new tdd.groomingzone.board.common.QBoardEntity(this);
 
     //inherited
     public final StringPath content = _super.content;

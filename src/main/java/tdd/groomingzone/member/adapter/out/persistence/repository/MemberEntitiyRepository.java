@@ -5,6 +5,6 @@ import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
+public interface MemberEntitiyRepository extends JpaRepository<MemberEntity, Long> {
     Optional<MemberEntity> findByEmail(String email);
 }

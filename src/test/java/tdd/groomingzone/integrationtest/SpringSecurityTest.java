@@ -13,12 +13,13 @@ import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.domain.auth.dto.SignInDto;
-import tdd.groomingzone.domain.board.freeboard.dto.FreeBoardDto;
-import tdd.groomingzone.domain.board.freeboard.entity.FreeBoard;
-import tdd.groomingzone.domain.board.freeboard.service.FreeBoardCommandService;
-import tdd.groomingzone.domain.member.entity.Member;
-import tdd.groomingzone.domain.member.service.MemberCommandService;
+import tdd.groomingzone.auth.dto.SignInDto;
+import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
+import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
+import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
+import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static tdd.groomingzone.global.util.ApiDocumentUtils.getRequestPreProcessor;
-import static tdd.groomingzone.global.util.ApiDocumentUtils.getResponsePreProcessor;
+import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
+import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,10 +43,10 @@ class SpringSecurityTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private MemberCommandService memberCommandService;
+    private MemberEntitiyRepository memberEntitiyRepository;
 
     @Autowired
-    private FreeBoardCommandService freeBoardCommandService;
+    private PostFreeBoardUseCase postFreeBoardUseCase;
 
     @Autowired
     private Gson gson;
@@ -54,26 +55,25 @@ class SpringSecurityTest {
     void setUp(){
         String email = "jk@gmail.com";
         String password = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode( "123");
-        String name = "JKROH";
+        String nickName = "JKROH";
         String phoneNumber = "010-1111-2222";
 
-        Member member = Member.builder()
+        MemberEntity memberEntity = MemberEntity.builder()
                 .email(email)
                 .password(password)
-                .name(name)
+                .nickName(nickName)
                 .phoneNumber(phoneNumber)
                 .roles(List.of("BARBER", "CUSTOMER"))
                 .build();
 
-        Member createdMember = memberCommandService.createMember(member);
+        MemberEntity createdMemberEntity = memberEntitiyRepository.save(memberEntity);
 
-        FreeBoard freeBoard = FreeBoard.builder()
+        FreeBoardEntity freeBoard = FreeBoardEntity.builder()
                 .title("title")
                 .content("content")
                 .build();
 
-        createdMember.writeFreeBoard(freeBoard);
-        freeBoardCommandService.create(freeBoard);
+        postFreeBoardUseCase.postFreeBoard(PostFreeBoardCommand.of(createdMemberEntity.getId(), freeBoard.getTitle(), freeBoard.getContent()));
     }
 
     @Test
@@ -127,9 +127,10 @@ class SpringSecurityTest {
         String testTitle = "title";
         String testContent = "content";
 
-        FreeBoardDto.Post testPost = new FreeBoardDto.Post();
-        testPost.title = testTitle;
-        testPost.content = testContent;
+        FreeBoardApiDto.Post testPost = FreeBoardApiDto.Post.builder()
+                .title(testTitle)
+                .content(testContent)
+                .build();
 
         String content = gson.toJson(testPost);
         mockMvc.perform(
@@ -147,11 +148,13 @@ class SpringSecurityTest {
         String testTitle = "title";
         String testContent = "content";
 
-        FreeBoardDto.Post testPost = new FreeBoardDto.Post();
-        testPost.title = testTitle;
-        testPost.content = testContent;
+        FreeBoardApiDto.Post testPost = FreeBoardApiDto.Post.builder()
+                .title(testTitle)
+                .content(testContent)
+                .build();
 
         String content = gson.toJson(testPost);
+
         mockMvc.perform(
                 post("/free-board")
                         .accept(MediaType.APPLICATION_JSON)

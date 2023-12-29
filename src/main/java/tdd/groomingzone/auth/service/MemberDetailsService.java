@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
-import tdd.groomingzone.member.adapter.out.persistence.repository.MemberRepository;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
@@ -17,17 +17,17 @@ import java.util.Optional;
 @Service
 public class MemberDetailsService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
+    private final MemberEntitiyRepository memberEntitiyRepository;
     private final CustomAuthorityUtils customAuthorityUtils;
 
-    public MemberDetailsService(MemberRepository memberRepository, CustomAuthorityUtils customAuthorityUtils) {
-        this.memberRepository = memberRepository;
+    public MemberDetailsService(MemberEntitiyRepository memberEntitiyRepository, CustomAuthorityUtils customAuthorityUtils) {
+        this.memberEntitiyRepository = memberEntitiyRepository;
         this.customAuthorityUtils = customAuthorityUtils;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<MemberEntity> member = memberRepository.findByEmail(username);
+        Optional<MemberEntity> member = memberEntitiyRepository.findByEmail(username);
         MemberEntity findMemberEntity = member.orElseThrow(() -> new CustomAuthenticationException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return new MemberEntityDetails(findMemberEntity);

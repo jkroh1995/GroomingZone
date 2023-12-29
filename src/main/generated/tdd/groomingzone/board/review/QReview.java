@@ -22,7 +22,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public static final QReview review = new QReview("review");
 
-    public final tdd.groomingzone.board.QBoardEntity _super = new tdd.groomingzone.board.QBoardEntity(this);
+    public final tdd.groomingzone.board.common.QBoardEntity _super = new tdd.groomingzone.board.common.QBoardEntity(this);
 
     public final tdd.groomingzone.barbershop.QBarberShop barberShop;
 

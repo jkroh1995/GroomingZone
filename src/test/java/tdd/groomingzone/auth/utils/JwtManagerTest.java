@@ -1,4 +1,4 @@
-package tdd.groomingzone.domain.auth.utils;
+package tdd.groomingzone.auth.utils;
 
 import io.jsonwebtoken.io.Decoders;
 import org.junit.jupiter.api.Test;
@@ -51,5 +51,4 @@ class JwtManagerTest {
 
         assertThat(refreshToken).isNotNull();
     }
-
 }

@@ -1,4 +1,4 @@
-package tdd.groomingzone.global.util;
+package tdd.groomingzone.global.utils;
 
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;
