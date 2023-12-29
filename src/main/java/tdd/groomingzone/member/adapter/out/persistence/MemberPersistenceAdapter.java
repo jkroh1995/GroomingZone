@@ -30,22 +30,13 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort 
 
     @Override
     public Member findMemberById(long memberId) {
-        MemberEntity findMember = findMemberByIdOrElseThrowException(memberId);
+        MemberEntity findMember = memberRepository.findById(memberId).orElseThrow(() ->
+                new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
         return memberMapper.mapToDomainEntity(findMember);
     }
 
     @Override
     public Optional<MemberEntity> findOptionalMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
-    }
-
-    private MemberEntity findMEmberByEmailOrElseThrowException(String email) {
-        return memberRepository.findByEmail(email).orElseThrow(() ->
-                new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
-    }
-
-    private MemberEntity findMemberByIdOrElseThrowException(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() ->
-                new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 }
