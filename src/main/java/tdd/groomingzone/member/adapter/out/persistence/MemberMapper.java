@@ -8,7 +8,7 @@ import tdd.groomingzone.member.domain.Member;
 @Component
 public class MemberMapper {
 
-    @Value("${member.default.password}")
+    @Value("${member.temporary.password}")
     private String MEMBER_DEFAULT_PASSWORD;
     private final PasswordEncoder passwordEncoder;
     private final MemberRolesGenerator memberRolesGenerator;
