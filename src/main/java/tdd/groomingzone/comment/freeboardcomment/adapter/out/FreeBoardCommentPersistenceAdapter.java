@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 import tdd.groomingzone.comment.common.CommentEntity;
 import tdd.groomingzone.comment.common.CommentEntityRepository;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageable;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.LoadFreeBoardCommentPort;
@@ -21,9 +22,10 @@ public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentP
     }
 
     @Override
-    public void save(FreeBoardComment freeBoardComment) {
+    public FreeBoardCommentEntityResult save(FreeBoardComment freeBoardComment) {
         CommentEntity databaseEntity = freeBoardCommentMapper.mapToDatabaseEntity(freeBoardComment);
-        commentEntityRepository.save(databaseEntity);
+        CommentEntity savedDatabaseEntity = commentEntityRepository.save(databaseEntity);
+        return freeBoardCommentMapper.mapToSingleQueryResult(savedDatabaseEntity);
     }
 
     @Override

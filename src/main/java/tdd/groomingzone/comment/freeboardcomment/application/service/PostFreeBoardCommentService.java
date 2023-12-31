@@ -1,9 +1,11 @@
 package tdd.groomingzone.comment.freeboardcomment.application.service;
 
 import org.springframework.stereotype.Service;
+import tdd.groomingzone.board.common.WriterInfo;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
+import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.SaveFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.PostFreeBoardCommentCommand;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.PostFreeBoardCommentUseCase;
@@ -24,7 +26,7 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
     }
 
     @Override
-    public void postFreeBoardComment(PostFreeBoardCommentCommand postFreeBoardCommentCommand) {
+    public SingleFreeBoardCommentResponse postFreeBoardComment(PostFreeBoardCommentCommand postFreeBoardCommentCommand) {
         FreeBoardEntityQueryResult selectFreeBoardQueryResult = loadFreeBoardPort.loadFreeBoardById(postFreeBoardCommentCommand.getBoardId());
         Member freeBoardWriter = loadMemberPort.findMemberById(selectFreeBoardQueryResult.getWriterId());
         Member commentWriter = loadMemberPort.findMemberById(postFreeBoardCommentCommand.getWriterId());
@@ -33,6 +35,10 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
                 commentWriter,
                 postFreeBoardCommentCommand.getContent());
 
-        saveFreeBoardCommentPort.save(freeBoardComment);
+        FreeBoardCommentEntityResult saveResult= saveFreeBoardCommentPort.save(freeBoardComment);
+        return SingleFreeBoardCommentResponse.of(saveResult.getContent(),
+                saveResult.getCreatedAt(),
+                saveResult.getModifiedAt(),
+                WriterInfo.of(commentWriter));
     }
 }
