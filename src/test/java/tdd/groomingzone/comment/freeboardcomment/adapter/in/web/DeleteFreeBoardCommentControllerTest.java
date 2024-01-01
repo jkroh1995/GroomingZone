@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.DeleteFreeBoardCommentUseCase;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -23,6 +27,9 @@ class DeleteFreeBoardCommentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private DeleteFreeBoardCommentUseCase deleteFreeBoardCommentUseCase;
 
     @Test
     void deleteFreeBoardComment() throws Exception {
@@ -44,5 +51,7 @@ class DeleteFreeBoardCommentControllerTest {
                                 parameterWithName("comment-id").description("자유 게시글 댓글 식별자")
                         )
                 ));
+
+        verify(deleteFreeBoardCommentUseCase).delete(any());
     }
 }

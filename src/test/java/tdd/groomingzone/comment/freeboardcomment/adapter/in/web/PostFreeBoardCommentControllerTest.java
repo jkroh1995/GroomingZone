@@ -27,6 +27,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
@@ -93,6 +95,11 @@ class PostFreeBoardCommentControllerTest {
                         requestFields(
                                 List.of(
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                )
+                        ),
+                        pathParameters(
+                                List.of(
+                                        parameterWithName("free-board-id").description("자유 게시글 식별자")
                                 )
                         ),
                         responseFields(

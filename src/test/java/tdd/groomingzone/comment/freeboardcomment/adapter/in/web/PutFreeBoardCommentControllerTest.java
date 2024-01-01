@@ -27,6 +27,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
@@ -73,7 +75,7 @@ public class PutFreeBoardCommentControllerTest {
         given(putFreeBoardCommentUseCase.putFreeBoard(any())).willReturn(response);
 
         mockMvc.perform(
-                        put("/free-board/comment/{free-board-id}", 1L)
+                        put("/free-board/comment/{free-board-id}/{comment-id}", 1L, 1L)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
@@ -90,6 +92,12 @@ public class PutFreeBoardCommentControllerTest {
                         requestFields(
                                 List.of(
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                )
+                        ),
+                        pathParameters(
+                                List.of(
+                                        parameterWithName("free-board-id").description("자유 게시글 식별자"),
+                                        parameterWithName("comment-id").description("자유 게시글 댓글 식별자")
                                 )
                         ),
                         responseFields(
