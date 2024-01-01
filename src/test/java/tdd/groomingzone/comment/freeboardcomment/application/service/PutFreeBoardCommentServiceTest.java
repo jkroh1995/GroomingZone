@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
-import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.PostFreeBoardCommentCommand;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.PutFreeBoardCommentCommand;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
