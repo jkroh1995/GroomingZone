@@ -17,10 +17,11 @@ public class FreeBoardComment {
     private final FreeBoard freeBoard;
 
     @Builder
-    public FreeBoardComment(long id, Member writer, FreeBoard freeBoard, String content) {
-        this.commentVO = CommentVO.of(id, writer);
+    public FreeBoardComment(long id, Member writer, FreeBoard freeBoard, String content, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.commentVO = CommentVO.of(id, writer, createdAt);
         this.commentInfo = CommentInfo.builder()
                 .content(content)
+                .modifiedAt(modifiedAt)
                 .build();
         this.freeBoard = freeBoard;
     }

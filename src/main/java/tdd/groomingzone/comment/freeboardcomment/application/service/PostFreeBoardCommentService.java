@@ -13,6 +13,8 @@ import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase {
     private final LoadMemberPort loadMemberPort;
@@ -35,7 +37,9 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
         FreeBoardComment freeBoardComment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
                 freeBoardWriter,
                 commentWriter,
-                postFreeBoardCommentCommand.getContent());
+                postFreeBoardCommentCommand.getContent(),
+                LocalDateTime.now(),
+                LocalDateTime.now());
 
         FreeBoardCommentEntityResult saveQueryResult = saveFreeBoardCommentPort.save(freeBoardComment);
         return SingleFreeBoardCommentResponse.of(saveQueryResult.getContent(),

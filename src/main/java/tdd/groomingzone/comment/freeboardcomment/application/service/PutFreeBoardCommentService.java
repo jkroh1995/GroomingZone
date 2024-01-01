@@ -39,7 +39,7 @@ public class PutFreeBoardCommentService implements PutFreeBoardCommentUseCase {
         FreeBoardEntityQueryResult selectFreeBoardQueryResult = loadFreeBoardPort.loadFreeBoardById(selectCommentQueryResult.getBoardId());
         Member freeBoardWriter = loadMemberPort.findMemberById(selectFreeBoardQueryResult.getWriterId());
         Member commentWriter = loadMemberPort.findMemberById(selectCommentQueryResult.getWriterId());
-        FreeBoardComment comment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult, freeBoardWriter, commentWriter, command.getContent());
+        FreeBoardComment comment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult, freeBoardWriter, commentWriter, command.getContent(), selectCommentQueryResult.getCreatedAt(), LocalDateTime.now());
 
         Member requestMember = loadMemberPort.findMemberById(command.getRequestMemberId());
         comment.checkMemberAuthority(requestMember);

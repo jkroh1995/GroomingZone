@@ -9,14 +9,15 @@ import java.time.LocalDateTime;
 public final class CommentVO {
     private final long id;
     private final Member writer;
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private final LocalDateTime createdAt;
 
-    private CommentVO(long id, Member writer) {
+    private CommentVO(long id, Member writer, LocalDateTime createdAt) {
         this.id = id;
         this.writer = writer;
+        this.createdAt = createdAt;
     }
 
-    public static CommentVO of(long id, Member writer){
-        return new CommentVO(id, writer);
+    public static CommentVO of(long id, Member writer, LocalDateTime createdAt){
+        return new CommentVO(id, writer, createdAt);
     }
 }

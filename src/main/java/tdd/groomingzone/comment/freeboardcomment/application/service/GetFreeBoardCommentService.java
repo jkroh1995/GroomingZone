@@ -49,7 +49,9 @@ public class GetFreeBoardCommentService implements GetFreeBoardCommentUseCase {
                     FreeBoardComment freeBoardComment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
                             freeBoardWriter,
                             commentWriter,
-                            eachQueryResult.getContent());
+                            eachQueryResult.getContent(),
+                            eachQueryResult.getCreatedAt(),
+                            eachQueryResult.getModifiedAt());
 
                     return SingleFreeBoardCommentResponse.of(freeBoardComment.getContent(),
                             freeBoardComment.getCreatedAt(),
