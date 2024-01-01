@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import tdd.groomingzone.board.common.WriterInfo;
 import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
 import tdd.groomingzone.global.pagedresponse.PageInfo;
@@ -28,11 +27,13 @@ public class GetFreeBoardCommentService implements GetFreeBoardCommentUseCase {
     private final LoadFreeBoardCommentPort loadFreeBoardCommentPort;
     private final LoadFreeBoardPort loadFreeBoardPort;
     private final LoadMemberPort loadMemberPort;
+    private final FreeBoardCommentPublisher freeBoardCommentPublisher;
 
-    public GetFreeBoardCommentService(LoadFreeBoardCommentPort loadFreeBoardCommentPort, LoadFreeBoardPort loadFreeBoardPort, LoadMemberPort loadMemberPort) {
+    public GetFreeBoardCommentService(LoadFreeBoardCommentPort loadFreeBoardCommentPort, LoadFreeBoardPort loadFreeBoardPort, LoadMemberPort loadMemberPort, FreeBoardCommentPublisher freeBoardCommentPublisher) {
         this.loadFreeBoardCommentPort = loadFreeBoardCommentPort;
         this.loadFreeBoardPort = loadFreeBoardPort;
         this.loadMemberPort = loadMemberPort;
+        this.freeBoardCommentPublisher = freeBoardCommentPublisher;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class GetFreeBoardCommentService implements GetFreeBoardCommentUseCase {
                     FreeBoardEntityQueryResult selectFreeBoardQueryResult = loadFreeBoardPort.loadFreeBoardById(eachQueryResult.getBoardId());
                     Member freeBoardWriter = loadMemberPort.findMemberById(selectFreeBoardQueryResult.getWriterId());
                     Member commentWriter = loadMemberPort.findMemberById(eachQueryResult.getWriterId());
-                    FreeBoardComment freeBoardComment = FreeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
+                    FreeBoardComment freeBoardComment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
                             freeBoardWriter,
                             commentWriter,
                             eachQueryResult.getContent());

@@ -18,11 +18,13 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
     private final LoadMemberPort loadMemberPort;
     private final LoadFreeBoardPort loadFreeBoardPort;
     private final SaveFreeBoardCommentPort saveFreeBoardCommentPort;
+    private final FreeBoardCommentPublisher freeBoardCommentPublisher;
 
-    public PostFreeBoardCommentService(LoadMemberPort loadMemberPort, LoadFreeBoardPort loadFreeBoardPort, SaveFreeBoardCommentPort saveFreeBoardCommentPort) {
+    public PostFreeBoardCommentService(LoadMemberPort loadMemberPort, LoadFreeBoardPort loadFreeBoardPort, SaveFreeBoardCommentPort saveFreeBoardCommentPort, FreeBoardCommentPublisher freeBoardCommentPublisher) {
         this.loadMemberPort = loadMemberPort;
         this.loadFreeBoardPort = loadFreeBoardPort;
         this.saveFreeBoardCommentPort = saveFreeBoardCommentPort;
+        this.freeBoardCommentPublisher = freeBoardCommentPublisher;
     }
 
     @Override
@@ -30,15 +32,15 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
         FreeBoardEntityQueryResult selectFreeBoardQueryResult = loadFreeBoardPort.loadFreeBoardById(postFreeBoardCommentCommand.getBoardId());
         Member freeBoardWriter = loadMemberPort.findMemberById(selectFreeBoardQueryResult.getWriterId());
         Member commentWriter = loadMemberPort.findMemberById(postFreeBoardCommentCommand.getWriterId());
-        FreeBoardComment freeBoardComment = FreeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
+        FreeBoardComment freeBoardComment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
                 freeBoardWriter,
                 commentWriter,
                 postFreeBoardCommentCommand.getContent());
 
-        FreeBoardCommentEntityResult saveResult= saveFreeBoardCommentPort.save(freeBoardComment);
-        return SingleFreeBoardCommentResponse.of(saveResult.getContent(),
-                saveResult.getCreatedAt(),
-                saveResult.getModifiedAt(),
+        FreeBoardCommentEntityResult saveQueryResult = saveFreeBoardCommentPort.save(freeBoardComment);
+        return SingleFreeBoardCommentResponse.of(saveQueryResult.getContent(),
+                saveQueryResult.getCreatedAt(),
+                saveQueryResult.getModifiedAt(),
                 WriterInfo.of(commentWriter));
     }
 }
