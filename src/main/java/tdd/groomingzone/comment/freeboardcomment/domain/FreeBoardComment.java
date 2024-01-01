@@ -65,4 +65,8 @@ public class FreeBoardComment {
                 .modifiedAt(modifiedAt)
                 .build();
     }
+
+    public long getId() {
+        return this.commentVO.getId();
+    }
 }
