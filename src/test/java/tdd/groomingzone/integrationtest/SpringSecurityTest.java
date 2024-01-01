@@ -36,7 +36,7 @@ import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProce
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Tag("integration-test")
+//@Tag("integration-test") // restdocs 적용을 위한 태그 제거
 class SpringSecurityTest {
 
     @Autowired
@@ -104,6 +104,13 @@ class SpringSecurityTest {
                                 List.of(
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                                )
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("role").type(JsonFieldType.STRING).description("역할")
                                 )
                         )
                 ));
