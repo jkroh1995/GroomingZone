@@ -12,12 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.board.common.WriterInfo;
-import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.board.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.PostFreeBoardCommentUseCase;
-import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
-import tdd.groomingzone.global.configuration.SecurityConfig;
 import tdd.groomingzone.member.domain.Member;
 
 import java.time.LocalDateTime;
@@ -25,7 +21,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -55,7 +50,6 @@ class PostFreeBoardCommentControllerTest {
     @DisplayName("정상적인 게시글 등록 요청 테스트")
     void postFreeBoardTest() throws Exception {
         // given
-        long testId = 1L;
         String testContent = "content";
 
         FreeBoardCommentApiDto.Post testPost = new FreeBoardCommentApiDto.Post(testContent);
