@@ -33,4 +33,11 @@ public final class FreeBoardCommentApiDto {
                     .build();
         }
     }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Put {
+        private String content;
+    }
 }

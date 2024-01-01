@@ -10,6 +10,8 @@ import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardC
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.LoadFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.SaveFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
+import tdd.groomingzone.global.exception.BusinessException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 
 @Repository
 public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentPort, LoadFreeBoardCommentPort {
@@ -32,5 +34,12 @@ public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentP
     public FreeBoardCommentPageResult loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable) {
         Page<CommentEntity> databaseEntityPage = commentEntityRepository.findCommentPageByBoardId(freeBoardCommentPageable.getBoardId(), freeBoardCommentPageable.getPageable());
         return freeBoardCommentMapper.mapToMultiQueryResult(databaseEntityPage);
+    }
+
+    @Override
+    public FreeBoardCommentEntityResult loadFreeBoardComment(long commentId) {
+        CommentEntity databaseEntity = commentEntityRepository.findById(commentId).orElseThrow(() ->
+                new BusinessException(ExceptionCode.COMMENT_NOT_FOUND));
+        return null;
     }
 }

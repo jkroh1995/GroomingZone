@@ -4,6 +4,8 @@ import lombok.Builder;
 import tdd.groomingzone.board.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.common.CommentInfo;
 import tdd.groomingzone.comment.common.CommentVO;
+import tdd.groomingzone.global.exception.BusinessException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.domain.Member;
 
 import java.time.LocalDateTime;
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
 public class FreeBoardComment {
 
     private final CommentVO commentVO;
-    private final CommentInfo commentInfo;
+    private CommentInfo commentInfo;
     private final FreeBoard freeBoard;
 
     @Builder
@@ -45,5 +47,21 @@ public class FreeBoardComment {
 
     public LocalDateTime getModifiedAt() {
         return commentInfo.getModifiedAt();
+    }
+
+    public void checkMemberAuthority(Member requestMember) {
+        if(requestMember.isAdmin()){
+            return;
+        }
+        if(getWriterId() != requestMember.getMemberId()){
+            throw new BusinessException(ExceptionCode.UNAUTHORIZED);
+        }
+    }
+
+    public void modify(String content, LocalDateTime modifiedAt) {
+        this.commentInfo = CommentInfo.builder()
+                .content(content)
+                .modifiedAt(modifiedAt)
+                .build();
     }
 }
