@@ -40,6 +40,6 @@ public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentP
     public FreeBoardCommentEntityResult loadFreeBoardComment(long commentId) {
         CommentEntity databaseEntity = commentEntityRepository.findById(commentId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.COMMENT_NOT_FOUND));
-        return null;
+        return freeBoardCommentMapper.mapToSingleQueryResult(databaseEntity);
     }
 }
