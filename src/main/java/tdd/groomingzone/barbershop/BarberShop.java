@@ -1,8 +1,8 @@
-package tdd.groomingzone.domain.barbershop;
+package tdd.groomingzone.barbershop;
 
 import lombok.Getter;
-import tdd.groomingzone.domain.board.review.Review;
-import tdd.groomingzone.domain.member.entity.Member;
+import tdd.groomingzone.board.review.Review;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,5 +23,5 @@ public class BarberShop {
     private List<Review> reviews = new ArrayList<>();
 
     @OneToOne
-    private Member owner;
+    private MemberEntity owner;
 }

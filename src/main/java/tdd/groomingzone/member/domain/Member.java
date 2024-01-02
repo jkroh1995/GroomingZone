@@ -13,7 +13,7 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(long memberId, String email, String password, String nickName, String phoneNumber, String role){
+    public Member(long memberId, String email, String password, String nickName, String phoneNumber, String role) {
         this.memberId = memberId;
         this.email = Email.of(email);
         this.password = Password.of(password);
@@ -22,7 +22,7 @@ public class Member {
         this.role = Role.valueOf(role);
     }
 
-    public void modify(String email, String password, String nickName, String phoneNumber, String role){
+    public void modify(String email, String password, String nickName, String phoneNumber, String role) {
         this.email = Email.of(email);
         this.password = Password.of(password);
         this.nickName = nickName;
@@ -30,19 +30,19 @@ public class Member {
         this.role = Role.valueOf(role);
     }
 
-    public String getEmailValue() {
+    public String getEmail() {
         return email.getEmail();
     }
 
-    public String getPasswordValue() {
+    public String getPassword() {
         return password.getPassword();
     }
 
-    public String getRoleValue() {
+    public String getRole() {
         return role.getRole();
     }
 
-    public String getPhoneNumberValue() {
+    public String getPhoneNumber() {
         return phoneNumber.getPhoneNumber();
     }
 

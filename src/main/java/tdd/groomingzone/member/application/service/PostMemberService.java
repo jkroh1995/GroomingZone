@@ -37,10 +37,10 @@ public class PostMemberService implements PostMemberUseCase {
                 .build();
         Member savedMember = saveMemberPort.save(member);
         return MemberCommandResponse.of(savedMember.getMemberId(),
-                savedMember.getEmailValue(),
+                savedMember.getEmail(),
                 savedMember.getNickName(),
-                savedMember.getPhoneNumberValue(),
-                savedMember.getRoleValue());
+                savedMember.getPhoneNumber(),
+                savedMember.getRole());
     }
 
     private void verifyEmailDuplicate(String requestEmail) {

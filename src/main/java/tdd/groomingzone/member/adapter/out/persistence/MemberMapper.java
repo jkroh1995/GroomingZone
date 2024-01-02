@@ -11,11 +11,11 @@ public class MemberMapper {
     @Value("${member.temporary.password}")
     private String MEMBER_DEFAULT_PASSWORD;
     private final PasswordEncoder passwordEncoder;
-    private final MemberRolesGenerator memberRolesGenerator;
+    private final MemberEntityRolesGenerator memberEntityRolesGenerator;
 
-    public MemberMapper(PasswordEncoder passwordEncoder, MemberRolesGenerator memberRolesGenerator) {
+    public MemberMapper(PasswordEncoder passwordEncoder, MemberEntityRolesGenerator memberEntityRolesGenerator) {
         this.passwordEncoder = passwordEncoder;
-        this.memberRolesGenerator = memberRolesGenerator;
+        this.memberEntityRolesGenerator = memberEntityRolesGenerator;
     }
 
     public Member mapToDomainEntity(MemberEntity findMember) {
@@ -32,11 +32,11 @@ public class MemberMapper {
     public MemberEntity mapToDatabaseEntity(Member member) {
         return MemberEntity.builder()
                 .id(member.getMemberId())
-                .email(member.getEmailValue())
+                .email(member.getEmail())
                 .nickName(member.getNickName())
-                .password(passwordEncoder.encode(member.getPasswordValue()))
-                .roles(memberRolesGenerator.generateMemberRoles(member.getEmailValue(), member.getRoleValue()))
-                .phoneNumber(member.getPhoneNumberValue())
+                .password(passwordEncoder.encode(member.getPassword()))
+                .roles(memberEntityRolesGenerator.generateMemberRoles(member.getEmail(), member.getRole()))
+                .phoneNumber(member.getPhoneNumber())
                 .build();
     }
 }

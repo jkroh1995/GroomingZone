@@ -23,13 +23,13 @@ public class FreeBoardCommentMapper {
 
     public FreeBoardCommentPageResult mapToMultiQueryResult(Page<CommentEntity> page) {
         List<FreeBoardCommentEntityResult> queryResults = page.getContent().stream()
-                .map(this::mapToQueryResult)
+                .map(this::mapToSingleQueryResult)
                 .collect(Collectors.toList());
 
         return FreeBoardCommentPageResult.of(queryResults, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
     }
 
-    private FreeBoardCommentEntityResult mapToQueryResult(CommentEntity databaseEntity) {
+    public FreeBoardCommentEntityResult mapToSingleQueryResult(CommentEntity databaseEntity) {
         return FreeBoardCommentEntityResult.of(databaseEntity.getId(),
                 databaseEntity.getWriterId(),
                 databaseEntity.getBoardId(),
