@@ -58,7 +58,7 @@ public class RedisTest {
     }
 
     @Test
-    @DisplayName("인증되지 않은 사용자가 인증을 요구하지 않는 요청을 보내면 성공한다.")
+    @DisplayName("최초로 로그아웃 요청을 보내면 Redis에 등록되고 로그아웃 된다. 같은 토큰 값으로 다시 로그아웃 요청을 하면 수행되지 않는다.")
     @WithMockUser
     void testUnauthorizedRequestUnauthorizedMethod() throws Exception {
         mockMvc.perform(
