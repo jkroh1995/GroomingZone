@@ -16,7 +16,7 @@ public class SignOutService implements SignOutUseCase {
     private final RedisSignOutPort signOutPort;
     private final JwtManager jwtManager;
 
-    public SignOutService(RedisAdapter signOutPort, JwtManager jwtManager) {
+    public SignOutService(RedisSignOutPort signOutPort, JwtManager jwtManager) {
         this.signOutPort = signOutPort;
         this.jwtManager = jwtManager;
     }
