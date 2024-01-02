@@ -7,7 +7,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
 import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.global.exception.CustomAuthenticationException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import javax.servlet.FilterChain;
@@ -23,10 +26,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtManager jwtManager;
+    private final RedisSignInPort redisSignInPort;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtManager jwtManager) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtManager jwtManager, RedisSignInPort redisSignInPort) {
         this.authenticationManager = authenticationManager;
         this.jwtManager = jwtManager;
+        this.redisSignInPort = redisSignInPort;
     }
 
     @SneakyThrows
@@ -35,6 +40,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             , HttpServletResponse response) throws AuthenticationException {
         ObjectMapper objectMapper = new ObjectMapper();
         SignInDto signInDto = objectMapper.readValue(request.getInputStream(), SignInDto.class);
+
+        if(redisSignInPort.alreadySignIn(signInDto.getEmail())){
+            throw new CustomAuthenticationException(ExceptionCode.ALREADY_SIGN_IN);
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(signInDto.getEmail(), signInDto.getPassword());
@@ -55,6 +64,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setIntHeader("MemberId", (int) memberEntity.getId());
+
+        redisSignInPort.signIn(memberEntity.getEmail(), accessToken);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
