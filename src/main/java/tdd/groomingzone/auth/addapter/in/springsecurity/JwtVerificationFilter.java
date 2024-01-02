@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.filter;
+package tdd.groomingzone.auth.addapter.in.springsecurity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -8,10 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tdd.groomingzone.auth.RedisService;
+import tdd.groomingzone.auth.addapter.out.redis.RedisAdapter;
 import tdd.groomingzone.auth.utils.JwtManager;
-import tdd.groomingzone.auth.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
@@ -28,14 +28,14 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
-    private final RedisService redisService;
-    private final MemberDetailsService memberDetailsService;
+    private final RedisAdapter redisService;
+    private final UserDetailsService userDetailsService;
 
-    public JwtVerificationFilter(JwtManager jwtManager,CustomAuthorityUtils authorityUtils, RedisService redisService, MemberDetailsService memberDetailsService) {
+    public JwtVerificationFilter(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, RedisAdapter redisService, UserDetailsService userDetailsService) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.redisService = redisService;
-        this.memberDetailsService = memberDetailsService;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("email");
-        UserDetails memberDetails = memberDetailsService.loadUserByUsername(username);
+        UserDetails memberDetails = userDetailsService.loadUserByUsername(username);
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List<String>) claims.get("roles"));
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(memberDetails, null, authorities);
