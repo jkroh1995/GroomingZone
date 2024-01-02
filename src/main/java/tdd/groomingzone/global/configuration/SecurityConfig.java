@@ -12,14 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import tdd.groomingzone.auth.RedisService;
-import tdd.groomingzone.auth.filter.JwtAuthenticationFilter;
-import tdd.groomingzone.auth.filter.JwtVerificationFilter;
-import tdd.groomingzone.auth.handler.MemberAccessDeniedHandler;
-import tdd.groomingzone.auth.handler.MemberAuthenticationEntryPoint;
-import tdd.groomingzone.auth.handler.MemberAuthenticationFailureHandler;
-import tdd.groomingzone.auth.handler.MemberAuthenticationSuccessHandler;
-import tdd.groomingzone.auth.service.MemberDetailsService;
+import tdd.groomingzone.auth.addapter.out.redis.RedisAdapter;
+import tdd.groomingzone.auth.addapter.in.springsecurity.JwtAuthenticationFilter;
+import tdd.groomingzone.auth.addapter.in.springsecurity.JwtVerificationFilter;
+import tdd.groomingzone.auth.utils.handler.MemberAccessDeniedHandler;
+import tdd.groomingzone.auth.utils.handler.MemberAuthenticationEntryPoint;
+import tdd.groomingzone.auth.utils.handler.MemberAuthenticationFailureHandler;
+import tdd.groomingzone.auth.utils.handler.MemberAuthenticationSuccessHandler;
+import tdd.groomingzone.auth.application.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.auth.utils.JwtManager;
 
@@ -32,13 +32,13 @@ public class SecurityConfig {
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
-    private final RedisService redisService;
+    private final RedisAdapter redisAdapter;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisService redisService) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisAdapter redisAdapter) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
-        this.redisService = redisService;
+        this.redisAdapter = redisAdapter;
     }
 
     @Bean
@@ -101,7 +101,7 @@ public class SecurityConfig {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, redisService, memberDetailsService);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, redisAdapter, memberDetailsService);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

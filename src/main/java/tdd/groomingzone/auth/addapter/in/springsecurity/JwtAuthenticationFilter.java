@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.filter;
+package tdd.groomingzone.auth.addapter.in.springsecurity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -7,7 +7,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tdd.groomingzone.auth.dto.SignInDto;
 import tdd.groomingzone.auth.utils.JwtManager;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
