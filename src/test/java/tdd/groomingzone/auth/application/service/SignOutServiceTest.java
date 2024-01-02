@@ -9,8 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
 import tdd.groomingzone.auth.utils.JwtManager;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
