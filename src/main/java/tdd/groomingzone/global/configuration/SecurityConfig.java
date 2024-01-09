@@ -12,14 +12,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import tdd.groomingzone.auth.RedisService;
-import tdd.groomingzone.auth.filter.JwtAuthenticationFilter;
-import tdd.groomingzone.auth.filter.JwtVerificationFilter;
-import tdd.groomingzone.auth.handler.MemberAccessDeniedHandler;
-import tdd.groomingzone.auth.handler.MemberAuthenticationEntryPoint;
-import tdd.groomingzone.auth.handler.MemberAuthenticationFailureHandler;
-import tdd.groomingzone.auth.handler.MemberAuthenticationSuccessHandler;
-import tdd.groomingzone.auth.service.MemberDetailsService;
+import tdd.groomingzone.auth.addapter.in.springsecurity.JwtAuthenticationFilter;
+import tdd.groomingzone.auth.addapter.in.springsecurity.JwtVerificationFilter;
+import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
+import tdd.groomingzone.auth.utils.CookieManager;
+import tdd.groomingzone.auth.utils.handler.MemberAccessDeniedHandler;
+import tdd.groomingzone.auth.utils.handler.MemberAuthenticationEntryPoint;
+import tdd.groomingzone.auth.utils.handler.MemberAuthenticationFailureHandler;
+import tdd.groomingzone.auth.utils.handler.MemberAuthenticationSuccessHandler;
+import tdd.groomingzone.auth.application.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.auth.utils.JwtManager;
 
@@ -32,13 +33,15 @@ public class SecurityConfig {
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
-    private final RedisService redisService;
+    private final RedisSignInPort redisSignInPort;
+    private final CookieManager cookieManager;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisService redisService) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
-        this.redisService = redisService;
+        this.redisSignInPort = redisSignInPort;
+        this.cookieManager = cookieManager;
     }
 
     @Bean
@@ -77,7 +80,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://groomin-zone.com", "http://localhost:3000", "http://localhost:8080"));
+        configuration.setAllowedOrigins(List.of("https://grooming-zone.com", "http://localhost:3000", "http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
@@ -93,7 +96,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager, redisSignInPort, cookieManager);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/sign-in");
 
@@ -101,7 +104,7 @@ public class SecurityConfig {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, redisService, memberDetailsService);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, memberDetailsService, cookieManager);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

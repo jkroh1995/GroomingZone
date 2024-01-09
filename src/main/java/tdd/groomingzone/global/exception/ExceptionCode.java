@@ -22,7 +22,8 @@ public enum ExceptionCode {
     INVALID_ROLE(409, "바버, 고객 중 역할을 선택해주세요."),
     INVALID_REQUEST(409, "잘못된 요청입니다."),
     INVALID_BOARD_CONTENT(409, "글 내용은 빈 칸이면 안됩니다."),
-    EMAIL_ALREADY_EXISTS(409, "이미 가입한 이메일입니다.");
+    EMAIL_ALREADY_EXISTS(409, "이미 가입한 이메일입니다."),
+    ALREADY_SIGN_IN(409, "이미 로그인 처리 되었습니다.");
 
     private final int status;
     private final String message;

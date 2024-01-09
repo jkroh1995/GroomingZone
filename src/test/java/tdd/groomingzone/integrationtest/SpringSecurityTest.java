@@ -13,7 +13,7 @@ import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.auth.dto.SignInDto;
+import tdd.groomingzone.auth.addapter.in.springsecurity.SignInDto;
 import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
 import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
@@ -82,9 +82,7 @@ class SpringSecurityTest {
         String email = "jk@gmail.com";
         String password = "123";
 
-        SignInDto signInDto = new SignInDto();
-        signInDto.setEmail(email);
-        signInDto.setPassword(password);
+        SignInDto signInDto = new SignInDto(email, password);
 
         String content = gson.toJson(signInDto);
 

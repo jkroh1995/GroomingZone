@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.handler;
+package tdd.groomingzone.auth.utils.handler;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;

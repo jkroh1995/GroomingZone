@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.filter;
+package tdd.groomingzone.auth.addapter.in.springsecurity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -8,16 +8,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tdd.groomingzone.auth.RedisService;
+import tdd.groomingzone.auth.utils.CookieManager;
 import tdd.groomingzone.auth.utils.JwtManager;
-import tdd.groomingzone.auth.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
-import tdd.groomingzone.global.exception.ExceptionCode;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,25 +28,23 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
-    private final RedisService redisService;
-    private final MemberDetailsService memberDetailsService;
+    private final UserDetailsService userDetailsService;
+    private final CookieManager cookieManager;
 
-    public JwtVerificationFilter(JwtManager jwtManager,CustomAuthorityUtils authorityUtils, RedisService redisService, MemberDetailsService memberDetailsService) {
+    public JwtVerificationFilter(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, UserDetailsService userDetailsService, CookieManager cookieManager) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
-        this.redisService = redisService;
-        this.memberDetailsService = memberDetailsService;
+        this.userDetailsService = userDetailsService;
+        this.cookieManager = cookieManager;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String accessToken = jwtManager.getTokenFromHeader(request.getHeader("Authorization"));
         try {
-            if (redisService.isSignOut(accessToken)) {
-                throw new CustomAuthenticationException(ExceptionCode.NOT_SIGN_IN);
-            }
+            Cookie accessTokenCookie = cookieManager.resolveAccessTokenCookie(request);
+            String accessToken = getTokenFromCookie(accessTokenCookie);
             jwtManager.verifyToken(accessToken, jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey()));
-            Map<String, Object> claims = getClaims(request);
+            Map<String, Object> claims = getClaims(accessToken);
             setAuthenticationToContext(claims);
         }catch (CustomAuthenticationException | SignatureException ce){
             request.setAttribute("exception", ce);
@@ -59,15 +57,18 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private Claims getClaims(HttpServletRequest request) {
-        String jws = jwtManager.getTokenFromHeader(request.getHeader("Authorization"));
+    private String getTokenFromCookie(Cookie accessTokenCookie) {
+        return accessTokenCookie.getValue().replace("Bearer+", "");
+    }
+
+    private Claims getClaims(String accessToken) {
         String base64EncodedSecretKey = jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey());
-        return jwtManager.getClaims(jws, base64EncodedSecretKey).getBody();
+        return jwtManager.getClaims(accessToken, base64EncodedSecretKey).getBody();
     }
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("email");
-        UserDetails memberDetails = memberDetailsService.loadUserByUsername(username);
+        UserDetails memberDetails = userDetailsService.loadUserByUsername(username);
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List<String>) claims.get("roles"));
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(memberDetails, null, authorities);
@@ -76,8 +77,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
-
-        return authorization == null || !authorization.startsWith("Bearer");
+        if(request.getCookies() != null){
+            Cookie authorization = cookieManager.resolveAccessTokenCookie(request);
+            return authorization == null || !authorization.getValue().startsWith("Bearer");
+        }
+        return true;
     }
 }

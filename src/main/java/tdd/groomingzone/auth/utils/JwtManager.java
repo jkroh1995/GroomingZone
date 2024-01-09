@@ -84,10 +84,6 @@ public class JwtManager {
         return calendar.getTime();
     }
 
-    public String getTokenFromHeader(String tokenHeader) {
-        return tokenHeader.replace("Bearer ", "");
-    }
-
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         return Keys.hmacShaKeyFor(keyBytes);
