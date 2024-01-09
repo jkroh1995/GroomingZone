@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tdd.groomingzone.auth.utils.CookieManager;
 import tdd.groomingzone.auth.utils.JwtManager;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
@@ -28,17 +29,19 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final UserDetailsService userDetailsService;
+    private final CookieManager cookieManager;
 
-    public JwtVerificationFilter(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, UserDetailsService userDetailsService) {
+    public JwtVerificationFilter(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, UserDetailsService userDetailsService, CookieManager cookieManager) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.userDetailsService = userDetailsService;
+        this.cookieManager = cookieManager;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            Cookie accessTokenCookie = jwtManager.resolveAccessToken(request);
+            Cookie accessTokenCookie = cookieManager.resolveAccessTokenCookie(request);
             String accessToken = getTokenFromCookie(accessTokenCookie);
             jwtManager.verifyToken(accessToken, jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey()));
             Map<String, Object> claims = getClaims(accessToken);
@@ -75,7 +78,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         if(request.getCookies() != null){
-            Cookie authorization = jwtManager.resolveAccessToken(request);
+            Cookie authorization = cookieManager.resolveAccessTokenCookie(request);
             return authorization == null || !authorization.getValue().startsWith("Bearer");
         }
         return true;

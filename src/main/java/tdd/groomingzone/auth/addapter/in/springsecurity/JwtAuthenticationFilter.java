@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
-import tdd.groomingzone.auth.utils.CookieProvider;
+import tdd.groomingzone.auth.utils.CookieManager;
 import tdd.groomingzone.auth.utils.JwtManager;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
@@ -29,13 +29,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtManager jwtManager;
     private final RedisSignInPort redisSignInPort;
-    private final CookieProvider cookieProvider;
+    private final CookieManager cookieManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtManager jwtManager, RedisSignInPort redisSignInPort, CookieProvider cookieProvider) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtManager jwtManager, RedisSignInPort redisSignInPort, CookieManager cookieManager) {
         this.authenticationManager = authenticationManager;
         this.jwtManager = jwtManager;
         this.redisSignInPort = redisSignInPort;
-        this.cookieProvider = cookieProvider;
+        this.cookieManager = cookieManager;
     }
 
     @SneakyThrows
@@ -65,8 +65,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = getAccessTokenFromJwtTokenizer(memberEntity);
         String refreshToken = getRefreshTokenFromJwtTokenizer(memberEntity);
 
-        Cookie accessTokenCookie = cookieProvider.createCookie("ACCESS_TOKEN", "Bearer+" + accessToken, jwtManager.getAccessTokenExpirationMinutes());
-        Cookie refreshTokenCookie = cookieProvider.createCookie("REFRESH_TOKEN", refreshToken, jwtManager.getRefreshTokenExpirationMinutes());
+        Cookie accessTokenCookie = cookieManager.createCookie("ACCESS_TOKEN", "Bearer+" + accessToken, jwtManager.getAccessTokenExpirationMinutes());
+        Cookie refreshTokenCookie = cookieManager.createCookie("REFRESH_TOKEN", refreshToken, jwtManager.getRefreshTokenExpirationMinutes());
 
         response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);

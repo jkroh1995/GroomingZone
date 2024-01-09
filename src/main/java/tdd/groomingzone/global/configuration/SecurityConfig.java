@@ -15,7 +15,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import tdd.groomingzone.auth.addapter.in.springsecurity.JwtAuthenticationFilter;
 import tdd.groomingzone.auth.addapter.in.springsecurity.JwtVerificationFilter;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
-import tdd.groomingzone.auth.utils.CookieProvider;
+import tdd.groomingzone.auth.utils.CookieManager;
 import tdd.groomingzone.auth.utils.handler.MemberAccessDeniedHandler;
 import tdd.groomingzone.auth.utils.handler.MemberAuthenticationEntryPoint;
 import tdd.groomingzone.auth.utils.handler.MemberAuthenticationFailureHandler;
@@ -34,14 +34,14 @@ public class SecurityConfig {
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
     private final RedisSignInPort redisSignInPort;
-    private final CookieProvider cookieProvider;
+    private final CookieManager cookieManager;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieProvider cookieProvider) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
         this.redisSignInPort = redisSignInPort;
-        this.cookieProvider = cookieProvider;
+        this.cookieManager = cookieManager;
     }
 
     @Bean
@@ -96,7 +96,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager, redisSignInPort, cookieProvider);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager, redisSignInPort, cookieManager);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/sign-in");
 
@@ -104,7 +104,7 @@ public class SecurityConfig {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, memberDetailsService);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, memberDetailsService, cookieManager);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

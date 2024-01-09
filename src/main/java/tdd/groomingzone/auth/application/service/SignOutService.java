@@ -3,7 +3,7 @@ package tdd.groomingzone.auth.application.service;
 import org.springframework.stereotype.Service;
 import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
-import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.auth.utils.CookieManager;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,17 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 public class SignOutService implements SignOutUseCase {
 
     private final RedisSignOutPort signOutPort;
-    private final JwtManager jwtManager;
+    private final CookieManager cookieManager;
 
-    public SignOutService(RedisSignOutPort signOutPort, JwtManager jwtManager) {
+    public SignOutService(RedisSignOutPort signOutPort, CookieManager cookieManager) {
         this.signOutPort = signOutPort;
-        this.jwtManager = jwtManager;
+        this.cookieManager = cookieManager;
     }
 
     @Override
     public void signOut(String email, HttpServletRequest request, HttpServletResponse response) {
-        Cookie accessTokenCookie = jwtManager.resolveAccessToken(request);
-        Cookie refreshTokenCookie = jwtManager.resolveRefreshToken(request);
+        Cookie accessTokenCookie = cookieManager.resolveAccessTokenCookie(request);
+        Cookie refreshTokenCookie = cookieManager.resolveRefreshTokenCookie(request);
 
         expireCookie(accessTokenCookie);
         expireCookie(refreshTokenCookie);
