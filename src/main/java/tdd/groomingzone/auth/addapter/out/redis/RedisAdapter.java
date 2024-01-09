@@ -2,13 +2,14 @@ package tdd.groomingzone.auth.addapter.out.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
 import tdd.groomingzone.auth.utils.JwtManager;
 
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class RedisAdapter implements RedisSignOutPort {
+public class RedisAdapter implements RedisSignOutPort, RedisSignInPort {
 
     private final JwtManager jwtManager;
     private final RedisTemplate<String, String> redisTemplate;
@@ -18,15 +19,20 @@ public class RedisAdapter implements RedisSignOutPort {
         this.redisTemplate = redisTemplate;
     }
 
-    public void signOut(String accessToken, String refreshToken) {
+    @Override
+    public void signOut(String accessToken, String email) {
         jwtManager.verifyToken(accessToken, jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey()));
-        redisTemplate.opsForValue().set(accessToken, "sign-out");
-        redisTemplate.opsForValue().set(refreshToken, "sign-out");
-        redisTemplate.expire(accessToken, jwtManager.getAccessTokenExpirationMinutes(), TimeUnit.MINUTES);
-        redisTemplate.expire(refreshToken, jwtManager.getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
+        redisTemplate.opsForValue().getAndDelete(email);
     }
 
-    public boolean isSignOut(String accessToken) {
-        return Boolean.TRUE.equals(redisTemplate.hasKey(accessToken));
+    @Override
+    public void signIn(String email, String accessToken) {
+        redisTemplate.opsForValue().set(email, accessToken);
+        redisTemplate.expire(email, jwtManager.getAccessTokenExpirationMinutes(), TimeUnit.MINUTES);
+    }
+
+    @Override
+    public boolean alreadySignIn(String email) {
+        return Boolean.TRUE.equals(redisTemplate.hasKey(email));
     }
 }

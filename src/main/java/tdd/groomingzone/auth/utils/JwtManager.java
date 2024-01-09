@@ -9,7 +9,11 @@ import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import tdd.groomingzone.global.exception.CustomAuthenticationException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
@@ -84,12 +88,30 @@ public class JwtManager {
         return calendar.getTime();
     }
 
-    public String getTokenFromHeader(String tokenHeader) {
-        return tokenHeader.replace("Bearer ", "");
-    }
-
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public Cookie resolveAccessToken(HttpServletRequest request) {
+        return resolveToken(request, "ACCESS_TOKEN");
+    }
+
+    public Cookie resolveRefreshToken(HttpServletRequest request) {
+        return resolveToken(request, "REFRESH_TOKEN");
+    }
+
+    private Cookie resolveToken(HttpServletRequest request, String tokenName) {
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(tokenName)) {
+                    return cookie;
+                }
+            }
+        }
+
+        throw new CustomAuthenticationException(ExceptionCode.NOT_SIGN_IN);
     }
 }

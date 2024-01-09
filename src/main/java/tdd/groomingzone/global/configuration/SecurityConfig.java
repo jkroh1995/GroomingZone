@@ -12,9 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import tdd.groomingzone.auth.addapter.out.redis.RedisAdapter;
 import tdd.groomingzone.auth.addapter.in.springsecurity.JwtAuthenticationFilter;
 import tdd.groomingzone.auth.addapter.in.springsecurity.JwtVerificationFilter;
+import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
+import tdd.groomingzone.auth.utils.CookieProvider;
 import tdd.groomingzone.auth.utils.handler.MemberAccessDeniedHandler;
 import tdd.groomingzone.auth.utils.handler.MemberAuthenticationEntryPoint;
 import tdd.groomingzone.auth.utils.handler.MemberAuthenticationFailureHandler;
@@ -32,13 +33,15 @@ public class SecurityConfig {
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
-    private final RedisAdapter redisAdapter;
+    private final RedisSignInPort redisSignInPort;
+    private final CookieProvider cookieProvider;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisAdapter redisAdapter) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieProvider cookieProvider) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
-        this.redisAdapter = redisAdapter;
+        this.redisSignInPort = redisSignInPort;
+        this.cookieProvider = cookieProvider;
     }
 
     @Bean
@@ -77,7 +80,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://groomin-zone.com", "http://localhost:3000", "http://localhost:8080"));
+        configuration.setAllowedOrigins(List.of("https://grooming-zone.com", "http://localhost:3000", "http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
@@ -93,7 +96,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager, redisSignInPort, cookieProvider);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/sign-in");
 
@@ -101,7 +104,7 @@ public class SecurityConfig {
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, redisAdapter, memberDetailsService);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtManager, authorityUtils, memberDetailsService);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

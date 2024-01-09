@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
+import tdd.groomingzone.auth.utils.CookieProvider;
 import tdd.groomingzone.auth.utils.JwtManager;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
@@ -15,6 +16,7 @@ import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,11 +29,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtManager jwtManager;
     private final RedisSignInPort redisSignInPort;
+    private final CookieProvider cookieProvider;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtManager jwtManager, RedisSignInPort redisSignInPort) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtManager jwtManager, RedisSignInPort redisSignInPort, CookieProvider cookieProvider) {
         this.authenticationManager = authenticationManager;
         this.jwtManager = jwtManager;
         this.redisSignInPort = redisSignInPort;
+        this.cookieProvider = cookieProvider;
     }
 
     @SneakyThrows
@@ -61,8 +65,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = getAccessTokenFromJwtTokenizer(memberEntity);
         String refreshToken = getRefreshTokenFromJwtTokenizer(memberEntity);
 
-        response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
+        Cookie accessTokenCookie = cookieProvider.createCookie("ACCESS_TOKEN", "Bearer+" + accessToken, jwtManager.getAccessTokenExpirationMinutes());
+        Cookie refreshTokenCookie = cookieProvider.createCookie("REFRESH_TOKEN", refreshToken, jwtManager.getRefreshTokenExpirationMinutes());
+
+        response.addCookie(accessTokenCookie);
+        response.addCookie(refreshTokenCookie);
         response.setIntHeader("MemberId", (int) memberEntity.getId());
 
         redisSignInPort.signIn(memberEntity.getEmail(), accessToken);
