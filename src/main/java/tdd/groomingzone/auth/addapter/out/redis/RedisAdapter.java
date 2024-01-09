@@ -1,14 +1,14 @@
 package tdd.groomingzone.auth.addapter.out.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
 import tdd.groomingzone.auth.utils.JwtManager;
 
 import java.util.concurrent.TimeUnit;
 
-@Service
+@Repository
 public class RedisAdapter implements RedisSignOutPort, RedisSignInPort {
 
     private final JwtManager jwtManager;
