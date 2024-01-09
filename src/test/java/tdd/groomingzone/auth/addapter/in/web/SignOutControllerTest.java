@@ -9,7 +9,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
+import tdd.groomingzone.auth.utils.CookieProvider;
 
+import javax.servlet.http.Cookie;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
@@ -22,6 +28,8 @@ import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProce
 @AutoConfigureRestDocs
 class SignOutControllerTest {
 
+    private final CookieProvider cookieProvider = new CookieProvider();
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -30,22 +38,25 @@ class SignOutControllerTest {
 
     @Test
     void testSignOut() throws Exception {
-        String accessToken = "test access token";
-        String refreshToken = "test refresh token";
+        String testAccessToken = "test access token";
+        String testRefreshToken = "test refresh token";
+
+        Cookie accessTokenCookie = cookieProvider.createCookie("ACCESS_TOKEN", testAccessToken, 1);
+        Cookie refreshTokenCookie = cookieProvider.createCookie("REFRESH_TOKEN", testRefreshToken, 1);
 
         mockMvc.perform(
                         delete("/auth/sign-out")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .header("Authorization", accessToken)
-                                .header("Refresh", refreshToken)
+                                .cookie(accessTokenCookie, refreshTokenCookie)
                 ).andExpect(status().isOk())
                 .andDo(document(
                         "sign-out",
                         getRequestPreProcessor(),
                         getResponsePreProcessor()
-                ));
+                ))
+                .andReturn();
 
-        verify(signOutUseCase).signOut(accessToken, refreshToken);
+        verify(signOutUseCase).signOut(any(), any(), any());
     }
 }
