@@ -9,13 +9,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
-import tdd.groomingzone.auth.utils.CookieProvider;
+import tdd.groomingzone.auth.utils.CookieManager;
 
 import javax.servlet.http.Cookie;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
@@ -28,7 +26,7 @@ import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProce
 @AutoConfigureRestDocs
 class SignOutControllerTest {
 
-    private final CookieProvider cookieProvider = new CookieProvider();
+    private final CookieManager cookieManager = new CookieManager();
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,8 +39,8 @@ class SignOutControllerTest {
         String testAccessToken = "test access token";
         String testRefreshToken = "test refresh token";
 
-        Cookie accessTokenCookie = cookieProvider.createCookie("ACCESS_TOKEN", testAccessToken, 1);
-        Cookie refreshTokenCookie = cookieProvider.createCookie("REFRESH_TOKEN", testRefreshToken, 1);
+        Cookie accessTokenCookie = cookieManager.createCookie("ACCESS_TOKEN", testAccessToken, 1);
+        Cookie refreshTokenCookie = cookieManager.createCookie("REFRESH_TOKEN", testRefreshToken, 1);
 
         mockMvc.perform(
                         delete("/auth/sign-out")

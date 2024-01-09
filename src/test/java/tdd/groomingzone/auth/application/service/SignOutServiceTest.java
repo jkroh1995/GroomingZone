@@ -11,8 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
-import tdd.groomingzone.auth.utils.CookieProvider;
-import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.auth.utils.CookieManager;
 
 import javax.servlet.http.Cookie;
 
@@ -24,13 +23,11 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class SignOutServiceTest {
 
-    private CookieProvider cookieProvider = new CookieProvider();
+    @Mock
+    private CookieManager cookieManager;
 
     @Mock
     private RedisSignOutPort signOutPort;
-
-    @Mock
-    private JwtManager jwtManager;
 
     @InjectMocks
     private SignOutService signOutService;
@@ -42,18 +39,24 @@ class SignOutServiceTest {
         String testAccessToken = "test access token";
         String testRefreshToken = "test refresh token";
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
-        Cookie accessTokenCookie = cookieProvider.createCookie("ACCESS_TOKEN", testAccessToken, 1);
-        Cookie refreshTokenCookie = cookieProvider.createCookie("REFRESH_TOKEN", testRefreshToken, 1);
+        Cookie accessTokenCookie = new Cookie("ACCESS_TOKEN", testAccessToken);
+        accessTokenCookie.setHttpOnly(true);
+        accessTokenCookie.setMaxAge(1);
+        accessTokenCookie.setPath("/");
+        Cookie refreshTokenCookie = new Cookie("REFRESH_TOKEN", testRefreshToken);
+        accessTokenCookie.setHttpOnly(true);
+        accessTokenCookie.setMaxAge(1);
+        accessTokenCookie.setPath("/");
         mockHttpServletRequest.setCookies(accessTokenCookie, refreshTokenCookie);
 
-        given(jwtManager.resolveAccessToken(any())).willReturn(accessTokenCookie);
-        given(jwtManager.resolveRefreshToken(any())).willReturn(refreshTokenCookie);
+        given(cookieManager.resolveAccessTokenCookie(any())).willReturn(accessTokenCookie);
+        given(cookieManager.resolveRefreshTokenCookie(any())).willReturn(refreshTokenCookie);
 
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
         signOutService.signOut("jk@gmail.com", mockHttpServletRequest, mockHttpServletResponse);
 
-        verify(jwtManager).resolveAccessToken(mockHttpServletRequest);
-        verify(jwtManager).resolveRefreshToken(mockHttpServletRequest);
+        verify(cookieManager).resolveAccessTokenCookie(mockHttpServletRequest);
+        verify(cookieManager).resolveRefreshTokenCookie(mockHttpServletRequest);
         verify(signOutPort).signOut(testAccessToken, "jk@gmail.com");
 
         assertThat(mockHttpServletResponse.getCookie("ACCESS_TOKEN").getMaxAge()).isEqualTo(0);
