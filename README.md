@@ -1,5 +1,5 @@
 # GroomingZone
-TDD 연습을 위한 프로젝트입니다.
+TDD 구현 방식 연습 및 기술 학습을 위한 프로젝트입니다.
 <details>
 <summary> ✏ Study </summary>
 <div markdown="1">
