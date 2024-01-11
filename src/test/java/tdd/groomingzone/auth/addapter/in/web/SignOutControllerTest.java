@@ -52,8 +52,7 @@ class SignOutControllerTest {
                         "sign-out",
                         getRequestPreProcessor(),
                         getResponsePreProcessor()
-                ))
-                .andReturn();
+                ));
 
         verify(signOutUseCase).signOut(any(), any(), any());
     }

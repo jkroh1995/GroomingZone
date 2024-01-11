@@ -1,4 +1,4 @@
-package tdd.groomingzone.board.recruitment;
+package tdd.groomingzone.board.recruitment.adapter.out.persistence;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QRecruitment is a Querydsl query type for Recruitment
+ * QRecruitmentEntity is a Querydsl query type for RecruitmentEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QRecruitment extends EntityPathBase<Recruitment> {
+public class QRecruitmentEntity extends EntityPathBase<RecruitmentEntity> {
 
-    private static final long serialVersionUID = 1224716154L;
+    private static final long serialVersionUID = -708766993L;
 
-    public static final QRecruitment recruitment = new QRecruitment("recruitment");
+    public static final QRecruitmentEntity recruitmentEntity = new QRecruitmentEntity("recruitmentEntity");
 
     public final tdd.groomingzone.board.common.QBoardEntity _super = new tdd.groomingzone.board.common.QBoardEntity(this);
 
@@ -36,7 +36,7 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
     //inherited
     public final StringPath title = _super.title;
 
-    public final EnumPath<Recruitment.Type> type = createEnum("type", Recruitment.Type.class);
+    public final StringPath type = createString("type");
 
     //inherited
     public final NumberPath<Integer> viewCount = _super.viewCount;
@@ -47,16 +47,16 @@ public class QRecruitment extends EntityPathBase<Recruitment> {
     //inherited
     public final StringPath writerNickName = _super.writerNickName;
 
-    public QRecruitment(String variable) {
-        super(Recruitment.class, forVariable(variable));
+    public QRecruitmentEntity(String variable) {
+        super(RecruitmentEntity.class, forVariable(variable));
     }
 
-    public QRecruitment(Path<? extends Recruitment> path) {
+    public QRecruitmentEntity(Path<? extends RecruitmentEntity> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QRecruitment(PathMetadata metadata) {
-        super(Recruitment.class, metadata);
+    public QRecruitmentEntity(PathMetadata metadata) {
+        super(RecruitmentEntity.class, metadata);
     }
 
 }

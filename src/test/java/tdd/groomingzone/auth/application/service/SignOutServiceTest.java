@@ -8,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.security.test.context.support.TestExecutionEvent;
-import org.springframework.security.test.context.support.WithUserDetails;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
 import tdd.groomingzone.auth.utils.CookieManager;
 
@@ -34,7 +32,6 @@ class SignOutServiceTest {
 
     @Test
     @DisplayName("로그아웃 요청을 보내면 로그아웃에 성공한다.")
-    @WithUserDetails(value = "jk@gmail.com", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void signOut() {
         String testAccessToken = "test access token";
         String testRefreshToken = "test refresh token";

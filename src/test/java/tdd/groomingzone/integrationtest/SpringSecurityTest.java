@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -49,10 +50,16 @@ class SpringSecurityTest {
     private PostFreeBoardUseCase postFreeBoardUseCase;
 
     @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
     private Gson gson;
 
     @BeforeAll
     void setUp(){
+        redisTemplate.keys("*").stream().forEach(key -> {
+            redisTemplate.delete(key);
+        });
         String email = "jk@gmail.com";
         String password = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode( "123");
         String nickName = "JKROH";
@@ -76,6 +83,13 @@ class SpringSecurityTest {
         postFreeBoardUseCase.postFreeBoard(PostFreeBoardCommand.of(createdMemberEntity.getId(), freeBoard.getTitle(), freeBoard.getContent()));
     }
 
+    @AfterAll
+    void after(){
+        redisTemplate.keys("*").stream().forEach(key -> {
+            redisTemplate.delete(key);
+        });
+    }
+
     @Test
     @DisplayName("등록된 사용자가 로그인 요청을 보내면 성공한다")
     void testSignIn() throws Exception {
@@ -92,8 +106,8 @@ class SpringSecurityTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isOk())
-                .andExpect(header().exists("Authorization"))
-                .andExpect(header().exists("Refresh"))
+                .andExpect(cookie().exists("ACCESS_TOKEN"))
+                .andExpect(cookie().exists("REFRESH_TOKEN"))
                 .andDo(document(
                         "sign-in",
                         getRequestPreProcessor(),
