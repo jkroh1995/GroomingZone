@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 public final class BoardVO {
-    private final long id;
+    private final Long id;
 
     private final Member writer;
 
@@ -29,10 +29,10 @@ public final class BoardVO {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof BoardVO){
-            return this.id == ((BoardVO) obj).id
+        if (obj instanceof BoardVO) {
+            return this.id.equals(((BoardVO) obj).id)
                     && this.writer.getEmail().equals(((BoardVO) obj).getWriter().getEmail())
-                    && this.createdAt == ((BoardVO) obj).createdAt;
+                    && this.createdAt.equals(((BoardVO) obj).createdAt);
         }
         return false;
     }
