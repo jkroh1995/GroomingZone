@@ -1,7 +1,7 @@
 package tdd.groomingzone.barbershop;
 
 import lombok.Getter;
-import tdd.groomingzone.board.review.Review;
+import tdd.groomingzone.post.review.Review;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
 import javax.persistence.*;

@@ -1,8 +1,8 @@
 package tdd.groomingzone.comment.freeboardcomment.application.service;
 
 import org.springframework.stereotype.Service;
-import tdd.groomingzone.board.freeboard.application.port.out.FreeBoardEntityQueryResult;
-import tdd.groomingzone.board.freeboard.application.port.out.LoadFreeBoardPort;
+import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
+import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.DeleteFreeBoardCommentCommand;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.DeleteFreeBoardCommentUseCase;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.QFreeBoardEntity.freeBoardEntity;
+import static tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.QFreeBoardEntity.freeBoardEntity;
 import static tdd.groomingzone.comment.common.QCommentEntity.commentEntity;
 
 @Repository

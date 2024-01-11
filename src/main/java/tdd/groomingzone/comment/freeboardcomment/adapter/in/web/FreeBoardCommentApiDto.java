@@ -1,7 +1,7 @@
 package tdd.groomingzone.comment.freeboardcomment.adapter.in.web;
 
 import lombok.*;
-import tdd.groomingzone.board.common.WriterInfo;
+import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
 
 import java.time.format.DateTimeFormatter;
