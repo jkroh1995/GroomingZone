@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### QueryDSL
-src/main/generated
+!**/src/main/generated
