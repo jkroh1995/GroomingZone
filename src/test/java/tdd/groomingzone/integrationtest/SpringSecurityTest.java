@@ -15,10 +15,10 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.auth.addapter.in.springsecurity.SignInDto;
-import tdd.groomingzone.board.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.board.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
-import tdd.groomingzone.board.freeboard.application.port.in.command.PostFreeBoardCommand;
-import tdd.groomingzone.board.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
+import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
+import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
+import tdd.groomingzone.post.freeboard.application.port.in.command.PostFreeBoardCommand;
+import tdd.groomingzone.post.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 

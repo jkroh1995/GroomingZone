@@ -1,7 +1,7 @@
 package tdd.groomingzone.comment.freeboardcomment.domain;
 
 import lombok.Builder;
-import tdd.groomingzone.board.freeboard.domain.FreeBoard;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.common.CommentInfo;
 import tdd.groomingzone.comment.common.CommentVO;
 import tdd.groomingzone.global.exception.BusinessException;

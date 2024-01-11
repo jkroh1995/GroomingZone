@@ -28,7 +28,7 @@ public class QBarberShop extends EntityPathBase<BarberShop> {
 
     public final tdd.groomingzone.member.adapter.out.persistence.QMemberEntity owner;
 
-    public final ListPath<tdd.groomingzone.board.review.Review, tdd.groomingzone.board.review.QReview> reviews = this.<tdd.groomingzone.board.review.Review, tdd.groomingzone.board.review.QReview>createList("reviews", tdd.groomingzone.board.review.Review.class, tdd.groomingzone.board.review.QReview.class, PathInits.DIRECT2);
+    public final ListPath<tdd.groomingzone.post.review.Review, tdd.groomingzone.post.review.QReview> reviews = this.<tdd.groomingzone.post.review.Review, tdd.groomingzone.post.review.QReview>createList("reviews", tdd.groomingzone.post.review.Review.class, tdd.groomingzone.post.review.QReview.class, PathInits.DIRECT2);
 
     public QBarberShop(String variable) {
         this(BarberShop.class, forVariable(variable), INITS);
