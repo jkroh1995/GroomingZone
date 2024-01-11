@@ -2,6 +2,8 @@ package tdd.groomingzone.member.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import tdd.groomingzone.global.exception.BusinessException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 
 @Getter
 public class Member {
@@ -13,13 +15,13 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(long memberId, String email, String password, String nickName, String phoneNumber, String role) {
+    private Member(long memberId, String email, String password, String nickName, String phoneNumber, String role) {
         this.memberId = memberId;
         this.email = Email.of(email);
         this.password = Password.of(password);
         this.nickName = nickName;
         this.phoneNumber = PhoneNumber.of(phoneNumber);
-        this.role = Role.valueOf(role);
+        this.role = Role.of(role);
     }
 
     public void modify(String email, String password, String nickName, String phoneNumber, String role) {
@@ -27,7 +29,18 @@ public class Member {
         this.password = Password.of(password);
         this.nickName = nickName;
         this.phoneNumber = PhoneNumber.of(phoneNumber);
+        validateRole(role);
         this.role = Role.valueOf(role);
+    }
+
+    private void validateRole(String inputRole) {
+        Role [] roles = Role.values();
+        for(Role role : roles){
+            if(role.getRole().equals(inputRole)){
+                return;
+            }
+        }
+        throw new BusinessException(ExceptionCode.INVALID_ROLE);
     }
 
     public String getEmail() {
@@ -60,6 +73,14 @@ public class Member {
 
         Role(String role) {
             this.role = role;
+        }
+
+        public static Role of(String inputRole){
+            try{
+                return Role.valueOf(inputRole);
+            }catch (IllegalArgumentException e){
+                throw new BusinessException(ExceptionCode.INVALID_ROLE);
+            }
         }
     }
 }
