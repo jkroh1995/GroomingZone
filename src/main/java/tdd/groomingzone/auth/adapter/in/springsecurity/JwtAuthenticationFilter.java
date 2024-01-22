@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.addapter.in.springsecurity;
+package tdd.groomingzone.auth.adapter.in.springsecurity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -62,8 +62,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         MemberEntity memberEntity = (MemberEntity) authResult.getPrincipal();
 
-        String accessToken = getAccessTokenFromJwtTokenizer(memberEntity);
-        String refreshToken = getRefreshTokenFromJwtTokenizer(memberEntity);
+        String accessToken = getAccessTokenFromJwtManager(memberEntity);
+        String refreshToken = getRefreshTokenFromJwtManager(memberEntity);
 
         Cookie accessTokenCookie = cookieManager.createCookie("ACCESS_TOKEN", "Bearer+" + accessToken, jwtManager.getAccessTokenExpirationMinutes());
         Cookie refreshTokenCookie = cookieManager.createCookie("REFRESH_TOKEN", refreshToken, jwtManager.getRefreshTokenExpirationMinutes());
@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
-    private String getAccessTokenFromJwtTokenizer(MemberEntity memberEntity) {
+    private String getAccessTokenFromJwtManager(MemberEntity memberEntity) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", memberEntity.getEmail());
         claims.put("roles", memberEntity.getRoles());
@@ -89,7 +89,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return jwtManager.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
     }
 
-    private String getRefreshTokenFromJwtTokenizer(MemberEntity memberEntity) {
+    private String getRefreshTokenFromJwtManager(MemberEntity memberEntity) {
         String subject = memberEntity.getEmail();
         Date expiration = jwtManager.getTokenExpiration(jwtManager.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtManager.encodeBase64SecretKey(jwtManager.getSecretKey());
