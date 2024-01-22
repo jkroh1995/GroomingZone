@@ -1,8 +1,6 @@
 package tdd.groomingzone.auth.utils;
 
 import org.springframework.stereotype.Component;
-import tdd.groomingzone.global.exception.CustomAuthenticationException;
-import tdd.groomingzone.global.exception.ExceptionCode;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +34,6 @@ public class CookieManager {
             }
         }
 
-        throw new CustomAuthenticationException(ExceptionCode.NOT_SIGN_IN);
+        return null;
     }
 }
