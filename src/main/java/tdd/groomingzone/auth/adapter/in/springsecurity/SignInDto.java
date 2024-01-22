@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.addapter.in.springsecurity;
+package tdd.groomingzone.auth.adapter.in.springsecurity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

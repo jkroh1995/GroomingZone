@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.addapter.out.redis;
+package tdd.groomingzone.auth.adapter.out.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.addapter.in.web;
+package tdd.groomingzone.auth.adapter.in.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

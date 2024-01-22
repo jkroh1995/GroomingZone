@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.addapter.in.springsecurity;
+package tdd.groomingzone.auth.adapter.in.springsecurity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

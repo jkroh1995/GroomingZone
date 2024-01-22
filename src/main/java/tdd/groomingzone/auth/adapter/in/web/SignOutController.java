@@ -1,4 +1,4 @@
-package tdd.groomingzone.auth.addapter.in.web;
+package tdd.groomingzone.auth.adapter.in.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
