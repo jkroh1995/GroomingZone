@@ -1,5 +1,6 @@
 package tdd.groomingzone.global.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,21 +9,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import tdd.groomingzone.auth.addapter.in.springsecurity.JwtAuthenticationFilter;
-import tdd.groomingzone.auth.addapter.in.springsecurity.JwtVerificationFilter;
+import tdd.groomingzone.auth.adapter.in.springsecurity.JwtAuthenticationFilter;
+import tdd.groomingzone.auth.adapter.in.springsecurity.JwtVerificationFilter;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
+import tdd.groomingzone.auth.oauth2.OAuth2MemberService;
 import tdd.groomingzone.auth.utils.CookieManager;
-import tdd.groomingzone.auth.utils.handler.MemberAccessDeniedHandler;
-import tdd.groomingzone.auth.utils.handler.MemberAuthenticationEntryPoint;
-import tdd.groomingzone.auth.utils.handler.MemberAuthenticationFailureHandler;
-import tdd.groomingzone.auth.utils.handler.MemberAuthenticationSuccessHandler;
+import tdd.groomingzone.auth.utils.handler.*;
 import tdd.groomingzone.auth.application.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,18 +31,28 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String clientId;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String clientSecret;
+
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
     private final RedisSignInPort redisSignInPort;
     private final CookieManager cookieManager;
+    private final OAuth2MemberService OAuth2MemberService;
+    private final MemberEntitiyRepository memberEntityRepository;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager, OAuth2MemberService OAuth2MemberService, MemberEntitiyRepository memberEntityRepository) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
         this.redisSignInPort = redisSignInPort;
         this.cookieManager = cookieManager;
+        this.OAuth2MemberService = OAuth2MemberService;
+        this.memberEntityRepository = memberEntityRepository;
     }
 
     @Bean
@@ -62,7 +73,12 @@ public class SecurityConfig {
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
+                .oauth2Login(oAuth2 -> oAuth2
+                        .successHandler(new OAuth2MemberSuccessHandler(memberEntityRepository, jwtManager, cookieManager, redisSignInPort))
+                        .userInfoEndpoint()
+                        .userService(OAuth2MemberService))
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.GET, "/free-board").hasRole("CUSTOMER")
                         .antMatchers(HttpMethod.POST, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**").hasRole("CUSTOMER")
                         .antMatchers(HttpMethod.PUT, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
                         .antMatchers(HttpMethod.DELETE, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
@@ -108,7 +124,8 @@ public class SecurityConfig {
 
             builder
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
+                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
 }
