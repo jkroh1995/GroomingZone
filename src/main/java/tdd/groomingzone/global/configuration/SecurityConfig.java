@@ -1,6 +1,5 @@
 package tdd.groomingzone.global.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -19,6 +17,7 @@ import tdd.groomingzone.auth.adapter.in.springsecurity.JwtVerificationFilter;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
 import tdd.groomingzone.auth.oauth2.OAuth2MemberService;
 import tdd.groomingzone.auth.utils.CookieManager;
+import tdd.groomingzone.auth.application.service.SuccessfulAuthenticationProcessor;
 import tdd.groomingzone.auth.utils.handler.*;
 import tdd.groomingzone.auth.application.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
@@ -31,12 +30,6 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
-    private String clientId;
-    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
-    private String clientSecret;
-
     private final JwtManager jwtManager;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberDetailsService memberDetailsService;
@@ -44,8 +37,9 @@ public class SecurityConfig {
     private final CookieManager cookieManager;
     private final OAuth2MemberService OAuth2MemberService;
     private final MemberEntitiyRepository memberEntityRepository;
+    private final SuccessfulAuthenticationProcessor successfulAuthenticationProcessor;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager, OAuth2MemberService OAuth2MemberService, MemberEntitiyRepository memberEntityRepository) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager, OAuth2MemberService OAuth2MemberService, MemberEntitiyRepository memberEntityRepository, SuccessfulAuthenticationProcessor successfulAuthenticationProcessor) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
@@ -53,6 +47,7 @@ public class SecurityConfig {
         this.cookieManager = cookieManager;
         this.OAuth2MemberService = OAuth2MemberService;
         this.memberEntityRepository = memberEntityRepository;
+        this.successfulAuthenticationProcessor = successfulAuthenticationProcessor;
     }
 
     @Bean
@@ -74,7 +69,7 @@ public class SecurityConfig {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .oauth2Login(oAuth2 -> oAuth2
-                        .successHandler(new OAuth2MemberSuccessHandler(memberEntityRepository, jwtManager, cookieManager, redisSignInPort))
+                        .successHandler(new OAuth2MemberSuccessHandler(memberEntityRepository, successfulAuthenticationProcessor))
                         .userInfoEndpoint()
                         .userService(OAuth2MemberService))
                 .authorizeHttpRequests(authorize -> authorize
@@ -112,7 +107,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager, redisSignInPort, cookieManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, redisSignInPort, successfulAuthenticationProcessor);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/sign-in");
 
@@ -124,8 +119,7 @@ public class SecurityConfig {
 
             builder
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
-                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }
