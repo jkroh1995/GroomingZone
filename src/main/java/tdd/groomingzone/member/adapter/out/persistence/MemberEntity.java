@@ -4,6 +4,7 @@ import lombok.*;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,19 +40,14 @@ public class MemberEntity extends BaseEntity {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    private MemberEntity(long id, String email, String password, String nickName, String phoneNumber, List<String>roles){
+    private MemberEntity(long id, String email, String password, String nickName, String phoneNumber, List<String>roles, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.phoneNumber = phoneNumber;
         this.roles = roles;
+        this.setCreatedAt(createdAt);
+        this.setModifiedAt(modifiedAt);
     }
-//
-//    public void writeFreeBoard(FreeBoardEntity freeBoard) {
-//        this.freeBoards.add(freeBoard);
-//        if (freeBoard.getWriter() != this) {
-//            freeBoard.setWriter(this);
-//        }
-//    }
 }
