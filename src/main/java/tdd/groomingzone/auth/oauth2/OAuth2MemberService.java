@@ -42,11 +42,11 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
         List<String> roles = rolesGenerator.generateMemberRoles(email, "고객");
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities(roles);
 
-        saveMemberIfNotPresent(email, attributes.getName(), roles);
+        saveMemberIfNotPresent(email, attributes.getName(), roles, registrationId);
         return new CustomOAuth2User(registrationId, userAttributes, authorities, email);
     }
 
-    private void saveMemberIfNotPresent(String email, String nickName, List<String> roles){
+    private void saveMemberIfNotPresent(String email, String nickName, List<String> roles, String registrationId){
         if(memberEntitiyRepository.findByEmail(email).isEmpty()){
             LocalDateTime createTime = LocalDateTime.now();
             MemberEntity member = MemberEntity.builder()
@@ -56,6 +56,7 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
                     .roles(roles)
                     .createdAt(createTime)
                     .modifiedAt(createTime)
+                    .provider(registrationId)
                     .build();
             memberEntitiyRepository.save(member);
         }
