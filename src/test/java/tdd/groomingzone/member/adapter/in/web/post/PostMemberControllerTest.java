@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.member.adapter.dto.MemberApiDto;
 import tdd.groomingzone.member.application.port.in.MemberCommandResponse;
@@ -41,6 +42,9 @@ class PostMemberControllerTest {
     @MockBean
     private PostMemberUseCase postMemberUseCase;
 
+    @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
+
     @Test
     @DisplayName("정상적인 회원 가입 요청 테스트")
     void postMemberTest() throws Exception {
@@ -50,6 +54,7 @@ class PostMemberControllerTest {
         String nickName = "nickName";
         String phoneNumber = "010-1111-1111";
         String role = "BARBER";
+        String provider = "SERVER";
 
         MemberApiDto.Post postDto = MemberApiDto.Post.builder()
                 .email(email)
@@ -61,7 +66,7 @@ class PostMemberControllerTest {
 
         String content = gson.toJson(postDto);
 
-        MemberCommandResponse commandResponse = MemberCommandResponse.of(1L, email, nickName, phoneNumber, role);
+        MemberCommandResponse commandResponse = MemberCommandResponse.of(1L, email, nickName, phoneNumber, role, provider);
 
         given(postMemberUseCase.postMember(any())).willReturn(commandResponse);
 

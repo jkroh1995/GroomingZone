@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.MultiFreeBoardCommentResponse;
@@ -16,6 +17,7 @@ import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.respons
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.GetFreeBoardCommentUseCase;
 import tdd.groomingzone.global.pagedresponse.PageInfo;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +44,9 @@ import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProce
 class GetFreeBoardCommentControllerTest {
 
     @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
+
+    @MockBean
     private GetFreeBoardCommentUseCase getFreeBoardCommentUseCase;
 
     @Autowired
@@ -52,14 +57,7 @@ class GetFreeBoardCommentControllerTest {
     void testGetFreeBoardComment() throws Exception {
         String testContent = "content";
 
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();

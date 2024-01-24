@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
 import tdd.groomingzone.auth.utils.CookieManager;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = SignOutController.class,
+@WebMvcTest(controllers = {SignOutController.class},
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @AutoConfigureRestDocs
 class SignOutControllerTest {
@@ -30,6 +31,9 @@ class SignOutControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
 
     @MockBean
     private SignOutUseCase signOutUseCase;

@@ -10,12 +10,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
+import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 import tdd.groomingzone.util.StubTime;
 
 import java.time.LocalDateTime;
@@ -35,7 +38,7 @@ import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProces
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
 
-@WebMvcTest(controllers = PutFreeBoardController.class,
+@WebMvcTest(controllers = {PutFreeBoardController.class},
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @AutoConfigureRestDocs
 class PutFreeBoardControllerTest {
@@ -47,7 +50,10 @@ class PutFreeBoardControllerTest {
     private Gson gson;
 
     @MockBean
-    private StubTime stubTime;
+    private SecurityFilterChain oauth2SecurityFilterChain;
+
+    @MockBean
+    Time stubTime;
 
     @MockBean
     private PutFreeBoardUseCase putFreeBoardUseCase;
@@ -67,14 +73,7 @@ class PutFreeBoardControllerTest {
 
         String content = gson.toJson(testPut);
 
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         stubTime = new StubTime(LocalDateTime.of(2023, 11, 28, 22, 30, 10));
 
