@@ -12,17 +12,17 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import tdd.groomingzone.auth.addapter.in.springsecurity.JwtAuthenticationFilter;
-import tdd.groomingzone.auth.addapter.in.springsecurity.JwtVerificationFilter;
+import tdd.groomingzone.auth.adapter.in.springsecurity.JwtAuthenticationFilter;
+import tdd.groomingzone.auth.adapter.in.springsecurity.JwtVerificationFilter;
 import tdd.groomingzone.auth.application.port.out.RedisSignInPort;
+import tdd.groomingzone.auth.oauth2.OAuth2MemberService;
 import tdd.groomingzone.auth.utils.CookieManager;
-import tdd.groomingzone.auth.utils.handler.MemberAccessDeniedHandler;
-import tdd.groomingzone.auth.utils.handler.MemberAuthenticationEntryPoint;
-import tdd.groomingzone.auth.utils.handler.MemberAuthenticationFailureHandler;
-import tdd.groomingzone.auth.utils.handler.MemberAuthenticationSuccessHandler;
+import tdd.groomingzone.auth.application.service.SuccessfulAuthenticationProcessor;
+import tdd.groomingzone.auth.utils.handler.*;
 import tdd.groomingzone.auth.application.service.MemberDetailsService;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
 import tdd.groomingzone.auth.utils.JwtManager;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,13 +35,19 @@ public class SecurityConfig {
     private final MemberDetailsService memberDetailsService;
     private final RedisSignInPort redisSignInPort;
     private final CookieManager cookieManager;
+    private final OAuth2MemberService OAuth2MemberService;
+    private final MemberEntitiyRepository memberEntityRepository;
+    private final SuccessfulAuthenticationProcessor successfulAuthenticationProcessor;
 
-    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager) {
+    public SecurityConfig(JwtManager jwtManager, CustomAuthorityUtils authorityUtils, MemberDetailsService memberDetailsService, RedisSignInPort redisSignInPort, CookieManager cookieManager, OAuth2MemberService OAuth2MemberService, MemberEntitiyRepository memberEntityRepository, SuccessfulAuthenticationProcessor successfulAuthenticationProcessor) {
         this.jwtManager = jwtManager;
         this.authorityUtils = authorityUtils;
         this.memberDetailsService = memberDetailsService;
         this.redisSignInPort = redisSignInPort;
         this.cookieManager = cookieManager;
+        this.OAuth2MemberService = OAuth2MemberService;
+        this.memberEntityRepository = memberEntityRepository;
+        this.successfulAuthenticationProcessor = successfulAuthenticationProcessor;
     }
 
     @Bean
@@ -62,7 +68,12 @@ public class SecurityConfig {
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
+                .oauth2Login(oAuth2 -> oAuth2
+                        .successHandler(new OAuth2MemberSuccessHandler(memberEntityRepository, successfulAuthenticationProcessor))
+                        .userInfoEndpoint()
+                        .userService(OAuth2MemberService))
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.GET, "/free-board").hasRole("CUSTOMER")
                         .antMatchers(HttpMethod.POST, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**").hasRole("CUSTOMER")
                         .antMatchers(HttpMethod.PUT, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
                         .antMatchers(HttpMethod.DELETE, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
@@ -96,7 +107,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtManager, redisSignInPort, cookieManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, redisSignInPort, successfulAuthenticationProcessor);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/sign-in");
 
