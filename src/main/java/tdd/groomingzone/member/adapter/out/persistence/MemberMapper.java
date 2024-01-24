@@ -26,6 +26,7 @@ public class MemberMapper {
                 .nickName(findMember.getNickName())
                 .phoneNumber(findMember.getPhoneNumber())
                 .role(findMember.getRoles().get(0))
+                .provider(findMember.getProvider())
                 .build();
     }
 
@@ -37,6 +38,7 @@ public class MemberMapper {
                 .password(passwordEncoder.encode(member.getPassword()))
                 .roles(memberEntityRolesGenerator.generateMemberRoles(member.getEmail(), member.getRole()))
                 .phoneNumber(member.getPhoneNumber())
+                .provider(member.getProvider())
                 .build();
     }
 }
