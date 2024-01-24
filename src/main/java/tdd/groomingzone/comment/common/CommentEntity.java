@@ -5,6 +5,7 @@ import lombok.*;
 import tdd.groomingzone.global.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -27,9 +28,11 @@ public class CommentEntity extends BaseEntity {
     private String content;
 
     @Builder
-    public CommentEntity(Long boardId, Long writerId, String content){
+    public CommentEntity(Long boardId, Long writerId, String content, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.boardId = boardId;
         this.writerId = writerId;
         this.content = content;
+        setCreatedAt(createdAt);
+        setModifiedAt(modifiedAt);
     }
 }

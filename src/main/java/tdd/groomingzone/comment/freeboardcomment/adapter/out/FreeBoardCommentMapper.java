@@ -18,6 +18,8 @@ public class FreeBoardCommentMapper {
                 .boardId(freeBoardComment.getBoardId())
                 .writerId(freeBoardComment.getWriterId())
                 .content(freeBoardComment.getContent())
+                .createdAt(freeBoardComment.getCreatedAt())
+                .modifiedAt(freeBoardComment.getModifiedAt())
                 .build();
     }
 
