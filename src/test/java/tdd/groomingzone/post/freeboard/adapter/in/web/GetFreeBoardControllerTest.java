@@ -9,11 +9,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,6 +44,9 @@ class GetFreeBoardControllerTest {
     @MockBean
     private GetFreeBoardUseCase getFreeBoardUseCase;
 
+    @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
+
     @Test
     @DisplayName("정상적인 게시글 조회 요청 테스트")
     void getFreeBoardTest() throws Exception {
@@ -50,14 +55,7 @@ class GetFreeBoardControllerTest {
         String testContent = "changedContent";
         long testId = 1L;
 
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         FreeBoardEntityCommandResponse testResponse = FreeBoardEntityCommandResponse.of(testId,
                 testTitle,

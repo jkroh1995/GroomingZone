@@ -15,6 +15,7 @@ import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.global.pagedresponse.PageInfo;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,14 +40,7 @@ class GetFreeBoardPageServiceTest {
     @Test
     @DisplayName("자유 게시글 페이지를 읽어온다.")
     void testGetFreeBoardPage() {
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
         given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
 
         int testPageIndex = 0;

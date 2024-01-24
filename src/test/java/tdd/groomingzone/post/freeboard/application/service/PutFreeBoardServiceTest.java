@@ -14,6 +14,7 @@ import tdd.groomingzone.post.freeboard.application.port.out.SaveFreeBoardPort;
 import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 
@@ -41,14 +42,7 @@ class PutFreeBoardServiceTest {
     @DisplayName("자유 게시글을 수정한다.")
     void testPutFreeBoard(){
         //given
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         String testTitle = "title";
         String testContent = "content";

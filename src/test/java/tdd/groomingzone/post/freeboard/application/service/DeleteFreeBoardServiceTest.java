@@ -14,6 +14,7 @@ import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.post.freeboard.application.port.out.query.DeleteFreeBoardQuery;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 
@@ -41,14 +42,7 @@ class DeleteFreeBoardServiceTest {
     @DisplayName("게시글 삭제 테스트")
     void deleteTest() {
         //given
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         DeleteFreeBoardCommand deleteFreeBoardCommand = DeleteFreeBoardCommand.of(1L, 1L);
         FreeBoardEntityQueryResult entityQueryResult = FreeBoardEntityQueryResult.of(1L, "test", "content", 0, LocalDateTime.now(), LocalDateTime.now(), 1L);
