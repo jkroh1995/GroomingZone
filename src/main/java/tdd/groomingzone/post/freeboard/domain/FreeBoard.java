@@ -32,13 +32,9 @@ public class FreeBoard implements Post {
                 .build();
     }
 
-    public void modify(String title, String content, LocalDateTime modifiedAt) {
-        this.boardInfo = BoardInfo.builder()
-                .title(title)
-                .content(content)
-                .modifiedAt(modifiedAt)
-                .viewCount(boardInfo.getViewCount())
-                .build();
+    @Override
+    public void modify(BoardInfo boardInfo) {
+        this.boardInfo = boardInfo;
     }
 
     public void viewed() {

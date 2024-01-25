@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 public class Recruitment implements Post {
     private final BoardVO boardVO;
-    private final BoardInfo boardInfo;
+    private BoardInfo boardInfo;
     private final Type type;
 
     @Builder
@@ -70,6 +70,10 @@ public class Recruitment implements Post {
         return this.type.getType();
     }
 
+    public Member getWriter(){
+        return this.boardVO.getWriter();
+    }
+
     @Override
     public void checkMemberAuthority(Member member) {
         if (member.isAdmin()) {
@@ -78,6 +82,11 @@ public class Recruitment implements Post {
         if (getWriterId() != member.getMemberId()) {
             throw new BusinessException(ExceptionCode.UNAUTHORIZED);
         }
+    }
+
+    @Override
+    public void modify(BoardInfo boardInfo) {
+        this.boardInfo = boardInfo;
     }
 
     @Getter
