@@ -3,6 +3,7 @@ package tdd.groomingzone.post.freeboard.application.service;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import tdd.groomingzone.post.common.BoardInfo;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.PutFreeBoardCommand;
@@ -42,7 +43,12 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
 
         Member requestMember = loadMemberPort.findMemberById(command.getWriterId());
         freeBoard.checkMemberAuthority(requestMember);
-        freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
+        freeBoard.modify(BoardInfo.builder()
+                .title(command.getTitle())
+                .content(command.getContent())
+                .modifiedAt(command.getModifiedAt())
+                .viewCount(freeBoard.getViewCount())
+                .build());
 
         SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(
                 writer.getMemberId(),
