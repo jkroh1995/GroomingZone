@@ -64,12 +64,14 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofKakao(Map<String, Object> attributes) {
+
+        Map<String, Object> properties = (Map<String, Object>)attributes.get("properties");
         Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
-        Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
 
         return OAuthAttributes.builder()
-                .name((String) kakaoProfile.get("nickname"))
-                .email((String) kakaoAccount.get("email"))
+                .name(String.valueOf(properties.get("nickname")))
+                .email(String.valueOf(kakaoAccount.get("email")))
+                .profileImageUrl(String.valueOf(properties.get("profile_image")))
                 .attributes(attributes)
                 .nameAttributesKey(KAKAO_NAVER_ATTRIBUTE_NAME)
                 .build();
