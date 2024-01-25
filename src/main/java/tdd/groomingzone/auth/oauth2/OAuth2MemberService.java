@@ -38,25 +38,25 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userAttributes);
 
-        String email = attributes.getEmail();
-        List<String> roles = rolesGenerator.generateMemberRoles(email, "고객");
+        List<String> roles = rolesGenerator.generateMemberRoles(attributes.getEmail(), "고객");
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities(roles);
 
-        saveMemberIfNotPresent(email, attributes.getName(), roles, registrationId);
-        return new CustomOAuth2User(registrationId, userAttributes, authorities, email);
+        saveMemberIfNotPresent(attributes, roles, registrationId);
+        return new CustomOAuth2User(registrationId, userAttributes, authorities, attributes.getEmail());
     }
 
-    private void saveMemberIfNotPresent(String email, String nickName, List<String> roles, String registrationId){
-        if(memberEntitiyRepository.findByEmail(email).isEmpty()){
+    private void saveMemberIfNotPresent(OAuthAttributes attributes, List<String> roles, String registrationId){
+        if(memberEntitiyRepository.findByEmail(attributes.getEmail()).isEmpty()){
             LocalDateTime createTime = LocalDateTime.now();
             MemberEntity member = MemberEntity.builder()
                     .id(0)
-                    .email(email)
-                    .nickName(nickName)
+                    .email(attributes.getEmail())
+                    .nickName(attributes.getName())
                     .roles(roles)
                     .createdAt(createTime)
                     .modifiedAt(createTime)
                     .provider(registrationId)
+                    .profileImageUrl(attributes.getProfileImageUrl())
                     .build();
             memberEntitiyRepository.save(member);
         }
