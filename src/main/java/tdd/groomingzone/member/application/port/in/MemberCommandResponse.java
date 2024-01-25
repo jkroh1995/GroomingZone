@@ -10,17 +10,19 @@ public final class MemberCommandResponse {
     private final String phoneNumber;
     private final String role;
     private final String provider;
+    private final String profileImageUrl;
 
-    private MemberCommandResponse(long memberId, String email, String nickName, String phoneNumber, String role, String provider){
+    private MemberCommandResponse(long memberId, String email, String nickName, String phoneNumber, String role, String provider, String profileImageUrl){
         this.memberId = memberId;
         this.email = email;
         this.nickName = nickName;
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.provider = provider;
+        this.profileImageUrl = profileImageUrl;
     }
 
-    public static MemberCommandResponse of(long memberId, String email, String nickName, String phoneNumber, String role, String provider){
-        return new MemberCommandResponse(memberId, email, nickName, phoneNumber, role, provider);
+    public static MemberCommandResponse of(long memberId, String email, String nickName, String phoneNumber, String role, String provider, String profileImageUrl){
+        return new MemberCommandResponse(memberId, email, nickName, phoneNumber, role, provider, profileImageUrl);
     }
 }

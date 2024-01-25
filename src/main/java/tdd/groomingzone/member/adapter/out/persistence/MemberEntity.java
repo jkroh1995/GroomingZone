@@ -35,6 +35,9 @@ public class MemberEntity extends BaseEntity {
     @Column(name = "PROVIDER")
     private String provider;
 
+    @Column(name = "PROFILE_IMAGE_URL")
+    private String profileImageUrl;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "MEMBER_ROLES",
@@ -43,7 +46,7 @@ public class MemberEntity extends BaseEntity {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    private MemberEntity(long id, String email, String password, String nickName, String phoneNumber, List<String>roles, LocalDateTime createdAt, LocalDateTime modifiedAt, String provider){
+    private MemberEntity(long id, String email, String password, String nickName, String phoneNumber, List<String>roles, LocalDateTime createdAt, LocalDateTime modifiedAt, String provider, String profileImageUrl){
         this.id = id;
         this.email = email;
         this.password = password;
@@ -53,5 +56,6 @@ public class MemberEntity extends BaseEntity {
         this.provider = provider;
         this.setCreatedAt(createdAt);
         this.setModifiedAt(modifiedAt);
+        this.profileImageUrl = profileImageUrl;
     }
 }

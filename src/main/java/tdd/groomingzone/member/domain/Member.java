@@ -18,9 +18,10 @@ public class Member {
     private final Provider provider;
     private final LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private String profileImageUrl;
 
     @Builder
-    private Member(long memberId, String email, String password, String nickName, String phoneNumber, String role, String provider, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    private Member(long memberId, String email, String password, String nickName, String phoneNumber, String role, String provider, LocalDateTime createdAt, LocalDateTime modifiedAt, String profileImageUrl) {
         this.memberId = memberId;
         this.email = Email.of(email);
         this.password = Password.of(password);
@@ -30,9 +31,10 @@ public class Member {
         this.provider = Provider.of(provider);
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        this.profileImageUrl = profileImageUrl;
     }
 
-    public void modify(String email, String password, String nickName, String phoneNumber, String role, LocalDateTime modifiedAt) {
+    public void modify(String email, String password, String nickName, String phoneNumber, String role, LocalDateTime modifiedAt, String profileImageUrl) {
         this.email = Email.of(email);
         this.password = Password.of(password);
         this.nickName = nickName;
@@ -40,6 +42,7 @@ public class Member {
         validateRole(role);
         this.role = Role.of(role);
         this.modifiedAt = modifiedAt;
+        this.profileImageUrl = profileImageUrl;
     }
 
     private void validateRole(String inputRole) {

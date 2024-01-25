@@ -46,12 +46,13 @@ class PostMemberServiceTest {
         String nickName = "nickName";
         String phoneNumber = "010-1111-1111";
         String role = "BARBER";
+        String profileImageUrl = "sample url";
 
         Member member = MemberCreator.createMember();
 
         given(saveMemberPort.save(any())).willReturn(member);
 
-        PostMemberCommand command = PostMemberCommand.of(email, password, nickName, phoneNumber, role);
+        PostMemberCommand command = PostMemberCommand.of(email, password, nickName, phoneNumber, role, profileImageUrl);
 
         //when
         MemberCommandResponse memberCommandResponse = postMemberService.postMember(command);
@@ -76,8 +77,9 @@ class PostMemberServiceTest {
         String nickName = "nickName";
         String phoneNumber = "010-1111-1111";
         String role = "BARBER";
+        String profileImageUrl = "sample url";
 
-        PostMemberCommand command = PostMemberCommand.of(email, password, nickName, phoneNumber, role);
+        PostMemberCommand command = PostMemberCommand.of(email, password, nickName, phoneNumber, role, profileImageUrl);
 
         //when, then
         assertThrows(BusinessException.class, () -> postMemberService.postMember(command));

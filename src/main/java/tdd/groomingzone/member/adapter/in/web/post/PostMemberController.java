@@ -27,13 +27,15 @@ public class PostMemberController {
                 dto.getPassword(),
                 dto.getNickName(),
                 dto.getPhoneNumber(),
-                dto.getRole());
+                dto.getRole(),
+                dto.getProfileImageUrl());
         MemberCommandResponse commandResponse = postMemberUseCase.postMember(postMemberCommand);
         MemberApiDto.Response responseDto = MemberApiDto.Response.builder()
                 .email(commandResponse.getEmail())
                 .nickName(commandResponse.getNickName())
                 .phoneNumber(commandResponse.getPhoneNumber())
                 .role(commandResponse.getRole())
+                .profileImageUrl(commandResponse.getProfileImageUrl())
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
