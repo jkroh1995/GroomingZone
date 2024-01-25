@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tdd.groomingzone.post.common.WriterInfo;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.GetFreeBoardCommand;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardUseCase;
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
@@ -31,7 +31,7 @@ public class GetFreeBoardService implements GetFreeBoardUseCase {
 
     @Override
     @Transactional
-    public FreeBoardEntityCommandResponse getFreeBoard(GetFreeBoardCommand getFreeBoardCommand) {
+    public SingleFreeBoardCommandResponse getFreeBoard(GetFreeBoardCommand getFreeBoardCommand) {
         FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(getFreeBoardCommand.getFreeBoardId());
         Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
@@ -56,7 +56,7 @@ public class GetFreeBoardService implements GetFreeBoardUseCase {
 
         saveFreeBoardPort.save(saveFreeBoardQuery);
 
-        return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
+        return SingleFreeBoardCommandResponse.of(freeBoard.getId(),
                 freeBoard.getTitle(),
                 freeBoard.getContent(),
                 freeBoard.getViewCount(),

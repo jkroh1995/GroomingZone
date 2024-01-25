@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardPageCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.MultiFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.GetFreeBoardPageCommand;
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPageQueryResult;
@@ -78,9 +78,9 @@ class GetFreeBoardPageServiceTest {
                 testContent,
                 "nickName",
                 testPageIndex + 1);
-        FreeBoardPageCommandResponse pageCommandResponse = getFreeBoardPageService.getFreeBoardPage(command);
+        MultiFreeBoardCommandResponse pageCommandResponse = getFreeBoardPageService.getFreeBoardPage(command);
 
-        List<FreeBoardEntityCommandResponse> pageResponse = pageCommandResponse.getPageResponse();
+        List<SingleFreeBoardCommandResponse> pageResponse = pageCommandResponse.getPageResponse();
         PageInfo pageInfo = pageCommandResponse.getPageInfo();
 
         for (int i = 0; i < pageResponse.size(); i++) {

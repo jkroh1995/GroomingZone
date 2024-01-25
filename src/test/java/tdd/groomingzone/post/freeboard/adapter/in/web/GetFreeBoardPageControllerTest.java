@@ -12,8 +12,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardPageCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.MultiFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardPageUseCase;
 import tdd.groomingzone.global.pagedresponse.PageInfo;
 import tdd.groomingzone.member.domain.Member;
@@ -56,10 +56,10 @@ class GetFreeBoardPageControllerTest {
         // given
         Member writer = MemberCreator.createMember();
 
-        List<FreeBoardEntityCommandResponse> testCommandResponseList = new ArrayList<>();
+        List<SingleFreeBoardCommandResponse> testCommandResponseList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            FreeBoardEntityCommandResponse testResponse = FreeBoardEntityCommandResponse.of((i + 1),
+            SingleFreeBoardCommandResponse testResponse = SingleFreeBoardCommandResponse.of((i + 1),
                     "testTitle " + (i + 1),
                     "testContent " + (i + 1),
                     1,
@@ -71,7 +71,7 @@ class GetFreeBoardPageControllerTest {
 
         PageInfo pageInfo = PageInfo.of(1, testCommandResponseList.size(), 20, 1);
 
-        given(getFreeBoardPageUseCase.getFreeBoardPage(any())).willReturn(FreeBoardPageCommandResponse.of(testCommandResponseList, pageInfo));
+        given(getFreeBoardPageUseCase.getFreeBoardPage(any())).willReturn(MultiFreeBoardCommandResponse.of(testCommandResponseList, pageInfo));
 
         int fakePageNumber = 1;
         // when // then

@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.util.MemberCreator;
@@ -77,7 +77,7 @@ class PutFreeBoardControllerTest {
 
         stubTime = new StubTime(LocalDateTime.of(2023, 11, 28, 22, 30, 10));
 
-        FreeBoardEntityCommandResponse testResponse = FreeBoardEntityCommandResponse.of(testId,
+        SingleFreeBoardCommandResponse testResponse = SingleFreeBoardCommandResponse.of(testId,
                 testTitle,
                 testContent,
                 1,

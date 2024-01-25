@@ -12,7 +12,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.util.MemberCreator;
@@ -57,7 +57,7 @@ class GetFreeBoardControllerTest {
 
         Member writer = MemberCreator.createMember();
 
-        FreeBoardEntityCommandResponse testResponse = FreeBoardEntityCommandResponse.of(testId,
+        SingleFreeBoardCommandResponse testResponse = SingleFreeBoardCommandResponse.of(testId,
                 testTitle,
                 testContent,
                 1,
