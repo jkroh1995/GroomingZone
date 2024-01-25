@@ -1,7 +1,7 @@
 package tdd.groomingzone.auth.utils.handler;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import tdd.groomingzone.auth.oauth2.CustomOAuth2User;
 import tdd.groomingzone.auth.application.service.SuccessfulAuthenticationProcessor;
 import tdd.groomingzone.global.exception.BusinessException;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class OAuth2MemberSuccessHandler implements AuthenticationSuccessHandler {
 
     private final MemberEntitiyRepository memberEntitiyRepository;
     private final SuccessfulAuthenticationProcessor successfulAuthenticationProcessor;

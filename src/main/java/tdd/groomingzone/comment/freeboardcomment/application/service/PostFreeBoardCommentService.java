@@ -34,14 +34,17 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
         FreeBoardEntityQueryResult selectFreeBoardQueryResult = loadFreeBoardPort.loadFreeBoardById(postFreeBoardCommentCommand.getBoardId());
         Member freeBoardWriter = loadMemberPort.findMemberById(selectFreeBoardQueryResult.getWriterId());
         Member commentWriter = loadMemberPort.findMemberById(postFreeBoardCommentCommand.getWriterId());
+
+        LocalDateTime writeCommentTime = LocalDateTime.now();
         FreeBoardComment freeBoardComment = freeBoardCommentPublisher.createFreeBoardComment(selectFreeBoardQueryResult,
                 freeBoardWriter,
                 commentWriter,
                 postFreeBoardCommentCommand.getContent(),
-                LocalDateTime.now(),
-                LocalDateTime.now());
+                writeCommentTime,
+                writeCommentTime);
 
         FreeBoardCommentEntityResult saveQueryResult = saveFreeBoardCommentPort.save(freeBoardComment);
+
         return SingleFreeBoardCommentResponse.of(saveQueryResult.getContent(),
                 saveQueryResult.getCreatedAt(),
                 saveQueryResult.getModifiedAt(),

@@ -3,6 +3,7 @@ package tdd.groomingzone.post.freeboard.domain;
 import org.junit.jupiter.api.Test;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 import tdd.groomingzone.util.StubTime;
 
 import java.time.LocalDateTime;
@@ -14,14 +15,7 @@ class FreeBoardTest {
 
     @Test
     void testModify() {
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         FreeBoard testEntity = FreeBoard.builder()
                 .id(1L)
@@ -46,14 +40,7 @@ class FreeBoardTest {
 
     @Test
     void testViewed() {
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         int viewCount = 0;
 
@@ -74,14 +61,7 @@ class FreeBoardTest {
 
     @Test
     void testCheckMemberAuthority() {
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         FreeBoard testEntity = FreeBoard.builder()
                 .id(1L)
@@ -100,6 +80,7 @@ class FreeBoardTest {
                 .phoneNumber("010-2211-1111")
                 .nickName("nickName22")
                 .role("CUSTOMER")
+                .provider("SERVER")
                 .build();
 
         assertThrows(BusinessException.class,() -> testEntity.checkMemberAuthority(otherMember));

@@ -13,6 +13,7 @@ import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruit
 import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 
@@ -37,14 +38,7 @@ class PostRecruitmentServiceTest {
     @DisplayName("구인구직 게시글을 저장한다")
     void testPostRecruitment() {
         //given
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         String testTitle = "title";
         String testContent = "content";

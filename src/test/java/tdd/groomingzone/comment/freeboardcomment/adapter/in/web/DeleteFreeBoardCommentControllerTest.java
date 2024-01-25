@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.DeleteFreeBoardCommentUseCase;
 
@@ -20,13 +21,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = DeleteFreeBoardCommentController.class,
+@WebMvcTest(controllers = {DeleteFreeBoardCommentController.class},
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @AutoConfigureRestDocs
 class DeleteFreeBoardCommentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
 
     @MockBean
     private DeleteFreeBoardCommentUseCase deleteFreeBoardCommentUseCase;

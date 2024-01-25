@@ -1,8 +1,7 @@
 package tdd.groomingzone.post.freeboard.adapter.in.web;
 
 import com.google.gson.Gson;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -11,12 +10,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = PostFreeBoardController.class,
+@WebMvcTest(controllers = {PostFreeBoardController.class},
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @AutoConfigureRestDocs
 class PostFreeBoardControllerTest {
@@ -44,15 +45,18 @@ class PostFreeBoardControllerTest {
     private Gson gson;
 
     @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
+
+    @MockBean
     private PostFreeBoardUseCase postFreeBoardUseCase;
 
     @Test
     @DisplayName("정상적인 게시글 등록 요청 테스트")
     void postFreeBoardTest() throws Exception {
         // given
-        long testId = 1L;
         String testTitle = "title";
         String testContent = "content";
+        long testId = 1;
 
         FreeBoardApiDto.Post testPost = FreeBoardApiDto.Post.builder()
                 .title(testTitle)
@@ -61,14 +65,7 @@ class PostFreeBoardControllerTest {
 
         String content = gson.toJson(testPost);
 
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         FreeBoardEntityCommandResponse testResponse = FreeBoardEntityCommandResponse.of(testId,
                 testTitle,

@@ -13,6 +13,7 @@ import tdd.groomingzone.member.application.port.in.command.PostMemberCommand;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.application.port.out.SaveMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.util.Optional;
 
@@ -46,14 +47,7 @@ class PostMemberServiceTest {
         String phoneNumber = "010-1111-1111";
         String role = "BARBER";
 
-        Member member = Member.builder()
-                .memberId(1L)
-                .email(email)
-                .password(password)
-                .phoneNumber(phoneNumber)
-                .nickName(nickName)
-                .role(role)
-                .build();
+        Member member = MemberCreator.createMember();
 
         given(saveMemberPort.save(any())).willReturn(member);
 

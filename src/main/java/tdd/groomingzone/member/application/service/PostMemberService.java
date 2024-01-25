@@ -12,6 +12,8 @@ import tdd.groomingzone.member.application.port.in.MemberCommandResponse;
 import tdd.groomingzone.member.application.port.out.SaveMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PostMemberService implements PostMemberUseCase {
 
@@ -27,6 +29,7 @@ public class PostMemberService implements PostMemberUseCase {
     @Transactional
     public MemberCommandResponse postMember(PostMemberCommand command) {
         verifyEmailDuplicate(command.getEmail());
+        LocalDateTime createAt = LocalDateTime.now();
         Member member = Member.builder()
                 .memberId(0)
                 .email(command.getEmail())
@@ -34,13 +37,17 @@ public class PostMemberService implements PostMemberUseCase {
                 .nickName(command.getNickName())
                 .phoneNumber(command.getPhoneNumber())
                 .role(command.getRole())
+                .createdAt(createAt)
+                .modifiedAt(createAt)
+                .provider("SERVER")
                 .build();
         Member savedMember = saveMemberPort.save(member);
         return MemberCommandResponse.of(savedMember.getMemberId(),
                 savedMember.getEmail(),
                 savedMember.getNickName(),
                 savedMember.getPhoneNumber(),
-                savedMember.getRole());
+                savedMember.getRole(),
+                savedMember.getProvider());
     }
 
     private void verifyEmailDuplicate(String requestEmail) {

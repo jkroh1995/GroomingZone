@@ -10,11 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
+import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,6 +46,9 @@ class PostRecruitmentControllerTest {
     @MockBean
     private PostRecruitmentUseCase postRecruitmentUseCase;
 
+    @MockBean
+    private SecurityFilterChain oauth2SecurityFilterChain;
+
     @Test
     @DisplayName("구인 구직 게시글을 등록한다.")
     void testPostRecruitment() throws Exception {
@@ -61,14 +66,7 @@ class PostRecruitmentControllerTest {
 
         String content = gson.toJson(testPost);
 
-        Member writer = Member.builder()
-                .memberId(1L)
-                .email("test@email.com")
-                .password("11aA!!@@Password")
-                .phoneNumber("010-1111-1111")
-                .nickName("nickName")
-                .role("BARBER")
-                .build();
+        Member writer = MemberCreator.createMember();
 
         SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(testId,
                 testTitle,

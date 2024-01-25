@@ -71,6 +71,7 @@ class SpringSecurityTest {
                 .nickName(nickName)
                 .phoneNumber(phoneNumber)
                 .roles(List.of("BARBER", "CUSTOMER"))
+                .provider("SERVER")
                 .build();
 
         MemberEntity createdMemberEntity = memberEntitiyRepository.save(memberEntity);
