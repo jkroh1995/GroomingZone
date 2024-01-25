@@ -13,9 +13,9 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.member.domain.Member;
-import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -68,14 +68,16 @@ class PostRecruitmentControllerTest {
 
         Member writer = MemberCreator.createMember();
 
-        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(testId,
-                testTitle,
-                testContent,
-                testType,
-                1,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                WriterInfo.of(writer));
+        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(Recruitment.builder()
+                .writer(writer)
+                .id(testId)
+                .title(testTitle)
+                .content(testContent)
+                .type(testType)
+                .viewCount(1)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build());
 
         given(postRecruitmentUseCase.postRecruitment(any())).willReturn(testResponse);
 
@@ -88,7 +90,7 @@ class PostRecruitmentControllerTest {
                 ).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(testPost.getTitle()))
                 .andExpect(jsonPath("$.content").value(testPost.getContent()))
-                .andExpect(jsonPath("$.type").value(testPost.getType()))
+                .andExpect(jsonPath("$.type").value("구인"))
                 .andDo(document(
                         "post-recruitment",
                         getRequestPreProcessor(),
