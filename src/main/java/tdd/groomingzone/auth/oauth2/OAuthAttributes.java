@@ -37,13 +37,19 @@ public class OAuthAttributes {
             return ofGoogle(attributes);
         }
         if(socialName.equals("naver")){
-            return ofNaver(KAKAO_NAVER_ATTRIBUTE_NAME, attributes);
+            return ofNaver(attributes);
         }
         throw new BusinessException(ExceptionCode.INVALID_OAUTH_LOGIN);
     }
 
-    private static OAuthAttributes ofNaver(String id, Map<String, Object> attributes) {
-        return null;
+    private static OAuthAttributes ofNaver(Map<String, Object> attributes) {
+        return OAuthAttributes.builder()
+                .name(String.valueOf(attributes.get("name")))
+                .email(String.valueOf(attributes.get("email")))
+                .profileImageUrl(String.valueOf(attributes.get("profile_image")))
+                .attributes(attributes)
+                .nameAttributesKey(KAKAO_NAVER_ATTRIBUTE_NAME)
+                .build();
     }
 
     private static OAuthAttributes ofGoogle(Map<String, Object> attributes) {
