@@ -8,10 +8,11 @@ import tdd.groomingzone.post.common.BoardVO;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.common.Post;
 
 import java.time.LocalDateTime;
 
-public class FreeBoard {
+public class FreeBoard implements Post {
     private final BoardVO boardVO;
     private BoardInfo boardInfo;
 
@@ -44,6 +45,7 @@ public class FreeBoard {
         boardInfo.setViewCount(boardInfo.getViewCount() + 1);
     }
 
+    @Override
     public void checkMemberAuthority(Member member) {
         if (member.isAdmin()) {
             return;
