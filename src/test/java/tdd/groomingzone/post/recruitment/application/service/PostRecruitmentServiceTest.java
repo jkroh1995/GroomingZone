@@ -13,6 +13,7 @@ import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruit
 import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -52,15 +53,15 @@ class PostRecruitmentServiceTest {
                 testContent,
                 testType);
 
-        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(writer.getMemberId(),
-                writer.getNickName(),
-                1L,
-                testTitle,
-                testContent,
-                testViewCount,
-                testCreatedAt,
-                testModifiedAt,
-                testType);
+        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(Recruitment.builder()
+                .writer(writer)
+                .title(testTitle)
+                .content(testContent)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .viewCount(testViewCount)
+                .type(testType)
+                .build());
 
         RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L,
                 writer.getMemberId(),

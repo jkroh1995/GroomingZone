@@ -40,24 +40,9 @@ public class PostRecruitmentService implements PostRecruitmentUseCase {
                 .type(postRecruitmentCommand.getType())
                 .build();
 
-        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(recruitment.getWriterId(),
-                recruitment.getWriterNickName(),
-                recruitment.getId(),
-                recruitment.getTitle(),
-                recruitment.getContent(),
-                recruitment.getViewCount(),
-                recruitment.getCreatedAt(),
-                recruitment.getModifiedAt(),
-                recruitment.getType());
+        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(recruitment);
 
-        RecruitmentEntityQueryResult queryResult = saveRecruitmentPort.save(saveRecruitmentQuery);
-        return SingleRecruitmentResponse.of(queryResult.getBoardId(),
-                queryResult.getTitle(),
-                queryResult.getContent(),
-                queryResult.getType(),
-                queryResult.getViewCount(),
-                queryResult.getCreatedAt(),
-                queryResult.getModifiedAt(),
-                WriterInfo.of(writer));
+        saveRecruitmentPort.save(saveRecruitmentQuery);
+        return SingleRecruitmentResponse.of(recruitment);
     }
 }

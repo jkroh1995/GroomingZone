@@ -1,6 +1,7 @@
 package tdd.groomingzone.post.recruitment.application.port.out;
 
 import lombok.Getter;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +30,15 @@ public final class SaveRecruitmentQuery {
         this.type = type;
     }
 
-    public static SaveRecruitmentQuery of(Long writerId, String writerNickName, Long boardId, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, String type) {
-        return new SaveRecruitmentQuery(writerId, writerNickName, boardId, title, content, viewCount, createdAt, modifiedAt, type);
+    public static SaveRecruitmentQuery of(Recruitment recruitment) {
+        return new SaveRecruitmentQuery(recruitment.getWriterId(),
+                recruitment.getWriterNickName(),
+                recruitment.getId(),
+                recruitment.getTitle(),
+                recruitment.getContent(),
+                recruitment.getViewCount(),
+                recruitment.getCreatedAt(),
+                recruitment.getModifiedAt(),
+                recruitment.getType());
     }
 }
