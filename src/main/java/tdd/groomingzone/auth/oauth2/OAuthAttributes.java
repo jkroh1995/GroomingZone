@@ -43,11 +43,12 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofNaver(Map<String, Object> attributes) {
+        Map<String, Object> response = (Map<String, Object>)attributes.get("response");
         return OAuthAttributes.builder()
-                .name(String.valueOf(attributes.get("name")))
-                .email(String.valueOf(attributes.get("email")))
-                .profileImageUrl(String.valueOf(attributes.get("profile_image")))
-                .attributes(attributes)
+                .name(String.valueOf(response.get("nickname")))
+                .email(String.valueOf(response.get("email")))
+                .profileImageUrl(String.valueOf(response.get("profile_image")))
+                .attributes(response)
                 .nameAttributesKey(KAKAO_NAVER_ATTRIBUTE_NAME)
                 .build();
     }
