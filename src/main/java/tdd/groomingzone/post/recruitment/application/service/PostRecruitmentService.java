@@ -1,11 +1,9 @@
 package tdd.groomingzone.post.recruitment.application.service;
 
 import org.springframework.stereotype.Service;
-import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruitmentCommand;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
 import tdd.groomingzone.post.recruitment.domain.Recruitment;
