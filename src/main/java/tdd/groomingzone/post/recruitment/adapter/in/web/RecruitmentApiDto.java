@@ -20,6 +20,13 @@ public final class RecruitmentApiDto {
 
     @Getter
     @Builder
+    public static final class Put {
+        private final String title;
+        private final String content;
+    }
+
+    @Getter
+    @Builder
     public static final class Response {
         private final long boardId;
         private final String title;
