@@ -13,7 +13,7 @@ public final class WriterInfo {
         this.writerNickName = writerNickName;
     }
 
-    public static WriterInfo of(Member writer){
-        return new WriterInfo(writer.getMemberId(), writer.getNickName());
+    public static WriterInfo of(long writerId, String writerNickName){
+        return new WriterInfo(writerId, writerNickName);
     }
 }

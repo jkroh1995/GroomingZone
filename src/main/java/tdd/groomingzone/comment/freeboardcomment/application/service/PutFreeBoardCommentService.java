@@ -49,6 +49,6 @@ public class PutFreeBoardCommentService implements PutFreeBoardCommentUseCase {
         return SingleFreeBoardCommentResponse.of(saveCommentQueryResult.getContent(),
                 saveCommentQueryResult.getCreatedAt(),
                 saveCommentQueryResult.getModifiedAt(),
-                WriterInfo.of(requestMember));
+                WriterInfo.of(requestMember.getMemberId(), requestMember.getNickName()));
     }
 }

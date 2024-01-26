@@ -68,6 +68,6 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
                 freeBoard.getViewCount(),
                 freeBoard.getCreatedAt(),
                 freeBoard.getModifiedAt(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
     }
 }

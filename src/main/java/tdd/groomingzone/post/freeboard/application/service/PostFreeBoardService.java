@@ -72,6 +72,6 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 savedFreeBoard.getViewCount(),
                 savedFreeBoard.getCreatedAt(),
                 savedFreeBoard.getModifiedAt(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
     }
 }

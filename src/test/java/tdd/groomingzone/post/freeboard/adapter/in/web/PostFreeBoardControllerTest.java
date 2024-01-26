@@ -73,7 +73,7 @@ class PostFreeBoardControllerTest {
                 1,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
 
         given(postFreeBoardUseCase.postFreeBoard(any())).willReturn(testResponse);
 

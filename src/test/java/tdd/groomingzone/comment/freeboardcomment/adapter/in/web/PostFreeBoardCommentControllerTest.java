@@ -70,7 +70,7 @@ class PostFreeBoardCommentControllerTest {
         SingleFreeBoardCommentResponse testResponse = SingleFreeBoardCommentResponse.of(testContent,
                 testCreatedAt,
                 testModifiedAt,
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
 
         given(postFreeBoardCommentUseCase.postFreeBoardComment(any())).willReturn(testResponse);
 

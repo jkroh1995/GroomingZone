@@ -16,7 +16,7 @@ import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PutRecruitmentUseCase;
-import tdd.groomingzone.post.recruitment.domain.Recruitment;
+import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.util.MemberCreator;
 import tdd.groomingzone.util.StubTime;
 
@@ -74,16 +74,17 @@ class PutRecruitmentControllerTest {
 
         stubTime = new StubTime(LocalDateTime.of(2023, 11, 28, 22, 30, 10));
 
-        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(Recruitment.builder()
-                .writer(writer)
-                .id(testId)
-                .title(testTitle)
-                .content(testContent)
-                .type(testType)
-                .viewCount(1)
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(stubTime.now())
-                .build());
+        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(RecruitmentEntityQueryResult.of(
+                testId,
+                writer.getMemberId(),
+                writer.getNickName(),
+                testTitle,
+                testContent,
+                testType,
+                1,
+                LocalDateTime.now(),
+                stubTime.now()
+        ));
 
         given(putRecruitmentUseCase.putRecruitment(any())).willReturn(testResponse);
 

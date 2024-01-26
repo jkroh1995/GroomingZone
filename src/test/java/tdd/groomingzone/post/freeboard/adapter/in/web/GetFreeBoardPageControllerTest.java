@@ -65,7 +65,7 @@ class GetFreeBoardPageControllerTest {
                     1,
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    WriterInfo.of(writer));
+                    WriterInfo.of(writer.getMemberId(), writer.getNickName()));
             testCommandResponseList.add(testResponse);
         }
 

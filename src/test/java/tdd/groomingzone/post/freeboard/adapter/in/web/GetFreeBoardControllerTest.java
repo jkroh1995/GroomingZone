@@ -63,7 +63,7 @@ class GetFreeBoardControllerTest {
                 1,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
 
         given(getFreeBoardUseCase.getFreeBoard(any())).willReturn(testResponse);
 

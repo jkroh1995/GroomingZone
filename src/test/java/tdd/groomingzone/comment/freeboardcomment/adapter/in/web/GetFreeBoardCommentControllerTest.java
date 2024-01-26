@@ -67,7 +67,7 @@ class GetFreeBoardCommentControllerTest {
             responseList.add(SingleFreeBoardCommentResponse.of(testContent + i,
                     testCreatedAt,
                     testModifiedAt,
-                    WriterInfo.of(writer)));
+                    WriterInfo.of(writer.getMemberId(), writer.getNickName())));
         }
 
         PageInfo pageInfo = PageInfo.of(1, responseList.size(), 20, 1);

@@ -83,7 +83,7 @@ class PutFreeBoardControllerTest {
                 1,
                 LocalDateTime.now(),
                 stubTime.now(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
 
         given(putFreeBoardUseCase.putFreeBoard(any())).willReturn(testResponse);
 

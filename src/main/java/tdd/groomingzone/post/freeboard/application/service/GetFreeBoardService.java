@@ -62,6 +62,6 @@ public class GetFreeBoardService implements GetFreeBoardUseCase {
                 freeBoard.getViewCount(),
                 freeBoard.getCreatedAt(),
                 freeBoard.getModifiedAt(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
     }
 }

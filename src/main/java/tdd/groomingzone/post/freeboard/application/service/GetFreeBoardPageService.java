@@ -56,7 +56,7 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
                            freeBoard.getViewCount(),
                            freeBoard.getCreatedAt(),
                            freeBoard.getModifiedAt(),
-                           WriterInfo.of(writer));
+                           WriterInfo.of(writer.getMemberId(), writer.getNickName()));
                 })
                 .collect(Collectors.toList());
         PageInfo pageInfo = PageInfo.of(convertPageIndexToPageNumber(selectQueryResult), selectQueryResult.getPageSize(), selectQueryResult.getTotalElements(), selectQueryResult.getTotalPages());
