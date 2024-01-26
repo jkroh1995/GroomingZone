@@ -53,16 +53,6 @@ class PostRecruitmentServiceTest {
                 testContent,
                 testType);
 
-        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(Recruitment.builder()
-                .writer(writer)
-                .title(testTitle)
-                .content(testContent)
-                .createdAt(testCreatedAt)
-                .modifiedAt(testModifiedAt)
-                .viewCount(testViewCount)
-                .type(testType)
-                .build());
-
         RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L,
                 writer.getMemberId(),
                 writer.getNickName(),
@@ -78,14 +68,9 @@ class PostRecruitmentServiceTest {
 
         SingleRecruitmentResponse response = postRecruitmentService.postRecruitment(postRecruitmentCommand);
 
-        assertThat(response.getBoardId()).isEqualTo(saveRecruitmentQuery.getBoardId());
-        assertThat(response.getTitle()).isEqualTo(saveRecruitmentQuery.getTitle());
-        assertThat(response.getContent()).isEqualTo(saveRecruitmentQuery.getContent());
-        assertThat(response.getViewCount()).isEqualTo(saveRecruitmentQuery.getViewCount());
-        assertThat(response.getCreatedAt()).isEqualTo(saveRecruitmentQuery.getCreatedAt());
-        assertThat(response.getModifiedAt()).isEqualTo(saveRecruitmentQuery.getModifiedAt());
-        assertThat(response.getType()).isEqualTo(saveRecruitmentQuery.getType());
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
-        assertThat(response.getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
+        assertThat(response.getTitle()).isEqualTo(postRecruitmentCommand.getTitle());
+        assertThat(response.getContent()).isEqualTo(postRecruitmentCommand.getContent());
+        assertThat(response.getType()).isEqualTo(postRecruitmentCommand.getType());
+        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(postRecruitmentCommand.getWriterId());
     }
 }

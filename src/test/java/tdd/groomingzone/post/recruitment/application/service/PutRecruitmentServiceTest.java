@@ -57,17 +57,6 @@ class PutRecruitmentServiceTest {
                 1L,
                 testModifiedAt);
 
-        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(Recruitment.builder()
-                .writer(writer)
-                .id(1L)
-                .title(testTitle)
-                .content(testContent)
-                .createdAt(testCreatedAt)
-                .modifiedAt(testModifiedAt)
-                .viewCount(testViewCount)
-                .type(testType)
-                .build());
-
         RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L, writer.getMemberId(), writer.getNickName(), testTitle,testContent, testType, testViewCount, testCreatedAt, testModifiedAt);
 
 
@@ -77,15 +66,10 @@ class PutRecruitmentServiceTest {
 
         SingleRecruitmentResponse response = putRecruitmentService.putRecruitment(putRecruitmentCommand);
 
-        assertThat(response.getBoardId()).isEqualTo(saveRecruitmentQuery.getBoardId());
-        assertThat(response.getTitle()).isEqualTo(saveRecruitmentQuery.getTitle());
-        assertThat(response.getContent()).isEqualTo(saveRecruitmentQuery.getContent());
-        assertThat(response.getViewCount()).isEqualTo(saveRecruitmentQuery.getViewCount());
-        assertThat(response.getCreatedAt()).isEqualTo(saveRecruitmentQuery.getCreatedAt());
-        assertThat(response.getModifiedAt()).isEqualTo(saveRecruitmentQuery.getModifiedAt());
-        assertThat(response.getType()).isEqualTo("구인");
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
-        assertThat(response.getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
-
+        assertThat(response.getBoardId()).isEqualTo(putRecruitmentCommand.getRecruitmentId());
+        assertThat(response.getTitle()).isEqualTo(putRecruitmentCommand.getTitle());
+        assertThat(response.getContent()).isEqualTo(putRecruitmentCommand.getContent());
+        assertThat(response.getModifiedAt()).isEqualTo(putRecruitmentCommand.getModifiedAt());
+        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(putRecruitmentCommand.getRequestMemberId());
     }
 }

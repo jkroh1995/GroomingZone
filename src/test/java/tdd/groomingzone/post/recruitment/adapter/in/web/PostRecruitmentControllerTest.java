@@ -94,7 +94,7 @@ class PostRecruitmentControllerTest {
                 ).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(testPost.getTitle()))
                 .andExpect(jsonPath("$.content").value(testPost.getContent()))
-                .andExpect(jsonPath("$.type").value("구인"))
+                .andExpect(jsonPath("$.type").value(testPost.getType()))
                 .andDo(document(
                         "post-recruitment",
                         getRequestPreProcessor(),
