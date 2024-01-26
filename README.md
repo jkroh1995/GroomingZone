@@ -51,3 +51,4 @@ TDD 구현 방식 연습 및 기술 학습을 위한 프로젝트입니다.
 - [Pull Request 025. 회원 도메인을 향한 의존은 어디에 존재해야 할까? - 게시글 수정 기능 리팩토링](https://random-topic.tistory.com/201)
 - [Pull Request 026. 자유 게시글 테스트 코드를 리팩토링하며 느낀 점](https://random-topic.tistory.com/203)
 - [Pull Request 027. 로그인 / 로그아웃 로직 리팩토링하기 - Http Header 대신 Cookie를 사용해보자](https://random-topic.tistory.com/212)
+- [Pull Request 028. Spring Security + OAuth2.0 로그인 적용하기](https://random-topic.tistory.com/218)
