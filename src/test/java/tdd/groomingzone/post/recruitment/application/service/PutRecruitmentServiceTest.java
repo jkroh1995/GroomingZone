@@ -13,8 +13,6 @@ import tdd.groomingzone.post.recruitment.application.port.in.command.PutRecruitm
 import tdd.groomingzone.post.recruitment.application.port.out.LoadRecruitmentPort;
 import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
-import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
-import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;

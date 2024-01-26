@@ -1,7 +1,6 @@
 package tdd.groomingzone.post.common;
 
 import lombok.Getter;
-import tdd.groomingzone.member.domain.Member;
 
 @Getter
 public final class WriterInfo {
