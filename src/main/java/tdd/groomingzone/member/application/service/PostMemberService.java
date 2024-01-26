@@ -40,6 +40,7 @@ public class PostMemberService implements PostMemberUseCase {
                 .createdAt(createAt)
                 .modifiedAt(createAt)
                 .provider("SERVER")
+                .profileImageUrl(command.getProfileImageUrl())
                 .build();
         Member savedMember = saveMemberPort.save(member);
         return MemberCommandResponse.of(savedMember.getMemberId(),
@@ -47,7 +48,8 @@ public class PostMemberService implements PostMemberUseCase {
                 savedMember.getNickName(),
                 savedMember.getPhoneNumber(),
                 savedMember.getRole(),
-                savedMember.getProvider());
+                savedMember.getProvider(),
+                savedMember.getProfileImageUrl());
     }
 
     private void verifyEmailDuplicate(String requestEmail) {

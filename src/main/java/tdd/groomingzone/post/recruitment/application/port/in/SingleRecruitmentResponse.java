@@ -2,6 +2,7 @@ package tdd.groomingzone.post.recruitment.application.port.in;
 
 import lombok.Getter;
 import tdd.groomingzone.post.common.WriterInfo;
+import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 
 import java.time.LocalDateTime;
 
@@ -27,7 +28,14 @@ public final class SingleRecruitmentResponse {
         this.writerInfo = writerInfo;
     }
 
-    public static SingleRecruitmentResponse of(long boardId, String title, String content, String type, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, WriterInfo writerInfo){
-        return new SingleRecruitmentResponse(boardId, title, content, type, viewCount, createdAt, modifiedAt, writerInfo);
+    public static SingleRecruitmentResponse of(RecruitmentEntityQueryResult queryResult){
+        return new SingleRecruitmentResponse(queryResult.getBoardId(),
+                queryResult.getTitle(),
+                queryResult.getContent(),
+                queryResult.getType(),
+                queryResult.getViewCount(),
+                queryResult.getCreatedAt(),
+                queryResult.getModifiedAt(),
+                WriterInfo.of(queryResult.getWriterId(), queryResult.getWriterNickName()));
     }
 }

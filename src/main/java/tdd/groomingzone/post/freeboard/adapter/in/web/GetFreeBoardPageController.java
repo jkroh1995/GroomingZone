@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardPageCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.MultiFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.GetFreeBoardPageCommand;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardPageUseCase;
 import tdd.groomingzone.global.pagedresponse.PagedResponseDto;
@@ -31,7 +31,7 @@ public class GetFreeBoardPageController {
                                                                                        @RequestParam(name = "writer", required = false)String writer,
                                                                                        @RequestParam(name = "page", defaultValue = "1") int pageNumber) {
         GetFreeBoardPageCommand getFreeBoardPageCommand = GetFreeBoardPageCommand.of(title, content, writer, pageNumber);
-        FreeBoardPageCommandResponse commandResponse = getFreeBoardPageUseCase.getFreeBoardPage(getFreeBoardPageCommand);
+        MultiFreeBoardCommandResponse commandResponse = getFreeBoardPageUseCase.getFreeBoardPage(getFreeBoardPageCommand);
         List<FreeBoardApiDto.SimpleResponse> responseDtoList= commandResponse.getPageResponse().stream()
                 .map(FreeBoardApiDto.SimpleResponse::of)
                 .collect(Collectors.toList());

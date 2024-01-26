@@ -68,7 +68,7 @@ public class PutFreeBoardCommentControllerTest {
         SingleFreeBoardCommentResponse response = SingleFreeBoardCommentResponse.of(testContent,
                 testCreatedAt,
                 testModifiedAt,
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
 
         given(putFreeBoardCommentUseCase.putFreeBoard(any())).willReturn(response);
 

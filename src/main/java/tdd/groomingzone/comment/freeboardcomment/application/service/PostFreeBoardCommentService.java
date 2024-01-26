@@ -48,6 +48,6 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
         return SingleFreeBoardCommentResponse.of(saveQueryResult.getContent(),
                 saveQueryResult.getCreatedAt(),
                 saveQueryResult.getModifiedAt(),
-                WriterInfo.of(commentWriter));
+                WriterInfo.of(commentWriter.getMemberId(), commentWriter.getNickName()));
     }
 }

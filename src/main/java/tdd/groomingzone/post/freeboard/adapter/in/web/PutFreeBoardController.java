@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.PutFreeBoardCommand;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 import tdd.groomingzone.global.time.Time;
@@ -31,14 +31,14 @@ public class PutFreeBoardController {
                                                                  @PathVariable("free-board-id") long freeBoardId,
                                                                  @RequestBody FreeBoardApiDto.Put putDto) {
         PutFreeBoardCommand putFreeBoardCommand = PutFreeBoardCommand.of(requestMemberEntity.getId(), freeBoardId, putDto.getTitle(), putDto.getContent(), time.now());
-        FreeBoardEntityCommandResponse commandResult = putFreeBoardUseCase.putFreeBoard(putFreeBoardCommand);
+        SingleFreeBoardCommandResponse commandResponse = putFreeBoardUseCase.putFreeBoard(putFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
-                .boardId(commandResult.getBoardId())
-                .title(commandResult.getTitle())
-                .content(commandResult.getContent())
-                .createdAt(commandResult.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                .modifiedAt(commandResult.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                .writerInfo(commandResult.getWriterInfo())
+                .boardId(commandResponse.getBoardId())
+                .title(commandResponse.getTitle())
+                .content(commandResponse.getContent())
+                .createdAt(commandResponse.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(commandResponse.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .writerInfo(commandResponse.getWriterInfo())
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }

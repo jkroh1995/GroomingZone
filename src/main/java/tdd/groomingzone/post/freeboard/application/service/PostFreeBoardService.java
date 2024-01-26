@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.post.common.WriterInfo;
 
 import tdd.groomingzone.post.freeboard.application.port.in.command.PostFreeBoardCommand;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
@@ -33,7 +33,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
 
     @Override
     @Transactional
-    public FreeBoardEntityCommandResponse postFreeBoard(PostFreeBoardCommand command) {
+    public SingleFreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
         Member writer = loadMemberPort.findMemberById(command.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
                 .id(CommonEnums.NEW_INSTANCE.getValue())
@@ -66,12 +66,12 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 .modifiedAt(queryResult.getModifiedAt())
                 .build();
 
-        return FreeBoardEntityCommandResponse.of(savedFreeBoard.getId(),
+        return SingleFreeBoardCommandResponse.of(savedFreeBoard.getId(),
                 savedFreeBoard.getTitle(),
                 savedFreeBoard.getContent(),
                 savedFreeBoard.getViewCount(),
                 savedFreeBoard.getCreatedAt(),
                 savedFreeBoard.getModifiedAt(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
     }
 }

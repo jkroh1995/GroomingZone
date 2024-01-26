@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.PostFreeBoardCommand;
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.SaveFreeBoardPort;
@@ -67,7 +67,7 @@ class PostFreeBoardServiceTest {
         given(saveFreeBoardPort.save(any())).willReturn(entityQueryResult);
         given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
 
-        FreeBoardEntityCommandResponse response = postFreeBoardService.postFreeBoard(postFreeBoardCommand);
+        SingleFreeBoardCommandResponse response = postFreeBoardService.postFreeBoard(postFreeBoardCommand);
 
         assertThat(response.getBoardId()).isEqualTo(saveFreeBoardQuery.getBoardId());
         assertThat(response.getTitle()).isEqualTo(saveFreeBoardQuery.getTitle());

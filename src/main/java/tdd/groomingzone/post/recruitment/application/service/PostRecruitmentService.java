@@ -1,7 +1,6 @@
 package tdd.groomingzone.post.recruitment.application.service;
 
 import org.springframework.stereotype.Service;
-import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruitmentCommand;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
@@ -40,24 +39,9 @@ public class PostRecruitmentService implements PostRecruitmentUseCase {
                 .type(postRecruitmentCommand.getType())
                 .build();
 
-        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(recruitment.getWriterId(),
-                recruitment.getWriterNickName(),
-                recruitment.getId(),
-                recruitment.getTitle(),
-                recruitment.getContent(),
-                recruitment.getViewCount(),
-                recruitment.getCreatedAt(),
-                recruitment.getModifiedAt(),
-                recruitment.getType());
+        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(recruitment);
 
-        RecruitmentEntityQueryResult queryResult = saveRecruitmentPort.save(saveRecruitmentQuery);
-        return SingleRecruitmentResponse.of(queryResult.getBoardId(),
-                queryResult.getTitle(),
-                queryResult.getContent(),
-                queryResult.getType(),
-                queryResult.getViewCount(),
-                queryResult.getCreatedAt(),
-                queryResult.getModifiedAt(),
-                WriterInfo.of(writer));
+        RecruitmentEntityQueryResult saveResult = saveRecruitmentPort.save(saveRecruitmentQuery);
+        return SingleRecruitmentResponse.of(saveResult);
     }
 }

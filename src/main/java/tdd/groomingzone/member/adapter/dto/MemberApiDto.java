@@ -13,13 +13,16 @@ public class MemberApiDto {
         private String nickName;
         private String phoneNumber;
         private String role;
+        private String profileImageUrl;
     }
 
     @Builder
+    @Getter
     public static class Response {
-        public String email;
-        public String nickName;
-        public String phoneNumber;
-        public String role;
+        private final String email;
+        private final String nickName;
+        private final String phoneNumber;
+        private final String role;
+        private final String profileImageUrl;
     }
 }

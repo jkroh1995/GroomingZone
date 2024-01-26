@@ -9,7 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
-import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruitmentCommand;
+import tdd.groomingzone.post.recruitment.application.port.in.command.PutRecruitmentCommand;
+import tdd.groomingzone.post.recruitment.application.port.out.LoadRecruitmentPort;
 import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
 import tdd.groomingzone.util.MemberCreator;
@@ -22,53 +23,51 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class PostRecruitmentServiceTest {
+class PutRecruitmentServiceTest {
 
     @Mock
     private LoadMemberPort loadMemberPort;
 
     @Mock
+    private LoadRecruitmentPort loadRecruitmentPort;
+
+    @Mock
     private SaveRecruitmentPort saveRecruitmentPort;
 
     @InjectMocks
-    private PostRecruitmentService postRecruitmentService;
+    private PutRecruitmentService putRecruitmentService;
 
     @Test
-    @DisplayName("구인구직 게시글을 저장한다")
-    void testPostRecruitment() {
-        //given
+    @DisplayName("구인구직 게시글을 수정한다.")
+    void testPutRecruitment() {
         Member writer = MemberCreator.createMember();
 
         String testTitle = "title";
         String testContent = "content";
-        String testType = "OFFER";
         int testViewCount = 1;
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
+        String testType = "OFFER";
 
-        PostRecruitmentCommand postRecruitmentCommand = PostRecruitmentCommand.of(writer.getMemberId(),
-                testTitle,
+        PutRecruitmentCommand putRecruitmentCommand = PutRecruitmentCommand.of(testTitle,
                 testContent,
-                testType);
-
-        RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L,
                 writer.getMemberId(),
-                writer.getNickName(),
-                testTitle,
-                testContent,
-                testType,
-                testViewCount,
-                testCreatedAt,
+                1L,
                 testModifiedAt);
 
-        given(saveRecruitmentPort.save(any())).willReturn(entityQueryResult);
+        RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L, writer.getMemberId(), writer.getNickName(), testTitle,testContent, testType, testViewCount, testCreatedAt, testModifiedAt);
+
+
         given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
+        given(loadRecruitmentPort.loadRecruitmentById(anyLong())).willReturn(entityQueryResult);
+        given(saveRecruitmentPort.save(any())).willReturn(entityQueryResult);
 
-        SingleRecruitmentResponse response = postRecruitmentService.postRecruitment(postRecruitmentCommand);
+        SingleRecruitmentResponse response = putRecruitmentService.putRecruitment(putRecruitmentCommand);
 
-        assertThat(response.getTitle()).isEqualTo(postRecruitmentCommand.getTitle());
-        assertThat(response.getContent()).isEqualTo(postRecruitmentCommand.getContent());
-        assertThat(response.getType()).isEqualTo(postRecruitmentCommand.getType());
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(postRecruitmentCommand.getWriterId());
+        assertThat(response.getBoardId()).isEqualTo(putRecruitmentCommand.getRecruitmentId());
+        assertThat(response.getTitle()).isEqualTo(putRecruitmentCommand.getTitle());
+        assertThat(response.getContent()).isEqualTo(putRecruitmentCommand.getContent());
+        assertThat(response.getModifiedAt()).isEqualTo(putRecruitmentCommand.getModifiedAt());
+        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(putRecruitmentCommand.getRequestMemberId());
     }
 }

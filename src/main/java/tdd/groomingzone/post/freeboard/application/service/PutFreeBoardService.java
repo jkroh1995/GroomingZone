@@ -3,8 +3,9 @@ package tdd.groomingzone.post.freeboard.application.service;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import tdd.groomingzone.post.common.BoardInfo;
 import tdd.groomingzone.post.common.WriterInfo;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.PutFreeBoardCommand;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
@@ -28,7 +29,7 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
 
     @Override
     @Transactional
-    public FreeBoardEntityCommandResponse putFreeBoard(PutFreeBoardCommand command) {
+    public SingleFreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
         FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
         Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
         FreeBoard freeBoard = FreeBoard.builder()
@@ -42,7 +43,12 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
 
         Member requestMember = loadMemberPort.findMemberById(command.getWriterId());
         freeBoard.checkMemberAuthority(requestMember);
-        freeBoard.modify(command.getTitle(), command.getContent(), command.getModifiedAt());
+        freeBoard.modify(BoardInfo.builder()
+                .title(command.getTitle())
+                .content(command.getContent())
+                .modifiedAt(command.getModifiedAt())
+                .viewCount(freeBoard.getViewCount())
+                .build());
 
         SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(
                 writer.getMemberId(),
@@ -56,12 +62,12 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
 
         saveFreeBoardPort.save(saveFreeBoardQuery);
 
-        return FreeBoardEntityCommandResponse.of(freeBoard.getId(),
+        return SingleFreeBoardCommandResponse.of(freeBoard.getId(),
                 freeBoard.getTitle(),
                 freeBoard.getContent(),
                 freeBoard.getViewCount(),
                 freeBoard.getCreatedAt(),
                 freeBoard.getModifiedAt(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
     }
 }

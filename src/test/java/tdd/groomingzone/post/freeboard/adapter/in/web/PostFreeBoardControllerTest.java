@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.post.freeboard.application.port.in.FreeBoardEntityCommandResponse;
+import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.util.MemberCreator;
@@ -67,13 +67,13 @@ class PostFreeBoardControllerTest {
 
         Member writer = MemberCreator.createMember();
 
-        FreeBoardEntityCommandResponse testResponse = FreeBoardEntityCommandResponse.of(testId,
+        SingleFreeBoardCommandResponse testResponse = SingleFreeBoardCommandResponse.of(testId,
                 testTitle,
                 testContent,
                 1,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                WriterInfo.of(writer));
+                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
 
         given(postFreeBoardUseCase.postFreeBoard(any())).willReturn(testResponse);
 

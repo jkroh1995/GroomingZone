@@ -55,6 +55,7 @@ class PostMemberControllerTest {
         String phoneNumber = "010-1111-1111";
         String role = "BARBER";
         String provider = "SERVER";
+        String profileImageUrl = "sample_url";
 
         MemberApiDto.Post postDto = MemberApiDto.Post.builder()
                 .email(email)
@@ -62,11 +63,12 @@ class PostMemberControllerTest {
                 .nickName(nickName)
                 .phoneNumber(phoneNumber)
                 .role(role)
+                .profileImageUrl(profileImageUrl)
                 .build();
 
         String content = gson.toJson(postDto);
 
-        MemberCommandResponse commandResponse = MemberCommandResponse.of(1L, email, nickName, phoneNumber, role, provider);
+        MemberCommandResponse commandResponse = MemberCommandResponse.of(1L, email, nickName, phoneNumber, role, provider, profileImageUrl);
 
         given(postMemberUseCase.postMember(any())).willReturn(commandResponse);
 
@@ -81,6 +83,7 @@ class PostMemberControllerTest {
                 .andExpect(jsonPath("$.nickName").value(postDto.getNickName()))
                 .andExpect(jsonPath("$.phoneNumber").value(postDto.getPhoneNumber()))
                 .andExpect(jsonPath("$.role").value(postDto.getRole()))
+                .andExpect(jsonPath("$.profileImageUrl").value(postDto.getProfileImageUrl()))
                 .andDo(document(
                         "post-member",
                         getRequestPreProcessor(),
@@ -91,7 +94,8 @@ class PostMemberControllerTest {
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀 번호"),
                                         fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
                                         fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("전화 번호"),
-                                        fieldWithPath("role").type(JsonFieldType.STRING).description("역할")
+                                        fieldWithPath("role").type(JsonFieldType.STRING).description("역할"),
+                                        fieldWithPath("profileImageUrl").type(JsonFieldType.STRING).description("프로필 사진 url")
                                 )
                         ),
                         responseFields(
@@ -99,7 +103,8 @@ class PostMemberControllerTest {
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
                                         fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("전화 번호"),
-                                        fieldWithPath("role").type(JsonFieldType.STRING).description("역할")
+                                        fieldWithPath("role").type(JsonFieldType.STRING).description("역할"),
+                                        fieldWithPath("profileImageUrl").type(JsonFieldType.STRING).description("프로필 사진 url")
                                 )
                         )
                 ));

@@ -7,12 +7,13 @@ import tdd.groomingzone.post.common.BoardVO;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.common.Post;
 
 import java.time.LocalDateTime;
 
-public class Recruitment {
+public class Recruitment implements Post {
     private final BoardVO boardVO;
-    private final BoardInfo boardInfo;
+    private BoardInfo boardInfo;
     private final Type type;
 
     @Builder
@@ -67,6 +68,25 @@ public class Recruitment {
 
     public String getType() {
         return this.type.getType();
+    }
+
+    public Member getWriter(){
+        return this.boardVO.getWriter();
+    }
+
+    @Override
+    public void checkMemberAuthority(Member member) {
+        if (member.isAdmin()) {
+            return;
+        }
+        if (getWriterId() != member.getMemberId()) {
+            throw new BusinessException(ExceptionCode.UNAUTHORIZED);
+        }
+    }
+
+    @Override
+    public void modify(BoardInfo boardInfo) {
+        this.boardInfo = boardInfo;
     }
 
     @Getter

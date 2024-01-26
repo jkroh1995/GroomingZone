@@ -56,7 +56,7 @@ public class GetFreeBoardCommentService implements GetFreeBoardCommentUseCase {
                     return SingleFreeBoardCommentResponse.of(freeBoardComment.getContent(),
                             freeBoardComment.getCreatedAt(),
                             freeBoardComment.getModifiedAt(),
-                            WriterInfo.of(commentWriter));
+                            WriterInfo.of(commentWriter.getMemberId(), commentWriter.getNickName()));
                 })
                 .collect(Collectors.toList());
         PageInfo pageInfo = PageInfo.of(selectQueryResult.getPageNumber() + 1, selectQueryResult.getPageSize(), selectQueryResult.getTotalElements(), selectQueryResult.getTotalPages());
