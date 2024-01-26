@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
-import tdd.groomingzone.post.recruitment.domain.Recruitment;
+import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -57,6 +57,9 @@ class PostRecruitmentControllerTest {
         String testTitle = "title";
         String testContent = "content";
         String testType = "OFFER";
+        int testViewCount = 0;
+        LocalDateTime testCreatedAt = LocalDateTime.now();
+        LocalDateTime testModifiedAt = LocalDateTime.now();
 
         RecruitmentApiDto.Post testPost = RecruitmentApiDto.Post.builder()
                 .title(testTitle)
@@ -68,16 +71,17 @@ class PostRecruitmentControllerTest {
 
         Member writer = MemberCreator.createMember();
 
-        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(Recruitment.builder()
-                .writer(writer)
-                .id(testId)
-                .title(testTitle)
-                .content(testContent)
-                .type(testType)
-                .viewCount(1)
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
-                .build());
+        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(RecruitmentEntityQueryResult.of(
+                testId,
+                writer.getMemberId(),
+                writer.getNickName(),
+                testTitle,
+                testContent,
+                testType,
+                testViewCount,
+                testCreatedAt,
+                testModifiedAt
+        ));
 
         given(postRecruitmentUseCase.postRecruitment(any())).willReturn(testResponse);
 

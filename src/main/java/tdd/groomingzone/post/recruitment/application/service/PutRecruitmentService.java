@@ -50,7 +50,7 @@ public class PutRecruitmentService implements PutRecruitmentUseCase {
                 .build());
 
         SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(recruitment);
-        saveRecruitmentPort.save(saveRecruitmentQuery);
-        return SingleRecruitmentResponse.of(recruitment);
+        RecruitmentEntityQueryResult queryResult = saveRecruitmentPort.save(saveRecruitmentQuery);
+        return SingleRecruitmentResponse.of(queryResult);
     }
 }
