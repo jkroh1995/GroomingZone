@@ -35,12 +35,6 @@ class GetFreeBoardCommentServiceTest {
     @Mock
     private LoadFreeBoardCommentPort loadFreeBoardCommentPort;
 
-    @Mock
-    private LoadFreeBoardPort loadFreeBoardPort;
-
-    @Mock
-    private LoadMemberPort loadMemberPort;
-
     @InjectMocks
     private GetFreeBoardCommentService getFreeBoardCommentService;
 
