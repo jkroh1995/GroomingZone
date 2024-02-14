@@ -10,13 +10,11 @@ import org.springframework.data.domain.PageImpl;
 import tdd.groomingzone.comment.common.CommentEntity;
 import tdd.groomingzone.comment.freeboardcomment.adapter.out.FreeBoardCommentPage;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
-import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.GetFreeBoardCommentPageCommand;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.MultiFreeBoardCommentResponse;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.LoadFreeBoardCommentPort;
-import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.util.MemberCreator;
 
