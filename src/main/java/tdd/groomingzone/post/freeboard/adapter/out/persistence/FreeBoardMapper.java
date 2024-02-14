@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
-;
+
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 

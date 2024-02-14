@@ -41,7 +41,7 @@ public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeB
 
     @Override
     public FreeBoardPage loadFreeBoardPage(String title, String content, String writerNickName, PageNumber pageNumber) {
-        Pageable pageable = Pageable.ofSize(PAGE_SIZE.getValue()).withPage(pageNumber.getPageNumber());;
+        Pageable pageable = Pageable.ofSize(PAGE_SIZE.getValue()).withPage(pageNumber.getPageNumber());
         Page<FreeBoardEntity> page = freeBoardEntityRepository.findFilteredFreeBoards(title, content, writerNickName, pageable);
         return freeBoardMapper.mapToMultiQueryResult(page);
     }

@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageImpl;
 import tdd.groomingzone.comment.common.CommentEntity;
 import tdd.groomingzone.comment.freeboardcomment.adapter.out.FreeBoardCommentPage;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.GetFreeBoardCommentPageCommand;
@@ -21,7 +20,6 @@ import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.util.MemberCreator;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,6 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
