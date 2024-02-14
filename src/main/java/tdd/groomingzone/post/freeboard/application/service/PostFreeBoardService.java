@@ -10,10 +10,8 @@ import tdd.groomingzone.post.freeboard.application.port.in.command.PostFreeBoard
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PostFreeBoardUseCase;
 
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.SaveFreeBoardPort;
 
-import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.global.utils.CommonEnums;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -34,7 +32,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     @Override
     @Transactional
     public SingleFreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
-        Member writer = loadMemberPort.findMemberById(command.getWriterId());
+        Member writer = loadMemberPort.findMemberByEmail(command.getWriterEmail());
         FreeBoard freeBoard = FreeBoard.builder()
                 .id(CommonEnums.NEW_INSTANCE.getValue())
                 .writer(writer)
@@ -45,26 +43,7 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
                 .modifiedAt(LocalDateTime.now())
                 .build();
 
-        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(writer.getMemberId(),
-                writer.getNickName(),
-                freeBoard.getId(),
-                freeBoard.getTitle(),
-                freeBoard.getContent(),
-                freeBoard.getViewCount(),
-                freeBoard.getCreatedAt(),
-                freeBoard.getModifiedAt());
-
-        FreeBoardEntityQueryResult queryResult = saveFreeBoardPort.save(saveFreeBoardQuery);
-
-        FreeBoard savedFreeBoard = FreeBoard.builder()
-                .id(queryResult.getId())
-                .writer(writer)
-                .title(queryResult.getTitle())
-                .content(queryResult.getContent())
-                .viewCount(queryResult.getViewCount())
-                .createdAt(queryResult.getCreatedAt())
-                .modifiedAt(queryResult.getModifiedAt())
-                .build();
+        FreeBoard savedFreeBoard = saveFreeBoardPort.save(freeBoard);
 
         return SingleFreeBoardCommandResponse.of(savedFreeBoard.getId(),
                 savedFreeBoard.getTitle(),

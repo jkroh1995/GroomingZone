@@ -5,11 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
-import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.DeleteFreeBoardCommentCommand;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.DeleteFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.LoadFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
@@ -19,8 +16,7 @@ import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -33,12 +29,6 @@ class DeleteFreeBoardCommentServiceTest {
     private LoadFreeBoardCommentPort loadFreeBoardCommentPort;
 
     @Mock
-    private LoadFreeBoardPort loadFreeBoardPort;
-
-    @Mock
-    private FreeBoardCommentPublisher freeBoardCommentPublisher;
-
-    @Mock
     private DeleteFreeBoardCommentPort deleteFreeBoardCommentPort;
 
     @InjectMocks
@@ -48,47 +38,32 @@ class DeleteFreeBoardCommentServiceTest {
         //given
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
-        FreeBoardCommentEntityResult freeBoardCommentEntityResult = FreeBoardCommentEntityResult.of(1L,
-                1L,
-                1L,
-                "content",
-                testCreatedAt,
-                testModifiedAt);
-        given(loadFreeBoardCommentPort.loadFreeBoardComment(anyLong())).willReturn(freeBoardCommentEntityResult);
-
-        FreeBoardEntityQueryResult freeBoardEntityQueryResult = FreeBoardEntityQueryResult.of(
-                1L,
-                "title",
-                "content",
-                0,
-                testCreatedAt,
-                testModifiedAt,
-                1L);
-
-        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(freeBoardEntityQueryResult);
 
         Member writer = MemberCreator.createMember();
 
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
-
         FreeBoard freeBoard = FreeBoard.builder()
-                .id(freeBoardEntityQueryResult.getId())
-                .title(freeBoardEntityQueryResult.getTitle())
-                .content(freeBoardEntityQueryResult.getContent())
-                .viewCount(freeBoardEntityQueryResult.getViewCount())
-                .createdAt(freeBoardEntityQueryResult.getCreatedAt())
-                .modifiedAt(freeBoardEntityQueryResult.getModifiedAt())
-                .build();
-        FreeBoardComment freeBoardComment = FreeBoardComment.builder()
-                .id(1L)
-                .freeBoard(freeBoard)
-                .content("content")
                 .writer(writer)
+                .id(1L)
+                .title("title")
+                .content("content")
+                .viewCount(1)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
                 .build();
-        given(freeBoardCommentPublisher.createFreeBoardComment(any(), any(), any(), any(), any(), any())).willReturn(freeBoardComment);
+
+        FreeBoardComment freeBoardComment = FreeBoardComment.builder()
+                .freeBoard(freeBoard)
+                .writer(writer)
+                .content("content")
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
+
+        given(loadFreeBoardCommentPort.loadFreeBoardComment(anyLong())).willReturn(freeBoardComment);
+        given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
 
         //when
-        DeleteFreeBoardCommentCommand command = DeleteFreeBoardCommentCommand.of(writer.getMemberId(), freeBoard.getId(), freeBoardComment.getId());
+        DeleteFreeBoardCommentCommand command = DeleteFreeBoardCommentCommand.of(writer.getEmail(), freeBoard.getId(), freeBoardComment.getId());
         deleteFreeBoardCommentService.delete(command);
 
         //then

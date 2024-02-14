@@ -5,22 +5,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.post.freeboard.application.port.in.command.DeleteFreeBoardCommand;
 import tdd.groomingzone.post.freeboard.application.port.out.DeleteFreeBoardPort;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
-import tdd.groomingzone.post.freeboard.application.port.out.query.DeleteFreeBoardQuery;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,21 +41,24 @@ class DeleteFreeBoardServiceTest {
         //given
         Member writer = MemberCreator.createMember();
 
-        DeleteFreeBoardCommand deleteFreeBoardCommand = DeleteFreeBoardCommand.of(1L, 1L);
-        FreeBoardEntityQueryResult entityQueryResult = FreeBoardEntityQueryResult.of(1L, "test", "content", 0, LocalDateTime.now(), LocalDateTime.now(), 1L);
+        DeleteFreeBoardCommand deleteFreeBoardCommand = DeleteFreeBoardCommand.of(writer.getEmail(), 1L);
+        FreeBoard freeBoard = FreeBoard.builder()
+                .writer(writer)
+                .id(1L)
+                .title("title")
+                .content("content")
+                .viewCount(1)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
 
-        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(entityQueryResult);
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
+        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(freeBoard);
+        given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
 
-        try (MockedStatic<DeleteFreeBoardQuery> mockedStatic = mockStatic(DeleteFreeBoardQuery.class)) {
-            DeleteFreeBoardQuery deleteQuery = DeleteFreeBoardQuery.of(1L);
-            given(DeleteFreeBoardQuery.of(anyLong())).willReturn(deleteQuery);
+        //when
+        deleteFreeBoardService.deleteFreeBoard(deleteFreeBoardCommand);
 
-            //when
-            deleteFreeBoardService.deleteFreeBoard(deleteFreeBoardCommand);
-
-            //then
-            verify(deleteFreeBoardPort).delete(deleteQuery);
-        }
+        //then
+        verify(deleteFreeBoardPort).delete(anyLong());
     }
 }

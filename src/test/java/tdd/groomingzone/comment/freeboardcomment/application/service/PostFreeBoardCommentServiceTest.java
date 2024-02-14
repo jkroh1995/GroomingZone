@@ -6,12 +6,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.command.PostFreeBoardCommentCommand;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.SaveFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -21,8 +19,7 @@ import tdd.groomingzone.util.MemberCreator;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,9 +34,6 @@ class PostFreeBoardCommentServiceTest {
     @Mock
     private SaveFreeBoardCommentPort saveFreeBoardCommentPort;
 
-    @Mock
-    private FreeBoardCommentPublisher freeBoardCommentPublisher;
-
     @InjectMocks
     private PostFreeBoardCommentService postFreeBoardCommentService;
 
@@ -49,53 +43,38 @@ class PostFreeBoardCommentServiceTest {
         //given
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
-        FreeBoardEntityQueryResult freeBoardEntityQueryResult = FreeBoardEntityQueryResult.of(
-                1L,
-                "title",
-                "content",
-                0,
-                testCreatedAt,
-                testModifiedAt,
-                1L);
-
-        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(freeBoardEntityQueryResult);
 
         Member writer = MemberCreator.createMember();
-
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
-
         FreeBoard freeBoard = FreeBoard.builder()
-                .id(freeBoardEntityQueryResult.getId())
-                .title(freeBoardEntityQueryResult.getTitle())
-                .content(freeBoardEntityQueryResult.getContent())
-                .viewCount(freeBoardEntityQueryResult.getViewCount())
-                .createdAt(freeBoardEntityQueryResult.getCreatedAt())
-                .modifiedAt(freeBoardEntityQueryResult.getModifiedAt())
-                .build();
-        FreeBoardComment freeBoardComment = FreeBoardComment.builder()
-                .id(1L)
-                .freeBoard(freeBoard)
-                .content("content")
                 .writer(writer)
+                .id(1L)
+                .title("title")
+                .content("content")
+                .viewCount(1)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testCreatedAt)
                 .build();
-        given(freeBoardCommentPublisher.createFreeBoardComment(any(), any(), any(), any(), any(), any())).willReturn(freeBoardComment);
 
-        FreeBoardCommentEntityResult commentEntityResult = FreeBoardCommentEntityResult.of(1L,
-                1L,
-                1L,
-                "content",
-                testCreatedAt,
-                testModifiedAt);
-        given(saveFreeBoardCommentPort.save(any())).willReturn(commentEntityResult);
+        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(freeBoard);
+        given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
+
+        FreeBoardComment freeBoardComment = FreeBoardComment.builder()
+                .writer(writer)
+                .freeBoard(freeBoard)
+                .id(1L)
+                .content("content")
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
+        given(saveFreeBoardCommentPort.save(any())).willReturn(freeBoardComment);
 
         //when
-        PostFreeBoardCommentCommand command = PostFreeBoardCommentCommand.of(1L, 1L, "content");
+        PostFreeBoardCommentCommand command = PostFreeBoardCommentCommand.of(writer.getEmail(), 1L, "content");
         SingleFreeBoardCommentResponse singleFreeBoardCommentResponse = postFreeBoardCommentService.postFreeBoardComment(command);
 
         //then
         assertThat(singleFreeBoardCommentResponse.getContent()).isEqualTo(command.getContent());
-        assertThat(singleFreeBoardCommentResponse.getCreatedAt()).isEqualTo(commentEntityResult.getCreatedAt());
-        assertThat(singleFreeBoardCommentResponse.getModifiedAt()).isEqualTo(commentEntityResult.getModifiedAt());
-        assertThat(singleFreeBoardCommentResponse.getWriterInfo().getWriterId()).isEqualTo(command.getWriterId());
+        assertThat(singleFreeBoardCommentResponse.getCreatedAt()).isEqualTo(freeBoardComment.getCreatedAt());
+        assertThat(singleFreeBoardCommentResponse.getModifiedAt()).isEqualTo(freeBoardComment.getModifiedAt());
     }
 }

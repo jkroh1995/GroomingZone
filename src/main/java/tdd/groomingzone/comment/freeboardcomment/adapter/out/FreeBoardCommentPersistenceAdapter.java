@@ -4,9 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 import tdd.groomingzone.comment.common.CommentEntity;
 import tdd.groomingzone.comment.common.CommentEntityRepository;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageable;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageResult;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.DeleteFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.LoadFreeBoardCommentPort;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.port.SaveFreeBoardCommentPort;
@@ -25,23 +23,23 @@ public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentP
     }
 
     @Override
-    public FreeBoardCommentEntityResult save(FreeBoardComment freeBoardComment) {
+    public FreeBoardComment save(FreeBoardComment freeBoardComment) {
         CommentEntity databaseEntity = freeBoardCommentMapper.mapToDatabaseEntity(freeBoardComment);
         CommentEntity savedDatabaseEntity = commentEntityRepository.save(databaseEntity);
-        return freeBoardCommentMapper.mapToSingleQueryResult(savedDatabaseEntity);
+        return freeBoardCommentMapper.mapToDomainEntity(savedDatabaseEntity);
     }
 
     @Override
-    public FreeBoardCommentPageResult loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable) {
+    public FreeBoardCommentPage loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable) {
         Page<CommentEntity> databaseEntityPage = commentEntityRepository.findCommentPageByBoardId(freeBoardCommentPageable.getBoardId(), freeBoardCommentPageable.getPageable());
-        return freeBoardCommentMapper.mapToMultiQueryResult(databaseEntityPage);
+        return freeBoardCommentMapper.mapToPage(databaseEntityPage);
     }
 
     @Override
-    public FreeBoardCommentEntityResult loadFreeBoardComment(long commentId) {
+    public FreeBoardComment loadFreeBoardComment(long commentId) {
         CommentEntity databaseEntity = commentEntityRepository.findById(commentId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.COMMENT_NOT_FOUND));
-        return freeBoardCommentMapper.mapToSingleQueryResult(databaseEntity);
+        return freeBoardCommentMapper.mapToDomainEntity(databaseEntity);
     }
 
     @Override

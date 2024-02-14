@@ -2,6 +2,7 @@ package tdd.groomingzone.post.freeboard.application.service;
 
 import org.springframework.stereotype.Service;
 
+import tdd.groomingzone.member.PageNumber;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.MultiFreeBoardCommandResponse;
@@ -10,7 +11,6 @@ import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardP
 
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPageQueryResult;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.global.pagedresponse.PageInfo;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -32,13 +32,13 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
 
     @Override
     public MultiFreeBoardCommandResponse getFreeBoardPage(GetFreeBoardPageCommand command) {
-        FreeBoardPage freeBoardPage = new FreeBoardPage(command.getPageNumber());
-        FreeBoardPageQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardPage(command.getTitle(),
+        PageNumber pageNumber = new PageNumber(command.getPageNumber());
+        FreeBoardPage freeBoardPage = loadFreeBoardPort.loadFreeBoardPage(command.getTitle(),
                 command.getContent(),
                 command.getWriterNickName(),
-                freeBoardPage);
+                pageNumber);
 
-        List<SingleFreeBoardCommandResponse> pageResponse = selectQueryResult.getQueryResults().stream()
+        List<SingleFreeBoardCommandResponse> pageResponse = freeBoardPage.getFreeBoards().stream()
                 .map(eachQueryResult -> {
                     Member writer = loadMemberPort.findMemberById(eachQueryResult.getWriterId());
                     FreeBoard freeBoard = FreeBoard.builder()
@@ -59,12 +59,8 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
                            WriterInfo.of(writer.getMemberId(), writer.getNickName()));
                 })
                 .collect(Collectors.toList());
-        PageInfo pageInfo = PageInfo.of(convertPageIndexToPageNumber(selectQueryResult), selectQueryResult.getPageSize(), selectQueryResult.getTotalElements(), selectQueryResult.getTotalPages());
+        PageInfo pageInfo = PageInfo.of(pageNumber.getPageNumber(), freeBoardPage.getPageSize(), freeBoardPage.getTotalElements(), freeBoardPage.getTotalPages());
 
         return MultiFreeBoardCommandResponse.of(pageResponse, pageInfo);
-    }
-
-    private static int convertPageIndexToPageNumber(FreeBoardPageQueryResult selectQueryResult) {
-        return selectQueryResult.getPageIndex() + 1;
     }
 }

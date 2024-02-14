@@ -1,12 +1,12 @@
 package tdd.groomingzone.comment.freeboardcomment.application.port.out.port;
 
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
+import tdd.groomingzone.comment.freeboardcomment.adapter.out.FreeBoardCommentPage;
 import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageable;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageResult;
+import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
 
 public interface LoadFreeBoardCommentPort {
 
-    FreeBoardCommentPageResult loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable);
+    FreeBoardCommentPage loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable);
 
-    FreeBoardCommentEntityResult loadFreeBoardComment(long commentId);
+    FreeBoardComment loadFreeBoardComment(long commentId);
 }

@@ -1,26 +1,30 @@
 package tdd.groomingzone.post.freeboard.application.port.out;
 
-import lombok.Getter;
+import lombok.Data;
 
-import org.springframework.data.domain.Pageable;
-import tdd.groomingzone.global.utils.CommonEnums;
-import tdd.groomingzone.global.exception.BusinessException;
-import tdd.groomingzone.global.exception.ExceptionCode;
+import org.springframework.data.domain.Page;
+import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 
-import static tdd.groomingzone.global.utils.CommonEnums.PAGE_SIZE;
+import java.util.List;
 
-@Getter
-public class FreeBoardPage {
-    private final Pageable pageable;
+@Data
+public final class FreeBoardPage {
+    private final List<FreeBoard> freeBoards;
+    private final int pageNumber;
+    private final int pageSize;
+    private final long totalElements;
+    private final int totalPages;
 
-    public FreeBoardPage(int pageNumber) {
-        verifyPageNumber(pageNumber);
-        this.pageable = Pageable.ofSize(PAGE_SIZE.getValue()).withPage(pageNumber - 1);
+    private FreeBoardPage(List<FreeBoard> freeBoards, Page<FreeBoardEntity> page) {
+        this.freeBoards = freeBoards;
+        this.pageNumber = page.getNumber();
+        this.pageSize = page.getSize();
+        this.totalElements = page.getTotalElements();
+        this.totalPages = page.getTotalPages();
     }
 
-    private void verifyPageNumber(int pageNumber) {
-        if(pageNumber < CommonEnums.MINIMUM_PAGE_NUMBER_VALUE.getValue()){
-            throw new BusinessException(ExceptionCode.INVALID_REQUEST);
-        }
+    public static FreeBoardPage of(List<FreeBoard> freeBoards, Page<FreeBoardEntity> page) {
+        return new FreeBoardPage(freeBoards, page);
     }
 }
