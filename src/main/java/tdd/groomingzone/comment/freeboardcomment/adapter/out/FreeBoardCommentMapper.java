@@ -4,15 +4,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import tdd.groomingzone.comment.common.CommentEntity;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentEntityResult;
-import tdd.groomingzone.comment.freeboardcomment.application.port.out.FreeBoardCommentPageResult;
 import tdd.groomingzone.comment.freeboardcomment.domain.FreeBoardComment;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class FreeBoardCommentMapper {
+    private final LoadFreeBoardPort loadFreeBoardPort;
+    private final LoadMemberPort loadMemberPort;
+
+    public FreeBoardCommentMapper(LoadFreeBoardPort loadFreeBoardPort, LoadMemberPort loadMemberPort) {
+        this.loadFreeBoardPort = loadFreeBoardPort;
+        this.loadMemberPort = loadMemberPort;
+    }
+
     public CommentEntity mapToDatabaseEntity(FreeBoardComment freeBoardComment) {
         return CommentEntity.builder()
                 .boardId(freeBoardComment.getBoardId())
@@ -23,20 +31,22 @@ public class FreeBoardCommentMapper {
                 .build();
     }
 
-    public FreeBoardCommentPageResult mapToMultiQueryResult(Page<CommentEntity> page) {
-        List<FreeBoardCommentEntityResult> queryResults = page.getContent().stream()
-                .map(this::mapToSingleQueryResult)
+    public FreeBoardCommentPage mapToPage(Page<CommentEntity> page) {
+        List<FreeBoardComment> queryResults = page.getContent().stream()
+                .map(this::mapToDomainEntity)
                 .collect(Collectors.toList());
 
-        return FreeBoardCommentPageResult.of(queryResults, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
+        return FreeBoardCommentPage.of(queryResults, page);
     }
 
-    public FreeBoardCommentEntityResult mapToSingleQueryResult(CommentEntity databaseEntity) {
-        return FreeBoardCommentEntityResult.of(databaseEntity.getId(),
-                databaseEntity.getWriterId(),
-                databaseEntity.getBoardId(),
-                databaseEntity.getContent(),
-                databaseEntity.getCreatedAt(),
-                databaseEntity.getModifiedAt());
+    public FreeBoardComment mapToDomainEntity(CommentEntity databaseEntity) {
+        return FreeBoardComment.builder()
+                .freeBoard(loadFreeBoardPort.loadFreeBoardById(databaseEntity.getBoardId()))
+                .writer(loadMemberPort.findMemberById(databaseEntity.getWriterId()))
+                .id(databaseEntity.getId())
+                .content(databaseEntity.getContent())
+                .createdAt(databaseEntity.getCreatedAt())
+                .modifiedAt(databaseEntity.getModifiedAt())
+                .build();
     }
 }

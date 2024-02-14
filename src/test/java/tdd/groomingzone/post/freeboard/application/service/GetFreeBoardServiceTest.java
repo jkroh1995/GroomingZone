@@ -8,11 +8,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.GetFreeBoardCommand;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
 import tdd.groomingzone.post.freeboard.application.port.out.SaveFreeBoardPort;
-import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -31,54 +30,55 @@ class GetFreeBoardServiceTest {
     @Mock
     private SaveFreeBoardPort saveFreeBoardPort;
 
-    @Mock
-    private LoadMemberPort loadMemberPort;
-
     @InjectMocks
     private GetFreeBoardService getFreeBoardService;
 
     @Test
     @DisplayName("하나의 자유 게시글을 조회한다.")
-    void testGetFreeBoard(){
+    void testGetFreeBoard() {
         //given
         Member writer = MemberCreator.createMember();
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
 
         String testTitle = "title";
         String testContent = "content";
+        long testId = 1L;
         int testViewCount = 1;
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
 
-        FreeBoardEntityQueryResult beforeReadQueryResult = FreeBoardEntityQueryResult.of(1L,
-                testTitle,
-                testContent,
-                testViewCount,
-                testCreatedAt,
-                testModifiedAt,
-                1L);
-        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(beforeReadQueryResult);
+        FreeBoard freeBoard = FreeBoard.builder()
+                .writer(writer)
+                .id(testId)
+                .title(testTitle)
+                .content(testContent)
+                .viewCount(testViewCount)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
+        given(loadFreeBoardPort.loadFreeBoardById(anyLong())).willReturn(freeBoard);
 
-        FreeBoardEntityQueryResult afterReadQueryResult = FreeBoardEntityQueryResult.of(1L,
-                testTitle,
-                testContent,
-                testViewCount + 1,
-                testCreatedAt,
-                testModifiedAt,
-                1L);
-        given(saveFreeBoardPort.save(any())).willReturn(afterReadQueryResult);
+        FreeBoard afterReadFreeBoard = FreeBoard.builder()
+                .writer(writer)
+                .id(testId)
+                .title(testTitle)
+                .content(testContent)
+                .viewCount(testViewCount + 1)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
+        given(saveFreeBoardPort.save(any())).willReturn(afterReadFreeBoard);
 
         //when
         GetFreeBoardCommand getFreeBoardCommand = GetFreeBoardCommand.of(1L);
         SingleFreeBoardCommandResponse response = getFreeBoardService.getFreeBoard(getFreeBoardCommand);
 
         //then
-        assertThat(response.getBoardId()).isEqualTo(afterReadQueryResult.getId());
-        assertThat(response.getTitle()).isEqualTo(afterReadQueryResult.getTitle());
-        assertThat(response.getContent()).isEqualTo(afterReadQueryResult.getContent());
-        assertThat(response.getViewCount()).isEqualTo(afterReadQueryResult.getViewCount());
-        assertThat(response.getCreatedAt()).isEqualTo(afterReadQueryResult.getCreatedAt());
-        assertThat(response.getModifiedAt()).isEqualTo(afterReadQueryResult.getModifiedAt());
+        assertThat(response.getBoardId()).isEqualTo(afterReadFreeBoard.getId());
+        assertThat(response.getTitle()).isEqualTo(afterReadFreeBoard.getTitle());
+        assertThat(response.getContent()).isEqualTo(afterReadFreeBoard.getContent());
+        assertThat(response.getViewCount()).isEqualTo(afterReadFreeBoard.getViewCount());
+        assertThat(response.getCreatedAt()).isEqualTo(afterReadFreeBoard.getCreatedAt());
+        assertThat(response.getModifiedAt()).isEqualTo(afterReadFreeBoard.getModifiedAt());
         assertThat(response.getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
         assertThat(response.getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
     }

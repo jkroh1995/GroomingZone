@@ -10,7 +10,6 @@ import tdd.groomingzone.post.freeboard.application.port.in.command.PutFreeBoardC
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
 
 import tdd.groomingzone.post.freeboard.application.port.out.*;
-import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
@@ -30,18 +29,8 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
     @Override
     @Transactional
     public SingleFreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
-        FreeBoardEntityQueryResult selectQueryResult = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
-        Member writer = loadMemberPort.findMemberById(selectQueryResult.getWriterId());
-        FreeBoard freeBoard = FreeBoard.builder()
-                .id(selectQueryResult.getId())
-                .writer(writer)
-                .title(selectQueryResult.getTitle())
-                .content(selectQueryResult.getContent())
-                .viewCount(selectQueryResult.getViewCount())
-                .createdAt(selectQueryResult.getCreatedAt())
-                .modifiedAt(selectQueryResult.getModifiedAt()).build();
-
-        Member requestMember = loadMemberPort.findMemberById(command.getWriterId());
+        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+        Member requestMember = loadMemberPort.findMemberByEmail(command.getRequestMemberEmail());
         freeBoard.checkMemberAuthority(requestMember);
         freeBoard.modify(BoardInfo.builder()
                 .title(command.getTitle())
@@ -50,17 +39,7 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
                 .viewCount(freeBoard.getViewCount())
                 .build());
 
-        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(
-                writer.getMemberId(),
-                writer.getNickName(),
-                freeBoard.getId(),
-                freeBoard.getTitle(),
-                freeBoard.getContent(),
-                freeBoard.getViewCount(),
-                freeBoard.getCreatedAt(),
-                freeBoard.getModifiedAt());
-
-        saveFreeBoardPort.save(saveFreeBoardQuery);
+        saveFreeBoardPort.save(freeBoard);
 
         return SingleFreeBoardCommandResponse.of(freeBoard.getId(),
                 freeBoard.getTitle(),
@@ -68,6 +47,6 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
                 freeBoard.getViewCount(),
                 freeBoard.getCreatedAt(),
                 freeBoard.getModifiedAt(),
-                WriterInfo.of(writer.getMemberId(), writer.getNickName()));
+                WriterInfo.of(freeBoard.getWriterId(), freeBoard.getWriterNickName()));
     }
 }

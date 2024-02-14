@@ -1,8 +1,8 @@
 package tdd.groomingzone.post.freeboard.application.port.out;
 
-import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 
 public interface SaveFreeBoardPort {
 
-    FreeBoardEntityQueryResult save(SaveFreeBoardQuery freeBoard);
+    FreeBoard save(FreeBoard freeBoard);
 }

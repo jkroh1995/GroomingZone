@@ -1,8 +1,11 @@
 package tdd.groomingzone.post.freeboard.application.port.out;
 
+import tdd.groomingzone.member.PageNumber;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
+
 public interface LoadFreeBoardPort {
 
-    FreeBoardEntityQueryResult loadFreeBoardById(long freeBoardId);
+    FreeBoard loadFreeBoardById(long freeBoardId);
 
-    FreeBoardPageQueryResult loadFreeBoardPage(String title, String content, String writerNickName, FreeBoardPage freeBoardPage);
+    FreeBoardPage loadFreeBoardPage(String title, String content, String writerNickName, PageNumber pageNumber);
 }

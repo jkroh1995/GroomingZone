@@ -8,8 +8,9 @@
 ⓒ JKROH <shworud1995@naver.com / shworud29@gmail.comn>
 
 ***
-== 자유 게시글
-=== 자유 게시글 등록
+== 게시글
+=== 자유 게시글
+==== 자유 게시글 등록
 .curl-request
 include::{snippets}/post-free-board/curl-request.adoc[]
 
@@ -22,10 +23,10 @@ include::{snippets}/post-free-board/request-fields.adoc[]
 .http-response
 include::{snippets}/post-free-board/http-response.adoc[]
 
-.response-headers
-include::{snippets}/post-free-board/response-headers.adoc[]
+.response-fields
+include::{snippets}/post-free-board/response-fields.adoc[]
 
-=== 자유 게시글 수정
+==== 자유 게시글 수정
 .curl-request
 include::{snippets}/put-free-board/curl-request.adoc[]
 
@@ -41,7 +42,10 @@ include::{snippets}/put-free-board/request-fields.adoc[]
 .http-response
 include::{snippets}/put-free-board/http-response.adoc[]
 
-=== 자유 게시글 조회
+.response-fields
+include::{snippets}/put-free-board/response-fields.adoc[]
+
+==== 자유 게시글 조회
 .curl-request
 include::{snippets}/get-free-board/curl-request.adoc[]
 
@@ -51,39 +55,32 @@ include::{snippets}/get-free-board/http-request.adoc[]
 .path-parameters
 include::{snippets}/get-free-board/path-parameters.adoc[]
 
-.request-fields
-include::{snippets}/get-free-board/request-fields.adoc[]
-
 .http-response
 include::{snippets}/get-free-board/http-response.adoc[]
 
-=== 자유 게시글 페이지 조회
+.response-fields
+include::{snippets}/get-free-board/response-fields.adoc[]
+
+==== 자유 게시글 페이지 조회
 .curl-request
-include::{snippets}/get-paged-free-board/curl-request.adoc[]
+include::{snippets}/get-free-board-page/curl-request.adoc[]
 
 .http-request
-include::{snippets}/get-paged-free-board/http-request.adoc[]
+include::{snippets}/get-free-board-page/http-request.adoc[]
 
 .request-parameters
-include::{snippets}/get-paged-free-board/request-parameters.adoc[]
+include::{snippets}/get-free-board-page/request-parameters.adoc[]
+
+.path-parameters
+include::{snippets}/get-free-board-page/path-parameters.adoc[]
 
 .http-response
-include::{snippets}/get-paged-free-board/http-response.adoc[]
+include::{snippets}/get-free-board-page/http-response.adoc[]
 
-=== 자유 게시글 검색
-.curl-request
-include::{snippets}/get-filtered-paged-free-board/curl-request.adoc[]
+.response-fields
+include::{snippets}/get-free-board-page/response-fields.adoc[]
 
-.http-request
-include::{snippets}/get-filtered-paged-free-board/http-request.adoc[]
-
-.request-parameters
-include::{snippets}/get-filtered-paged-free-board/request-parameters.adoc[]
-
-.http-response
-include::{snippets}/get-filtered-paged-free-board/http-response.adoc[]
-
-=== 자유 게시글 삭제
+==== 자유 게시글 삭제
 .curl-request
 include::{snippets}/delete-free-board/curl-request.adoc[]
 
@@ -96,6 +93,156 @@ include::{snippets}/delete-free-board/path-parameters.adoc[]
 .http-response
 include::{snippets}/delete-free-board/http-response.adoc[]
 
+=== 구인구직 게시글
+==== 구인구직 게시글 등록
+.curl-request
+include::{snippets}/post-recruitment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-recruitment/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-recruitment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-recruitment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-recruitment/response-fields.adoc[]
+
+==== 구인구직 게시글 수정
+.curl-request
+include::{snippets}/put-recruitment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/put-recruitment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/put-recruitment/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/put-recruitment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/put-recruitment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/put-recruitment/response-fields.adoc[]
+
+==== 구인구직 게시글 조회
+.curl-request
+include::{snippets}/get-recruitment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-recruitment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-recruitment/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-recruitment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-recruitment/response-fields.adoc[]
+
+==== 구인구직 게시글 페이지 조회
+.curl-request
+include::{snippets}/get-recruitment-page/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-recruitment-page/http-request.adoc[]
+
+.request-parameters
+include::{snippets}/get-recruitment-page/request-parameters.adoc[]
+
+.path-parameters
+include::{snippets}/get-recruitment-page/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-recruitment-page/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-recruitment-page/response-fields.adoc[]
+
+==== 구인구직 게시글 삭제
+.curl-request
+include::{snippets}/delete-recruitment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-recruitment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-recruitment/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-recruitment/http-response.adoc[]
+
+== 댓글
+=== 자유 게시글 댓글
+==== 자유 게시글 댓글 등록
+.curl-request
+include::{snippets}/post-free-board-comment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-free-board-comment/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-free-board-comment/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-free-board-comment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-free-board-comment/response-fields.adoc[]
+
+==== 자유 게시글 댓글 조회
+.curl-request
+include::{snippets}/get-free-board-comment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-free-board-comment/http-request.adoc[]
+
+.request-parameters
+include::{snippets}/get-free-board-comment/request-parameters.adoc[]
+
+.path-parameters
+include::{snippets}/get-free-board-comment/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/get-free-board-comment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-free-board-comment/response-fields.adoc[]
+
+==== 자유 게시글 댓글 수정
+.curl-request
+include::{snippets}/put-free-board-comment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/put-free-board-comment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/put-free-board-comment/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/put-free-board-comment/http-response.adoc[]
+
+.response-fields
+include::{snippets}/put-free-board-comment/response-fields.adoc[]
+
+==== 자유 게시글 댓글 삭제
+.curl-request
+include::{snippets}/delete-free-board-comment/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-free-board-comment/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-free-board-comment/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-free-board-comment/http-response.adoc[]
+
 == 인증처리
 === 로그인
 .curl-request
@@ -106,3 +253,19 @@ include::{snippets}/sign-in/http-request.adoc[]
 
 .http-response
 include::{snippets}/sign-in/http-response.adoc[]
+
+.response-fields
+include::{snippets}/sign-in/response-fields.adoc[]
+
+=== 로그아웃
+.curl-request
+include::{snippets}/sign-out/curl-request.adoc[]
+
+.http-request
+include::{snippets}/sign-out/http-request.adoc[]
+
+.http-response
+include::{snippets}/sign-out/http-response.adoc[]
+
+.request-headers
+include::{snippets}/sign-out/request-headers.adoc[]

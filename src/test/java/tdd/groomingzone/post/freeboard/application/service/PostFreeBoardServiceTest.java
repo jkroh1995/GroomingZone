@@ -8,18 +8,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.PostFreeBoardCommand;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
 import tdd.groomingzone.post.freeboard.application.port.out.SaveFreeBoardPort;
-import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,35 +44,29 @@ class PostFreeBoardServiceTest {
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
 
-        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(1L, "test", "content");
-        SaveFreeBoardQuery saveFreeBoardQuery = SaveFreeBoardQuery.of(writer.getMemberId(),
-                writer.getNickName(),
-                1L,
-                testTitle,
-                testContent,
-                testViewCount,
-                testCreatedAt,
-                testModifiedAt);
+        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer.getEmail(), "test", "content");
 
-        FreeBoardEntityQueryResult entityQueryResult = FreeBoardEntityQueryResult.of(1L,
-                testTitle,
-                testContent,
-                testViewCount,
-                testCreatedAt,
-                testModifiedAt,
-                1L);
+        FreeBoard freeBoard = FreeBoard.builder()
+                .writer(writer)
+                .id(1L)
+                .title(testTitle)
+                .content(testContent)
+                .viewCount(testViewCount)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
 
-        given(saveFreeBoardPort.save(any())).willReturn(entityQueryResult);
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
+        given(saveFreeBoardPort.save(any())).willReturn(freeBoard);
+        given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
 
         SingleFreeBoardCommandResponse response = postFreeBoardService.postFreeBoard(postFreeBoardCommand);
 
-        assertThat(response.getBoardId()).isEqualTo(saveFreeBoardQuery.getBoardId());
-        assertThat(response.getTitle()).isEqualTo(saveFreeBoardQuery.getTitle());
-        assertThat(response.getContent()).isEqualTo(saveFreeBoardQuery.getContent());
-        assertThat(response.getViewCount()).isEqualTo(saveFreeBoardQuery.getViewCount());
-        assertThat(response.getCreatedAt()).isEqualTo(saveFreeBoardQuery.getCreatedAt());
-        assertThat(response.getModifiedAt()).isEqualTo(saveFreeBoardQuery.getModifiedAt());
+        assertThat(response.getBoardId()).isEqualTo(freeBoard.getId());
+        assertThat(response.getTitle()).isEqualTo(freeBoard.getTitle());
+        assertThat(response.getContent()).isEqualTo(freeBoard.getContent());
+        assertThat(response.getViewCount()).isEqualTo(freeBoard.getViewCount());
+        assertThat(response.getCreatedAt()).isEqualTo(freeBoard.getCreatedAt());
+        assertThat(response.getModifiedAt()).isEqualTo(freeBoard.getModifiedAt());
         assertThat(response.getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
         assertThat(response.getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
     }

@@ -4,14 +4,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import tdd.groomingzone.member.PageNumber;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.repository.FreeBoardEntityRepository;
 import tdd.groomingzone.post.freeboard.application.port.out.*;
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
-import tdd.groomingzone.post.freeboard.application.port.out.query.DeleteFreeBoardQuery;
-import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
+
+import static tdd.groomingzone.global.utils.CommonEnums.PAGE_SIZE;
 
 @Repository
 public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeBoardPort, DeleteFreeBoardPort {
@@ -24,30 +26,29 @@ public class FreeBoardPersistenceAdapter implements SaveFreeBoardPort, LoadFreeB
     }
 
     @Override
-    public FreeBoardEntityQueryResult save(SaveFreeBoardQuery query) {
-        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(query);
+    public FreeBoard save(FreeBoard freeBoard) {
+        FreeBoardEntity databaseEntity = freeBoardMapper.mapToDatabaseEntity(freeBoard);
         FreeBoardEntity savedFreeBoardEntity =  freeBoardEntityRepository.save(databaseEntity);
-        return freeBoardMapper.mapToQueryResult(savedFreeBoardEntity);
+        return freeBoardMapper.mapToDomainEntity(savedFreeBoardEntity);
     }
 
     @Override
-    public FreeBoardEntityQueryResult loadFreeBoardById(long freeBoardId) {
+    public FreeBoard loadFreeBoardById(long freeBoardId) {
         FreeBoardEntity findFreeBoardEntity = freeBoardEntityRepository.findById(freeBoardId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
-        return freeBoardMapper.mapToQueryResult(findFreeBoardEntity);
+        return freeBoardMapper.mapToDomainEntity(findFreeBoardEntity);
     }
 
     @Override
-    public FreeBoardPageQueryResult loadFreeBoardPage(String title, String content, String writerNickName, FreeBoardPage freeBoardPage) {
-        Pageable pageable = freeBoardPage.getPageable();
+    public FreeBoardPage loadFreeBoardPage(String title, String content, String writerNickName, PageNumber pageNumber) {
+        Pageable pageable = Pageable.ofSize(PAGE_SIZE.getValue()).withPage(pageNumber.getPageNumber());;
         Page<FreeBoardEntity> page = freeBoardEntityRepository.findFilteredFreeBoards(title, content, writerNickName, pageable);
         return freeBoardMapper.mapToMultiQueryResult(page);
     }
 
     @Override
-    public void delete(DeleteFreeBoardQuery query) {
-        long boardId = query.getBoardId();
-        FreeBoardEntity databaseEntity = freeBoardEntityRepository.findById(boardId).orElseThrow(() ->
+    public void delete(long freeBoardId) {
+        FreeBoardEntity databaseEntity = freeBoardEntityRepository.findById(freeBoardId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
         freeBoardEntityRepository.delete(databaseEntity);
     }

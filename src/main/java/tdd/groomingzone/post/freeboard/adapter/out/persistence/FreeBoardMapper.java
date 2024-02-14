@@ -3,43 +3,55 @@ package tdd.groomingzone.post.freeboard.adapter.out.persistence;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPageQueryResult;
-import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardEntityQueryResult;
-import tdd.groomingzone.post.freeboard.application.port.out.query.SaveFreeBoardQuery;
+;
+import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
+import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class FreeBoardMapper {
-    public FreeBoardEntity mapToDatabaseEntity(SaveFreeBoardQuery query) {
+    private final LoadMemberPort loadMemberPort;
+
+    public FreeBoardMapper(LoadMemberPort loadMemberPort) {
+        this.loadMemberPort = loadMemberPort;
+    }
+
+    public FreeBoardEntity mapToDatabaseEntity(FreeBoard freeBoard) {
         return FreeBoardEntity.builder()
-                .boardId(query.getBoardId())
-                .writerId(query.getWriterId())
-                .writerNickName(query.getWriterNickName())
-                .title(query.getTitle())
-                .content(query.getContent())
-                .createdAt(query.getCreatedAt())
-                .modifiedAt(query.getModifiedAt())
+                .boardId(freeBoard.getId())
+                .writerId(freeBoard.getWriterId())
+                .writerNickName(freeBoard.getWriterNickName())
+                .title(freeBoard.getTitle())
+                .content(freeBoard.getContent())
+                .viewCount(freeBoard.getViewCount())
+                .createdAt(freeBoard.getCreatedAt())
+                .modifiedAt(freeBoard.getModifiedAt())
                 .build();
     }
 
-    public FreeBoardEntityQueryResult mapToQueryResult(FreeBoardEntity freeBoardDatabaseEntity) {
-        return FreeBoardEntityQueryResult.of(freeBoardDatabaseEntity.getId(),
-                freeBoardDatabaseEntity.getTitle(),
-                freeBoardDatabaseEntity.getContent(),
-                freeBoardDatabaseEntity.getViewCount(),
-                freeBoardDatabaseEntity.getCreatedAt(),
-                freeBoardDatabaseEntity.getModifiedAt(),
-                freeBoardDatabaseEntity.getWriterId());
+    public FreeBoard mapToDomainEntity(FreeBoardEntity freeBoardDatabaseEntity) {
+        Member writer = loadMemberPort.findMemberById(freeBoardDatabaseEntity.getWriterId());
+        return FreeBoard.builder()
+                .writer(writer)
+                .id(freeBoardDatabaseEntity.getId())
+                .title(freeBoardDatabaseEntity.getTitle())
+                .content(freeBoardDatabaseEntity.getContent())
+                .viewCount(freeBoardDatabaseEntity.getViewCount())
+                .createdAt(freeBoardDatabaseEntity.getCreatedAt())
+                .modifiedAt(freeBoardDatabaseEntity.getModifiedAt())
+                .build();
     }
 
-    public FreeBoardPageQueryResult mapToMultiQueryResult(Page<FreeBoardEntity> page) {
-        List<FreeBoardEntityQueryResult> queryResults = page.getContent().stream()
-                .map(this::mapToQueryResult)
+    public FreeBoardPage mapToMultiQueryResult(Page<FreeBoardEntity> page) {
+        List<FreeBoard> queryResults = page.getContent().stream()
+                .map(this::mapToDomainEntity)
                 .collect(Collectors.toList());
 
-        return FreeBoardPageQueryResult.of(queryResults, page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
+        return FreeBoardPage.of(queryResults, page);
     }
 }
