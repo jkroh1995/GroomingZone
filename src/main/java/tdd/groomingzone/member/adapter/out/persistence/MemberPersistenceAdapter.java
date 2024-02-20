@@ -39,4 +39,11 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort 
     public Optional<MemberEntity> findOptionalMemberByEmail(String email) {
         return memberEntitiyRepository.findByEmail(email);
     }
+
+    @Override
+    public Member findMemberByEmail(String email) {
+        MemberEntity findMember = findOptionalMemberByEmail(email).orElseThrow(() ->
+                new BusinessException(ExceptionCode.MEMBER_NOT_FOUND));
+        return memberMapper.mapToDomainEntity(findMember);
+    }
 }

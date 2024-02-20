@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public final class PutRecruitmentCommand {
     private final String title;
     private final String content;
-    private final long requestMemberId;
+    private final String requestMemberEmail;
     private final long recruitmentId;
     private final LocalDateTime modifiedAt;
 }

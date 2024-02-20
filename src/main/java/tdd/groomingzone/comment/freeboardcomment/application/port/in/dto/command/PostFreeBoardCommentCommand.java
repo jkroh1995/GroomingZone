@@ -4,17 +4,17 @@ import lombok.Data;
 
 @Data
 public final class PostFreeBoardCommentCommand {
-    private final Long writerId;
+    private final String writerEmail;
     private final Long boardId;
     private final String content;
 
-    private PostFreeBoardCommentCommand(Long writerId, Long boardId, String content) {
-        this.writerId = writerId;
+    private PostFreeBoardCommentCommand(String writerEmail, Long boardId, String content) {
+        this.writerEmail = writerEmail;
         this.boardId = boardId;
         this.content = content;
     }
 
-    public static PostFreeBoardCommentCommand of(long writerId, long boardId, String content) {
-        return new PostFreeBoardCommentCommand(writerId, boardId, content);
+    public static PostFreeBoardCommentCommand of(String writerEmail, Long boardId, String content) {
+        return new PostFreeBoardCommentCommand(writerEmail, boardId, content);
     }
 }

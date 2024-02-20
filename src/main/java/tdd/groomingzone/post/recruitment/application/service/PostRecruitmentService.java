@@ -27,7 +27,7 @@ public class PostRecruitmentService implements PostRecruitmentUseCase {
 
     @Override
     public SingleRecruitmentResponse postRecruitment(PostRecruitmentCommand postRecruitmentCommand) {
-        Member writer = loadMemberPort.findMemberById(postRecruitmentCommand.getWriterId());
+        Member writer = loadMemberPort.findMemberByEmail(postRecruitmentCommand.getWriterEmail());
         Recruitment recruitment = Recruitment.builder()
                 .id(CommonEnums.NEW_INSTANCE.getValue())
                 .writer(writer)

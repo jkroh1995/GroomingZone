@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public final class DeleteFreeBoardCommand {
-    private final long requestMemberId;
+    private final String requestMemberEmail;
     private final long freeBoardId;
 
-    private DeleteFreeBoardCommand(long requestMemberId, long freeBoardId) {
-        this.requestMemberId = requestMemberId;
+    private DeleteFreeBoardCommand(String requestMemberEmail, long freeBoardId) {
+        this.requestMemberEmail = requestMemberEmail;
         this.freeBoardId = freeBoardId;
     }
 
-    public static DeleteFreeBoardCommand of(long requestMemberId, long freeBoardId){
-        return new DeleteFreeBoardCommand(requestMemberId, freeBoardId);
+    public static DeleteFreeBoardCommand of(String requestMemberEmail, long freeBoardId){
+        return new DeleteFreeBoardCommand(requestMemberEmail, freeBoardId);
     }
 }

@@ -3,15 +3,23 @@ package tdd.groomingzone.post.freeboard.adapter.in.web;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import tdd.groomingzone.auth.application.service.MemberDetailsService;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
@@ -23,6 +31,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -33,8 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = {PostFreeBoardController.class},
-        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(PostFreeBoardController.class)
 @AutoConfigureRestDocs
 class PostFreeBoardControllerTest {
 
@@ -52,6 +60,7 @@ class PostFreeBoardControllerTest {
 
     @Test
     @DisplayName("정상적인 게시글 등록 요청 테스트")
+    @WithMockUser(value = "jk@gmail.com", roles = {"CUSTOMER"})
     void postFreeBoardTest() throws Exception {
         // given
         String testTitle = "title";

@@ -81,7 +81,7 @@ class SpringSecurityTest {
                 .content("content")
                 .build();
 
-        postFreeBoardUseCase.postFreeBoard(PostFreeBoardCommand.of(createdMemberEntity.getId(), freeBoard.getTitle(), freeBoard.getContent()));
+        postFreeBoardUseCase.postFreeBoard(PostFreeBoardCommand.of(createdMemberEntity.getEmail(), freeBoard.getTitle(), freeBoard.getContent()));
     }
 
     @AfterAll

@@ -5,19 +5,19 @@ import lombok.Getter;
 @Getter
 public final class PutFreeBoardCommentCommand {
 
-    private final long requestMemberId;
+    private final String requestMemberEmail;
     private final long boardId;
     private final long commentId;
     private final String content;
 
-    private PutFreeBoardCommentCommand(long requestMemberId, long boardId, long commentId, String content) {
-        this.requestMemberId = requestMemberId;
+    private PutFreeBoardCommentCommand(String requestMemberEmail, long boardId, long commentId, String content) {
+        this.requestMemberEmail = requestMemberEmail;
         this.boardId = boardId;
         this.commentId= commentId;
         this.content = content;
     }
 
-    public static PutFreeBoardCommentCommand of(long requestMemberId, long boardId, long commentId, String content) {
-        return new PutFreeBoardCommentCommand(requestMemberId, boardId, commentId, content);
+    public static PutFreeBoardCommentCommand of(String requestMemberEmail, long boardId, long commentId, String content) {
+        return new PutFreeBoardCommentCommand(requestMemberEmail, boardId, commentId, content);
     }
 }

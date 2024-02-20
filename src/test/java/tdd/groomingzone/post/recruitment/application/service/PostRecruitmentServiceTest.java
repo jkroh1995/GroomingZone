@@ -17,8 +17,7 @@ import tdd.groomingzone.util.MemberCreator;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +45,7 @@ class PostRecruitmentServiceTest {
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
 
-        PostRecruitmentCommand postRecruitmentCommand = PostRecruitmentCommand.of(writer.getMemberId(),
+        PostRecruitmentCommand postRecruitmentCommand = PostRecruitmentCommand.of(writer.getEmail(),
                 testTitle,
                 testContent,
                 testType);
@@ -62,13 +61,12 @@ class PostRecruitmentServiceTest {
                 testModifiedAt);
 
         given(saveRecruitmentPort.save(any())).willReturn(entityQueryResult);
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
+        given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
 
         SingleRecruitmentResponse response = postRecruitmentService.postRecruitment(postRecruitmentCommand);
 
         assertThat(response.getTitle()).isEqualTo(postRecruitmentCommand.getTitle());
         assertThat(response.getContent()).isEqualTo(postRecruitmentCommand.getContent());
         assertThat(response.getType()).isEqualTo(postRecruitmentCommand.getType());
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(postRecruitmentCommand.getWriterId());
     }
 }
