@@ -18,8 +18,7 @@ import tdd.groomingzone.util.MemberCreator;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +50,7 @@ class PutRecruitmentServiceTest {
 
         PutRecruitmentCommand putRecruitmentCommand = PutRecruitmentCommand.of(testTitle,
                 testContent,
-                writer.getMemberId(),
+                writer.getEmail(),
                 1L,
                 testModifiedAt);
 
@@ -59,6 +58,7 @@ class PutRecruitmentServiceTest {
 
 
         given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
+        given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
         given(loadRecruitmentPort.loadRecruitmentById(anyLong())).willReturn(entityQueryResult);
         given(saveRecruitmentPort.save(any())).willReturn(entityQueryResult);
 
@@ -68,6 +68,5 @@ class PutRecruitmentServiceTest {
         assertThat(response.getTitle()).isEqualTo(putRecruitmentCommand.getTitle());
         assertThat(response.getContent()).isEqualTo(putRecruitmentCommand.getContent());
         assertThat(response.getModifiedAt()).isEqualTo(putRecruitmentCommand.getModifiedAt());
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(putRecruitmentCommand.getRequestMemberId());
     }
 }

@@ -2,11 +2,11 @@ package tdd.groomingzone.comment.freeboardcomment.adapter.in.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.DeleteFreeBoardCommentUseCase;
@@ -21,8 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = {DeleteFreeBoardCommentController.class},
-        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(DeleteFreeBoardCommentController.class)
 @AutoConfigureRestDocs
 class DeleteFreeBoardCommentControllerTest {
 
@@ -36,6 +35,7 @@ class DeleteFreeBoardCommentControllerTest {
     private DeleteFreeBoardCommentUseCase deleteFreeBoardCommentUseCase;
 
     @Test
+    @WithMockUser(value = "jk@gmail.com", roles = {"CUSTOMER"})
     void deleteFreeBoardComment() throws Exception {
         // given
         long testId = 1L;

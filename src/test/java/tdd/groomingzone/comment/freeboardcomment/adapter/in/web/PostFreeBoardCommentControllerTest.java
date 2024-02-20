@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.common.WriterInfo;
@@ -36,8 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = PostFreeBoardCommentController.class,
-        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(PostFreeBoardCommentController.class)
 @AutoConfigureRestDocs
 class PostFreeBoardCommentControllerTest {
 
@@ -55,6 +54,7 @@ class PostFreeBoardCommentControllerTest {
 
     @Test
     @DisplayName("정상적인 게시글 등록 요청 테스트")
+    @WithMockUser(value = "jk@gmail.com", roles = {"CUSTOMER"})
     void postFreeBoardTest() throws Exception {
         // given
         String testContent = "content";

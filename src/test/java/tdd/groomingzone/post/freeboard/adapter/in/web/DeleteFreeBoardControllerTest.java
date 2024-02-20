@@ -2,11 +2,12 @@ package tdd.groomingzone.post.freeboard.adapter.in.web;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.post.freeboard.application.port.in.usecase.DeleteFreeBoardUseCase;
@@ -19,8 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = {DeleteFreeBoardController.class},
-        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(DeleteFreeBoardController.class)
 @AutoConfigureRestDocs
 class DeleteFreeBoardControllerTest {
 
@@ -35,6 +35,7 @@ class DeleteFreeBoardControllerTest {
 
     @Test
     @DisplayName("정상적인 게시글 삭제 요청 테스트")
+    @WithMockUser(value = "jk@gmail.com", roles = {"CUSTOMER"})
     void deleteFreeBoardTest() throws Exception {
         // given
         long testId = 1L;

@@ -3,7 +3,6 @@ package tdd.groomingzone.comment.freeboardcomment.adapter.in.web;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,8 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = GetFreeBoardCommentController.class,
-        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(GetFreeBoardCommentController.class)
 @AutoConfigureRestDocs
 class GetFreeBoardCommentControllerTest {
 
