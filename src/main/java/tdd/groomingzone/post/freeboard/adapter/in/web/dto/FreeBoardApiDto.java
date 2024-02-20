@@ -1,5 +1,6 @@
 package tdd.groomingzone.post.freeboard.adapter.in.web.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import tdd.groomingzone.post.common.WriterInfo;
@@ -12,6 +13,7 @@ public final class FreeBoardApiDto {
 
     @Getter
     @Builder
+    @AllArgsConstructor
     public final static class Post {
         private final String title;
         private final String content;
@@ -19,6 +21,7 @@ public final class FreeBoardApiDto {
 
     @Getter
     @Builder
+    @AllArgsConstructor
     public final static class Response {
         private final long boardId;
         private final String title;
@@ -42,6 +45,7 @@ public final class FreeBoardApiDto {
 
     @Getter
     @Builder
+    @AllArgsConstructor
     public final static class Put {
         private final String title;
         private final String content;

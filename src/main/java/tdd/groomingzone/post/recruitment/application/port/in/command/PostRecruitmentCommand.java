@@ -4,19 +4,19 @@ import lombok.Getter;
 
 @Getter
 public final class PostRecruitmentCommand {
-    private final long writerId;
+    private final String writerEmail;
     private final String title;
     private final String content;
     private final String type;
 
-    private PostRecruitmentCommand(long writerId, String title, String content, String type) {
-        this.writerId = writerId;
+    private PostRecruitmentCommand(String writerEmail, String title, String content, String type) {
+        this.writerEmail = writerEmail;
         this.title = title;
         this.content = content;
         this.type = type;
     }
 
-    public static PostRecruitmentCommand of(long writerId, String title, String content, String type) {
-        return new PostRecruitmentCommand(writerId, title, content, type);
+    public static PostRecruitmentCommand of(String writerEmail, String title, String content, String type) {
+        return new PostRecruitmentCommand(writerEmail, title, content, type);
     }
 }

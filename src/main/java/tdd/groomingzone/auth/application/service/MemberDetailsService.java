@@ -6,10 +6,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tdd.groomingzone.auth.utils.CustomAuthorityUtils;
-import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
-import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
+import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
+import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -30,12 +30,12 @@ public class MemberDetailsService implements UserDetailsService {
         Optional<MemberEntity> member = memberEntitiyRepository.findByEmail(username);
         MemberEntity findMemberEntity = member.orElseThrow(() -> new CustomAuthenticationException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        return new MemberEntityDetails(findMemberEntity);
+        return new MemberDetails(findMemberEntity);
     }
 
-    public final class MemberEntityDetails extends MemberEntity implements UserDetails {
+    public final class MemberDetails extends MemberEntity implements UserDetails {
 
-        MemberEntityDetails(MemberEntity memberEntity) {
+        MemberDetails(MemberEntity memberEntity) {
             setId(memberEntity.getId());
             setEmail(memberEntity.getEmail());
             setNickName(memberEntity.getNickName());

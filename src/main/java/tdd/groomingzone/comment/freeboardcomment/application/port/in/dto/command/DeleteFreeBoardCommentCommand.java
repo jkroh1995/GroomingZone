@@ -5,18 +5,18 @@ import lombok.Getter;
 @Getter
 public final class DeleteFreeBoardCommentCommand {
 
-    private final long requestMemberId;
+    private final String requestMemberEmail;
     private final long freeBoardId;
     private final long commentId;
 
-    private DeleteFreeBoardCommentCommand(long requestMemberId, long freeBoardId, long commentId) {
-        this.requestMemberId = requestMemberId;
+    private DeleteFreeBoardCommentCommand(String requestMemberEmail, long freeBoardId, long commentId) {
+        this.requestMemberEmail = requestMemberEmail;
         this.freeBoardId = freeBoardId;
         this.commentId = commentId;
     }
 
 
-    public static DeleteFreeBoardCommentCommand of(long requestMemberId, long freeBoardId, long commentId) {
-        return new DeleteFreeBoardCommentCommand(requestMemberId, freeBoardId, commentId);
+    public static DeleteFreeBoardCommentCommand of(String requestMemberEmail, long freeBoardId, long commentId) {
+        return new DeleteFreeBoardCommentCommand(requestMemberEmail, freeBoardId, commentId);
     }
 }

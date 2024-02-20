@@ -40,7 +40,7 @@ public class PutRecruitmentService implements PutRecruitmentUseCase {
                 .viewCount(selectQueryResult.getViewCount())
                 .build();
 
-        Member requestMember = loadMemberPort.findMemberById(command.getRequestMemberId());
+        Member requestMember = loadMemberPort.findMemberByEmail(command.getRequestMemberEmail());
         recruitment.checkMemberAuthority(requestMember);
         recruitment.modify(BoardInfo.builder()
                 .title(command.getTitle())

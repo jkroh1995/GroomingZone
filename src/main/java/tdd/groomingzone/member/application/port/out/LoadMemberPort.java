@@ -10,4 +10,6 @@ public interface LoadMemberPort {
     Member findMemberById(long memberId);
 
     Optional<MemberEntity> findOptionalMemberByEmail(String email);
+
+    Member findMemberByEmail(String writerEmail);
 }
