@@ -19,6 +19,7 @@ TDD 구현 방식 연습 및 기술 학습을 위한 프로젝트입니다.
 - [JWT 이대로 괜찮은가?](https://random-topic.tistory.com/204)
 - [웹소켓은 왜 쓸까?](https://random-topic.tistory.com/222)
 - [일대다 단방향 연관관계를 피하고 싶어서](https://random-topic.tistory.com/226)
+- [구체 클래스 vs 추상 클래스 vs 인터페이스 - 고객 / 바버 추상화하기](https://random-topic.tistory.com/227)
 
 </div>
 </details>
