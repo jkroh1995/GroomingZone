@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class Member {
-    private final long memberId;
+    private final MemberVO memberVO;
     private Email email;
     private Password password;
     private String nickName;
@@ -22,7 +22,7 @@ public class Member {
 
     @Builder
     private Member(long memberId, String email, String password, String nickName, String phoneNumber, String role, String provider, LocalDateTime createdAt, LocalDateTime modifiedAt, String profileImageUrl) {
-        this.memberId = memberId;
+        this.memberVO = MemberVO.of(memberId);
         this.email = Email.of(email);
         this.password = Password.of(password);
         this.nickName = nickName;
@@ -79,6 +79,10 @@ public class Member {
         return this.provider.getProvider();
     }
 
+    public Long getMemberId() {
+        return memberVO.getMemberId();
+    }
+
     @Getter
     public enum Role {
         ADMIN("관리자"),
@@ -119,5 +123,10 @@ public class Member {
                 throw new BusinessException(ExceptionCode.INVALID_ROLE);
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return memberVO.equals(obj);
     }
 }

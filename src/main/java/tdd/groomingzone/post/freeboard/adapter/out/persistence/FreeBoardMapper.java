@@ -38,7 +38,7 @@ public class FreeBoardMapper {
         Member writer = loadMemberPort.findMemberById(freeBoardDatabaseEntity.getWriterId());
         return FreeBoard.builder()
                 .writer(writer)
-                .id(freeBoardDatabaseEntity.getId())
+                .id(freeBoardDatabaseEntity.getBoardId())
                 .title(freeBoardDatabaseEntity.getTitle())
                 .content(freeBoardDatabaseEntity.getContent())
                 .viewCount(freeBoardDatabaseEntity.getViewCount())

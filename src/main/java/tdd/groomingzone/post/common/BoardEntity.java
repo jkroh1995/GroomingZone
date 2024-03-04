@@ -17,7 +17,7 @@ public abstract class BoardEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOARD_ID")
-    private Long id;
+    private Long boardId;
 
     @Column(name = "WRITE_MEMBER_ID")
     private Long writerId;

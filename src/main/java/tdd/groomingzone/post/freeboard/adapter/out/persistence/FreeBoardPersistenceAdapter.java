@@ -4,13 +4,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import tdd.groomingzone.member.PageNumber;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.repository.FreeBoardEntityRepository;
 import tdd.groomingzone.post.freeboard.application.port.out.*;
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
+import tdd.groomingzone.post.freeboard.application.service.PageNumber;
 import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 
 import static tdd.groomingzone.global.utils.CommonEnums.PAGE_SIZE;
