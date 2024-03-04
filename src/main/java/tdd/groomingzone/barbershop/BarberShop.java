@@ -1,27 +1,20 @@
 package tdd.groomingzone.barbershop;
 
+import lombok.Builder;
 import lombok.Getter;
-import tdd.groomingzone.post.review.Review;
-import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
+import tdd.groomingzone.member.domain.Member;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
 @Getter
 public class BarberShop {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BARBER_SHOP_ID")
-    private long id;
+    private final Long barberShopId;
+    private final Member owner;
+    private final String name;
 
-    private String name;
-
-    @OneToMany(mappedBy = "barberShop")
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToOne
-    private MemberEntity owner;
+    @Builder
+    private BarberShop(Long barberShopId, Member owner, String name){
+        this.barberShopId = barberShopId;
+        this.owner = owner;
+        this.name = name;
+    }
 }

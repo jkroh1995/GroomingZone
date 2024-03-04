@@ -2,7 +2,6 @@ package tdd.groomingzone.post.freeboard.application.service;
 
 import org.springframework.stereotype.Service;
 
-import tdd.groomingzone.member.PageNumber;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.MultiFreeBoardCommandResponse;
