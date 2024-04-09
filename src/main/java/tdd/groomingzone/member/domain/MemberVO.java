@@ -16,8 +16,8 @@ public final class MemberVO {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof MemberVO){
-            return memberId.equals(((MemberVO) obj).memberId);
+        if(obj instanceof MemberVO memberVO){
+            return this.memberId.equals(memberVO.memberId);
         }
         return false;
     }

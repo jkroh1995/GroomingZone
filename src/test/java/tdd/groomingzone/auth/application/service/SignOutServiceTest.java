@@ -11,7 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
 import tdd.groomingzone.auth.utils.CookieManager;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,6 +40,7 @@ class SignOutServiceTest {
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setMaxAge(1);
         accessTokenCookie.setPath("/");
+
         Cookie refreshTokenCookie = new Cookie("REFRESH_TOKEN", testRefreshToken);
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setMaxAge(1);

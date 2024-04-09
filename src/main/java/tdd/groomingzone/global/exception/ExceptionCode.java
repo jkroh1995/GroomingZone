@@ -27,7 +27,9 @@ public enum ExceptionCode {
     INVALID_BOARD_CONTENT(409, "글 내용은 빈 칸이면 안됩니다."),
     INVALID_RECRUITMENT_TYPE(409, "구인, 구직 중 선택해주세요."),
     INVALID_OAUTH_LOGIN(409, "유효하지 않은 소셜 로그인 시도입니다."),
-    INVALID_PAGE_NUMBER(409, "올바른 페이지 번호가 아닙니다.");
+    INVALID_PAGE_NUMBER(409, "올바른 페이지 번호가 아닙니다."),
+    INVALID_NICK_NAME_LENGTH(409, "닉네임은 3글자 이상 10글자 이내여야 합니다."),
+    BLANK_NICK_NAME(409, "닉네임은 공백이면 안됩니다.");
 
     private final int status;
     private final String message;

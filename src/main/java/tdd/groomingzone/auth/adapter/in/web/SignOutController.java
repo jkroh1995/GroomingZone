@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @RestController

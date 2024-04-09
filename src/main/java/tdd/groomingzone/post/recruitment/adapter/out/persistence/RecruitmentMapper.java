@@ -21,7 +21,7 @@ public class RecruitmentMapper {
     }
 
     public RecruitmentEntityQueryResult mapToEntityQueryResult(RecruitmentEntity savedDatabaseEntity) {
-        return RecruitmentEntityQueryResult.of(savedDatabaseEntity.getId(),
+        return RecruitmentEntityQueryResult.of(savedDatabaseEntity.getBoardId(),
                 savedDatabaseEntity.getWriterId(),
                 savedDatabaseEntity.getWriterNickName(),
                 savedDatabaseEntity.getTitle(),

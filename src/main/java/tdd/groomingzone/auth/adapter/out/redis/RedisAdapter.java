@@ -32,7 +32,7 @@ public class RedisAdapter implements RedisSignOutPort, RedisSignInPort {
     }
 
     @Override
-    public boolean alreadySignIn(String email) {
+    public boolean isMemberAlreadySignIn(String email) {
         return Boolean.TRUE.equals(redisTemplate.hasKey(email));
     }
 }

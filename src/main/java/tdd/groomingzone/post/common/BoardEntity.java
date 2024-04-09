@@ -1,11 +1,9 @@
 package tdd.groomingzone.post.common;
 
-import com.sun.istack.NotNull;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import tdd.groomingzone.global.BaseEntity;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
@@ -25,11 +23,9 @@ public abstract class BoardEntity extends BaseEntity {
     @Column(name = "WRITE_MEMBER_NICKNAME")
     private String writerNickName;
 
-    @NotNull
     @Column(name = "TITLE")
     private String title;
 
-    @NotNull
     @Column(name = "CONTENT")
     private String content;
 

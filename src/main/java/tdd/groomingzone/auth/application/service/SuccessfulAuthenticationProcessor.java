@@ -6,8 +6,8 @@ import tdd.groomingzone.auth.utils.CookieManager;
 import tdd.groomingzone.auth.utils.JwtManager;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

@@ -5,8 +5,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import tdd.groomingzone.post.freeboard.adapter.out.persistence.repository.FreeBoardEntityCustomRepositoryImpl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @TestConfiguration
 public class TestConfig {

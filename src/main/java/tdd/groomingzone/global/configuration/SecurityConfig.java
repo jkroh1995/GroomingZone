@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -53,33 +54,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin()
-                .and()
-                .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .exceptionHandling()
-                .accessDeniedHandler(new MemberAccessDeniedHandler())
-                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
-                .and()
-                .apply(new CustomFilterConfigurer())
-                .and()
+                .headers(configurer ->
+                        configurer
+                                .frameOptions(
+                                        HeadersConfigurer.FrameOptionsConfig::sameOrigin
+                                )
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(source -> corsConfigurationSource())
+                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .exceptionHandling(handler -> handler
+                        .accessDeniedHandler(new MemberAccessDeniedHandler())
+                        .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                )
+                .with(new CustomFilterConfigurer(), CustomFilterConfigurer::build)
                 .oauth2Login(oAuth2 -> oAuth2
                         .successHandler(new OAuth2MemberSuccessHandler(memberEntityRepository, successfulAuthenticationProcessor))
-                        .userInfoEndpoint()
-                        .userService(OAuth2MemberService))
+                        .userInfoEndpoint(userService -> userService
+                                .userService(OAuth2MemberService)))
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**").hasRole("CUSTOMER")
-                        .antMatchers(HttpMethod.PUT, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
-                        .antMatchers(HttpMethod.DELETE, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.POST, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE, "/free-board/**", "/review/**", "/recruitment/**", "/comment/**", "/member/**").hasRole("CUSTOMER")
 
-                        .antMatchers(HttpMethod.POST, "/barber-shop/**").hasRole("BARBER")
-                        .antMatchers(HttpMethod.PUT, "/barber-shop/**").hasRole("BARBER")
-                        .antMatchers(HttpMethod.DELETE, "/barber-shop/**").hasRole("BARBER")
+                        .requestMatchers(HttpMethod.POST, "/barber-shop/**").hasRole("BARBER")
+                        .requestMatchers(HttpMethod.PUT, "/barber-shop/**").hasRole("BARBER")
+                        .requestMatchers(HttpMethod.DELETE, "/barber-shop/**").hasRole("BARBER")
 
                         .anyRequest().permitAll()
                 );
@@ -119,6 +121,10 @@ public class SecurityConfig {
             builder
                     .addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+        }
+
+        public HttpSecurity build() {
+            return getBuilder();
         }
     }
 }

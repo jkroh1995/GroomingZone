@@ -72,3 +72,5 @@ jwt:
 member:
   temporary:
     password: ${MEMBER_TEMPORARY_PASSWORD}
+slack:
+  url: https://hooks.slack.com/services/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

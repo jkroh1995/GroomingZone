@@ -1,11 +1,12 @@
-package tdd.groomingzone.barbershop;
+package tdd.groomingzone.barbershop.adapter.out.persistence;
 
 import lombok.Getter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
+@Table(name = "BARBER_SHOP")
 public class BarberShopEntity {
 
     @Id

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.QFreeBoardEntity.freeBoardEntity;
 import static tdd.groomingzone.comment.common.QCommentEntity.commentEntity;
+import static tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.QFreeBoardEntity.freeBoardEntity;
 
 @Repository
 public class CommentEntityCustomRepositoryImpl implements CommentEntityCustomRepository{

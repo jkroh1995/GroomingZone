@@ -13,10 +13,10 @@ import tdd.groomingzone.global.exception.CustomAuthenticationException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ObjectMapper objectMapper = new ObjectMapper();
         SignInDto signInDto = objectMapper.readValue(request.getInputStream(), SignInDto.class);
 
-        if(redisSignInPort.alreadySignIn(signInDto.getEmail())){
+        if(redisSignInPort.isMemberAlreadySignIn(signInDto.getEmail())){
             throw new CustomAuthenticationException(ExceptionCode.ALREADY_SIGN_IN);
         }
 

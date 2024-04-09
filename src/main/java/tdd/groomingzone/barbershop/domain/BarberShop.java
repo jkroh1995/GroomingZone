@@ -1,4 +1,4 @@
-package tdd.groomingzone.barbershop;
+package tdd.groomingzone.barbershop.domain;
 
 import lombok.Builder;
 import lombok.Getter;

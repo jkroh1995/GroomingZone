@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
 import tdd.groomingzone.auth.utils.CookieManager;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

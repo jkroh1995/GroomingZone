@@ -88,14 +88,12 @@ class GetFreeBoardPageControllerTest {
                     .andExpect(jsonPath("data[%d].boardId", i).value(testCommandResponseList.get(i).getBoardId()))
                     .andExpect(jsonPath("data[%d].title", i).value(testCommandResponseList.get(i).getTitle()))
                     .andExpect(jsonPath("data[%d].viewCount", i).value(testCommandResponseList.get(i).getViewCount()))
-//                    .andExpect(jsonPath("data[%d].createdAt", i).value(testCommandResponseList.get(i).getCreatedAt()))   // 게시판 화면에서 작성일, 수정일이 출력될 수 있음
-//                    .andExpect(jsonPath("data[%d].modifiedAt", i).value(testCommandResponseList.get(i).getModifiedAt()))
                     .andExpect(jsonPath("data[%d].writerInfo.writerId", i).value(writer.getMemberId()))
                     .andExpect(jsonPath("data[%d].writerInfo.writerNickName", i).value(writer.getNickName()))
                     .andDo(document("get-free-board-page",
                             getRequestPreProcessor(),
                             getResponsePreProcessor(),
-                            requestParameters(
+                            queryParameters(
                                     parameterWithName("page").description("자유 게시글 페이지 번호"),
                                     parameterWithName("title").description("검색할 게시글 제목"),
                                     parameterWithName("content").description("검색할 게시글 내용"),

@@ -2,7 +2,7 @@ package tdd.groomingzone.barbershop.employment.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import tdd.groomingzone.barbershop.BarberShop;
+import tdd.groomingzone.barbershop.domain.BarberShop;
 import tdd.groomingzone.member.domain.Member;
 
 @Getter

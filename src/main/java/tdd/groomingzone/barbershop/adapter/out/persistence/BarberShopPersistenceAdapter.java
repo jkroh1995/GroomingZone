@@ -1,6 +1,8 @@
-package tdd.groomingzone.barbershop;
+package tdd.groomingzone.barbershop.adapter.out.persistence;
 
 import org.springframework.stereotype.Repository;
+import tdd.groomingzone.barbershop.application.port.LoadBarberShopPort;
+import tdd.groomingzone.barbershop.domain.BarberShop;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
