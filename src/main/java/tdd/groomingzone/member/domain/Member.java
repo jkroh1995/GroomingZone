@@ -12,7 +12,7 @@ public class Member {
     private final MemberVO memberVO;
     private Email email;
     private Password password;
-    private String nickName;
+    private NickName nickName;
     private PhoneNumber phoneNumber;
     private Role role;
     private final Provider provider;
@@ -25,7 +25,7 @@ public class Member {
         this.memberVO = MemberVO.of(memberId);
         this.email = Email.of(email);
         this.password = Password.of(password);
-        this.nickName = nickName;
+        this.nickName = NickName.of(nickName);
         this.phoneNumber = PhoneNumber.of(phoneNumber);
         this.role = Role.of(role);
         this.provider = Provider.of(provider);
@@ -37,7 +37,7 @@ public class Member {
     public void modify(String email, String password, String nickName, String phoneNumber, String role, LocalDateTime modifiedAt, String profileImageUrl) {
         this.email = Email.of(email);
         this.password = Password.of(password);
-        this.nickName = nickName;
+        this.nickName = NickName.of(nickName);
         this.phoneNumber = PhoneNumber.of(phoneNumber);
         validateRole(role);
         this.role = Role.of(role);
@@ -53,6 +53,10 @@ public class Member {
             }
         }
         throw new BusinessException(ExceptionCode.INVALID_ROLE);
+    }
+
+    public String getNickName(){
+        return nickName.getValue();
     }
 
     public String getEmail() {
@@ -123,10 +127,5 @@ public class Member {
                 throw new BusinessException(ExceptionCode.INVALID_ROLE);
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return memberVO.equals(obj);
     }
 }
