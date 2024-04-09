@@ -3,8 +3,7 @@ package tdd.groomingzone.global;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass

@@ -3,7 +3,7 @@ package tdd.groomingzone.member.adapter.out.persistence;
 import lombok.*;
 import tdd.groomingzone.global.BaseEntity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.member.domain.Member;
@@ -32,8 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static tdd.groomingzone.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 
-@WebMvcTest(controllers = PostRecruitmentController.class,
-        excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(controllers = PostRecruitmentController.class)
 @AutoConfigureRestDocs
 class PostRecruitmentControllerTest {
 
@@ -51,6 +50,7 @@ class PostRecruitmentControllerTest {
 
     @Test
     @DisplayName("구인 구직 게시글을 등록한다.")
+    @WithMockUser(value = "jk@gmail.com", roles = {"BARBER"})
     void testPostRecruitment() throws Exception {
         // given
         long testId = 1L;

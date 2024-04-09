@@ -7,9 +7,10 @@ spring:
       path: /h2
   datasource:
     url: jdbc:h2:mem:test
-  redis:
-    host: localhost
-    port: 6379
+  data:
+    redis:
+      host: localhost
+      port: 6379
   jpa:
     hibernate:
       ddl-auto: create  # (1) 스키마 자동 생성
@@ -72,3 +73,5 @@ jwt:
 member:
   temporary:
     password: ${MEMBER_TEMPORARY_PASSWORD}
+slack:
+  url: https://hooks.slack.com/services/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

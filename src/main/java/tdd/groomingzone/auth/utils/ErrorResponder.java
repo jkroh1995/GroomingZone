@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import tdd.groomingzone.global.exception.ErrorResponse;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ErrorResponder {

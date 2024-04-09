@@ -5,9 +5,9 @@ import tdd.groomingzone.auth.application.port.in.usecase.SignOutUseCase;
 import tdd.groomingzone.auth.application.port.out.RedisSignOutPort;
 import tdd.groomingzone.auth.utils.CookieManager;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class SignOutService implements SignOutUseCase {

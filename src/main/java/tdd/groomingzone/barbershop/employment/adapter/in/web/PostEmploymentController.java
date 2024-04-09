@@ -1,5 +1,6 @@
 package tdd.groomingzone.barbershop.employment.adapter.in.web;
 
+import com.fasterxml.jackson.databind.annotation.NoClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,17 +22,11 @@ public class PostEmploymentController {
     }
 
     @PostMapping("/{worker-id}")
-    public ResponseEntity<EmploymentApiDto.Response> postEmploymentByOwner(@AuthenticationPrincipal UserDetails requestMember,
-                                                                           @PathVariable("barber-shop-id") Long barberShopId,
-                                                                           @PathVariable("worker-id") Long workerId) {
+    public ResponseEntity<NoClass> postEmploymentByOwner(@AuthenticationPrincipal UserDetails requestMember,
+                                                         @PathVariable("barber-shop-id") Long barberShopId,
+                                                         @PathVariable("worker-id") Long workerId) {
         PostEmploymentCommand command = PostEmploymentCommand.of(requestMember.getUsername(), barberShopId, workerId);
         PostEmploymentResponse response = postEmploymentUseCase.postEmployment(command);
-        EmploymentApiDto.Response responseDto = EmploymentApiDto.Response.builder()
-                .workPlaceId(response.getWorkPlaceId())
-                .workPlaceName(response.getWorkPlaceName())
-                .workerId(response.getWorkerId())
-                .workerNickName(response.getWorkerNickName())
-                .build();
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

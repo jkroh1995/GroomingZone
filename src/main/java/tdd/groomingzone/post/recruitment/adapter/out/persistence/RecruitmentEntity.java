@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.groomingzone.post.common.BoardEntity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +20,7 @@ public class RecruitmentEntity extends BoardEntity {
 
     @Builder
     private RecruitmentEntity(Long boardId, Long writerId, String writerNickName, String type, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
-        this.setId(boardId);
+        this.setBoardId(boardId);
         this.setWriterId(writerId);
         this.setWriterNickName(writerNickName);
         this.setTitle(title);

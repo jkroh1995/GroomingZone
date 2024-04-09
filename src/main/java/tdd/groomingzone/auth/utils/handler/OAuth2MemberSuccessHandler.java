@@ -9,9 +9,9 @@ import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
 import tdd.groomingzone.member.adapter.out.persistence.repository.MemberEntitiyRepository;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class OAuth2MemberSuccessHandler implements AuthenticationSuccessHandler {

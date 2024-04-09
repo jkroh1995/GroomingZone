@@ -1,4 +1,4 @@
-package tdd.groomingzone.post.freeboard.adapter.out.persistence.entity;
+package tdd.groomingzone.post.review;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,17 +10,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@DiscriminatorValue(value = "FREE")
-public class FreeBoardEntity extends BoardEntity {
+@DiscriminatorValue(value = "REVIEW")
+public class ReviewEntity extends BoardEntity {
+
+    private Long barberShopId;
 
     @Builder
-    public FreeBoardEntity(Long boardId, Long writerId, String writerNickName, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    private ReviewEntity(Long barberShopId, Long boardId, Long writerId, String writerNickName, String title, String content, LocalDateTime createdAt, LocalDateTime modifiedAt){
+        this.barberShopId = barberShopId;
         this.setBoardId(boardId);
         this.setWriterId(writerId);
         this.setWriterNickName(writerNickName);
         this.setTitle(title);
         this.setContent(content);
-        this.setViewCount(viewCount);
         this.setCreatedAt(createdAt);
         this.setModifiedAt(modifiedAt);
     }

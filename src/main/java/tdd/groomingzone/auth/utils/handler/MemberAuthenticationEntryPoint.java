@@ -6,9 +6,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import tdd.groomingzone.auth.utils.ErrorResponder;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j

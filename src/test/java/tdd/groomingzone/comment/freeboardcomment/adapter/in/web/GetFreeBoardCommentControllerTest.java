@@ -97,7 +97,7 @@ class GetFreeBoardCommentControllerTest {
                             pathParameters(
                                     parameterWithName("free-board-id").description("자유 게시글 식별자")
                             ),
-                            requestParameters(
+                            queryParameters(
                                     parameterWithName("page").description("댓글 페이지 번호")
                             ),
                             responseFields(

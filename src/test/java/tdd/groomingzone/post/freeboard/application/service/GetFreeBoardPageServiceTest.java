@@ -105,7 +105,7 @@ class GetFreeBoardPageServiceTest {
             assertThat(pageResponse.get(i).getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
         }
 
-        assertThat(pageInfo.getPageNumber()).isEqualTo(freeBoardEntityPage.getNumber() + 1);
+        assertThat(pageInfo.getPageNumber()).isEqualTo(freeBoardEntityPage.getNumber());
         assertThat(pageInfo.getTotalPage()).isEqualTo(freeBoardEntityPage.getTotalPages());
         assertThat(pageInfo.getSize()).isEqualTo(freeBoardEntityPage.getSize());
         assertThat(pageInfo.getTotalElements()).isEqualTo(freeBoardEntityPage.getTotalElements());

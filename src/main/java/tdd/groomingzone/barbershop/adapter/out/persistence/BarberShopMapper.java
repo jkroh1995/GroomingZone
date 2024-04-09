@@ -1,6 +1,7 @@
-package tdd.groomingzone.barbershop;
+package tdd.groomingzone.barbershop.adapter.out.persistence;
 
 import org.springframework.stereotype.Component;
+import tdd.groomingzone.barbershop.domain.BarberShop;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 
 @Component
