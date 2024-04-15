@@ -24,6 +24,7 @@ TDD 구현 방식 연습 및 기술 학습을 위한 프로젝트입니다.
 - [바버 - 바버샵 최종장 : 중간 테이블... 써야겠지?](https://random-topic.tistory.com/229)
 - [중간 테이블은 어느 도메인에 위치시켜야할까?](https://random-topic.tistory.com/231)
 - [더 이상 미룰 수 없다. 너의 마이그레이션, 나의 삽질 : Java 11 -> 21, Spring Boot 2.X -> 3.X](https://random-topic.tistory.com/232)
+- [JPA Indexing은 개념에 맞게 사용해 중복을 피하자](https://random-topic.tistory.com/233)
 
 </div>
 </details>
