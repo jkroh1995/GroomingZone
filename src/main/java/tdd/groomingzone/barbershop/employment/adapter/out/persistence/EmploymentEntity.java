@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "EMPLOYMENT", indexes = @Index(name = "IDX__BARBER__SHOP__ID", columnList = "WORK_PLACE_ID"))
+@Table(name = "EMPLOYMENT", indexes = @Index(name = "IDX__WORK__PLACE__ID", columnList = "WORK_PLACE_ID"))
 public class EmploymentEntity {
 
     @Id
