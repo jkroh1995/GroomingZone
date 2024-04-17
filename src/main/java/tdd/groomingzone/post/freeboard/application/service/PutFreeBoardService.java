@@ -3,7 +3,6 @@ package tdd.groomingzone.post.freeboard.application.service;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
-import tdd.groomingzone.post.common.BoardInfo;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
 import tdd.groomingzone.post.freeboard.application.port.in.command.PutFreeBoardCommand;

@@ -1,7 +1,5 @@
 package tdd.groomingzone.post.recruitment.application.port.in.command;
 
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
 public record PutRecruitmentCommand (

@@ -3,9 +3,7 @@ package tdd.groomingzone.post.freeboard.domain;
 import org.junit.jupiter.api.Test;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.member.domain.Member;
-import tdd.groomingzone.post.common.BoardInfo;
 import tdd.groomingzone.util.MemberCreator;
-import tdd.groomingzone.util.StubTime;
 
 import java.time.LocalDateTime;
 
@@ -31,7 +29,6 @@ class FreeBoardTest {
         String modifiedTitle = "modifiedTitle";
         String modifiedContent = "modifiedContent";
         LocalDateTime fakeModifiedTime = LocalDateTime.of(2099, 11, 28, 22, 30, 10);
-        StubTime stubTime = new StubTime(fakeModifiedTime);
 
         testEntity.modify(modifiedTitle, modifiedContent, fakeModifiedTime);
         assertThat(testEntity.getTitle()).isEqualTo(modifiedTitle);
