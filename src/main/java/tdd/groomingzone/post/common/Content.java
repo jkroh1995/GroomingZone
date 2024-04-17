@@ -6,10 +6,8 @@ import tdd.groomingzone.global.exception.ExceptionCode;
 public record Content(
         String content
 ) {
-
-    public Content(String content) {
+    public Content {
         verifyContent(content);
-        this.content = content;
     }
 
     private void verifyContent(String content) {
