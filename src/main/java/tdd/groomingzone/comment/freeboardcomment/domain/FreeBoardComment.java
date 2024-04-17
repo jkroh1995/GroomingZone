@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class FreeBoardComment {
 
     private final CommentVO commentVO;
-    private CommentInfo commentInfo;
+    private final CommentInfo commentInfo;
     private final FreeBoard freeBoard;
 
     @Builder
@@ -54,16 +54,13 @@ public class FreeBoardComment {
         if(requestMember.isAdmin()){
             return;
         }
-        if(getWriterId() != requestMember.getMemberId()){
+        if(!getWriterId().equals(requestMember.getMemberId())){
             throw new BusinessException(ExceptionCode.UNAUTHORIZED);
         }
     }
 
     public void modify(String content, LocalDateTime modifiedAt) {
-        this.commentInfo = CommentInfo.builder()
-                .content(content)
-                .modifiedAt(modifiedAt)
-                .build();
+        commentInfo.modify(content, modifiedAt);
     }
 
     public long getId() {

@@ -29,15 +29,10 @@ public class PutFreeBoardService implements PutFreeBoardUseCase {
     @Override
     @Transactional
     public SingleFreeBoardCommandResponse putFreeBoard(PutFreeBoardCommand command) {
-        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
-        Member requestMember = loadMemberPort.findMemberByEmail(command.getRequestMemberEmail());
+        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.freeBoardId());
+        Member requestMember = loadMemberPort.findMemberByEmail(command.requestMemberEmail());
         freeBoard.checkMemberAuthority(requestMember);
-        freeBoard.modify(BoardInfo.builder()
-                .title(command.getTitle())
-                .content(command.getContent())
-                .modifiedAt(command.getModifiedAt())
-                .viewCount(freeBoard.getViewCount())
-                .build());
+        freeBoard.modify(command.title(), command.content(), command.modifiedAt());
 
         saveFreeBoardPort.save(freeBoard);
 

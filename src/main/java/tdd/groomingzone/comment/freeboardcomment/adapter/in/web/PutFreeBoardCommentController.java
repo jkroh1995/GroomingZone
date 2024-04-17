@@ -24,7 +24,7 @@ public class PutFreeBoardCommentController {
                                                                                @PathVariable("free-board-id") long freeBoardId,
                                                                                @PathVariable("comment-id") long commentId,
                                                                                @RequestBody FreeBoardCommentApiDto.Put dto) {
-        PutFreeBoardCommentCommand command = PutFreeBoardCommentCommand.of(requestMember.getUsername(), freeBoardId, commentId, dto.getContent());
+        PutFreeBoardCommentCommand command = PutFreeBoardCommentCommand.of(requestMember.getUsername(), freeBoardId, commentId, dto.content());
         SingleFreeBoardCommentResponse commandResponse = putFreeBoardCommentUseCase.putFreeBoard(command);
         FreeBoardCommentApiDto.Response responseDto = FreeBoardCommentApiDto.Response.of(commandResponse);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);

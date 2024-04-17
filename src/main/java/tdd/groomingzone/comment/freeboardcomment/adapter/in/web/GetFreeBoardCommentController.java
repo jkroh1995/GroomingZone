@@ -26,10 +26,10 @@ public class GetFreeBoardCommentController {
                                                                                                      @RequestParam(name = "page", defaultValue = "1") int pageNumber){
         GetFreeBoardCommentPageCommand command = GetFreeBoardCommentPageCommand.of(boardId, pageNumber);
         MultiFreeBoardCommentResponse commandResponse = getFreeBoardCommentUseCase.getFreeBoardComment(command);
-        List<FreeBoardCommentApiDto.Response> responseDtoList = commandResponse.getPageResponse().stream()
+        List<FreeBoardCommentApiDto.Response> responseDtoList = commandResponse.pageResponse().stream()
                 .map(FreeBoardCommentApiDto.Response::of)
                 .collect(Collectors.toList());
-        PagedResponseDto<FreeBoardCommentApiDto.Response> response = new PagedResponseDto<>(responseDtoList, commandResponse.getPageInfo());
+        PagedResponseDto<FreeBoardCommentApiDto.Response> response = new PagedResponseDto<>(responseDtoList, commandResponse.pageInfo());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -1,14 +1,10 @@
 package tdd.groomingzone.post.freeboard.application.service;
 
-import lombok.Data;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
-@Data
-public final class PageNumber {
+public record PageNumber(int pageNumber) {
     private static final int MINIMUM_PAGE_NUMBER = 1;
-
-    private final int pageNumber;
 
     public PageNumber(int pageNumber) {
         validatePageNumber(pageNumber);
@@ -20,7 +16,7 @@ public final class PageNumber {
     }
 
     private void validatePageNumber(int pageNumber) {
-        if(pageNumber < MINIMUM_PAGE_NUMBER){
+        if (pageNumber < MINIMUM_PAGE_NUMBER) {
             throw new BusinessException(ExceptionCode.INVALID_PAGE_NUMBER);
         }
     }

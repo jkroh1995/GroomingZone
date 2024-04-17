@@ -1,5 +1,7 @@
 package tdd.groomingzone.post.recruitment.application.port.out;
 
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
+
 public interface LoadRecruitmentPort {
-    RecruitmentEntityQueryResult loadRecruitmentById(long recruitmentId);
+    Recruitment loadRecruitmentById(long recruitmentId);
 }

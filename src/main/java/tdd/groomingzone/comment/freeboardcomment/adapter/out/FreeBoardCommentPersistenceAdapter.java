@@ -31,7 +31,7 @@ public class FreeBoardCommentPersistenceAdapter implements SaveFreeBoardCommentP
 
     @Override
     public FreeBoardCommentPage loadFreeBoardCommentPage(FreeBoardCommentPageable freeBoardCommentPageable) {
-        Page<CommentEntity> databaseEntityPage = commentEntityRepository.findCommentPageByBoardId(freeBoardCommentPageable.getBoardId(), freeBoardCommentPageable.getPageable());
+        Page<CommentEntity> databaseEntityPage = commentEntityRepository.findCommentPageByBoardId(freeBoardCommentPageable.boardId(), freeBoardCommentPageable.pageable());
         return freeBoardCommentMapper.mapToPage(databaseEntityPage);
     }
 

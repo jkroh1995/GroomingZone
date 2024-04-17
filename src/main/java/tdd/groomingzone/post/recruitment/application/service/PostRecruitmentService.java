@@ -4,9 +4,7 @@ import org.springframework.stereotype.Service;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruitmentCommand;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
-import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
 import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.global.utils.CommonEnums;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
@@ -27,21 +25,21 @@ public class PostRecruitmentService implements PostRecruitmentUseCase {
 
     @Override
     public SingleRecruitmentResponse postRecruitment(PostRecruitmentCommand postRecruitmentCommand) {
-        Member writer = loadMemberPort.findMemberByEmail(postRecruitmentCommand.getWriterEmail());
+        Member writer = loadMemberPort.findMemberByEmail(postRecruitmentCommand.writerEmail());
+        LocalDateTime writeTime = LocalDateTime.now();
+
         Recruitment recruitment = Recruitment.builder()
                 .id(CommonEnums.NEW_INSTANCE.getValue())
                 .writer(writer)
-                .title(postRecruitmentCommand.getTitle())
-                .content(postRecruitmentCommand.getContent())
+                .title(postRecruitmentCommand.title())
+                .content(postRecruitmentCommand.content())
                 .viewCount(CommonEnums.NEW_INSTANCE.getValue())
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
-                .type(postRecruitmentCommand.getType())
+                .createdAt(writeTime)
+                .modifiedAt(writeTime)
+                .type(postRecruitmentCommand.type())
                 .build();
 
-        SaveRecruitmentQuery saveRecruitmentQuery = SaveRecruitmentQuery.of(recruitment);
-
-        RecruitmentEntityQueryResult saveResult = saveRecruitmentPort.save(saveRecruitmentQuery);
-        return SingleRecruitmentResponse.of(saveResult);
+        Recruitment savedRecruitment = saveRecruitmentPort.save(recruitment);
+        return SingleRecruitmentResponse.of(savedRecruitment);
     }
 }

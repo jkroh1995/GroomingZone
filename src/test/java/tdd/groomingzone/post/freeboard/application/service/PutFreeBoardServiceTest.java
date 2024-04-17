@@ -66,13 +66,13 @@ class PutFreeBoardServiceTest {
 
         SingleFreeBoardCommandResponse response = putFreeBoardService.putFreeBoard(putFreeBoardCommand);
 
-        assertThat(response.getBoardId()).isEqualTo(entityQueryResult.getId());
-        assertThat(response.getTitle()).isEqualTo(entityQueryResult.getTitle());
-        assertThat(response.getContent()).isEqualTo(entityQueryResult.getContent());
-        assertThat(response.getViewCount()).isEqualTo(entityQueryResult.getViewCount());
-        assertThat(response.getCreatedAt()).isEqualTo(entityQueryResult.getCreatedAt());
-        assertThat(response.getModifiedAt()).isEqualTo(entityQueryResult.getModifiedAt());
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
-        assertThat(response.getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
+        assertThat(response.boardId()).isEqualTo(entityQueryResult.getId());
+        assertThat(response.title()).isEqualTo(entityQueryResult.getTitle());
+        assertThat(response.content()).isEqualTo(entityQueryResult.getContent());
+        assertThat(response.viewCount()).isEqualTo(entityQueryResult.getViewCount());
+        assertThat(response.createdAt()).isEqualTo(entityQueryResult.getCreatedAt());
+        assertThat(response.modifiedAt()).isEqualTo(entityQueryResult.getModifiedAt());
+        assertThat(response.writerInfo().getWriterId()).isEqualTo(writer.getMemberId());
+        assertThat(response.writerInfo().getWriterNickName()).isEqualTo(writer.getNickName());
     }
 }

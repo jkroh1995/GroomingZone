@@ -23,8 +23,8 @@ public class DeleteFreeBoardCommentService implements DeleteFreeBoardCommentUseC
 
     @Override
     public void delete(DeleteFreeBoardCommentCommand command) {
-        FreeBoardComment freeBoardComment = loadFreeBoardCommentPort.loadFreeBoardComment(command.getCommentId());
-        Member requestMember = loadMemberPort.findMemberByEmail(command.getRequestMemberEmail());
+        FreeBoardComment freeBoardComment = loadFreeBoardCommentPort.loadFreeBoardComment(command.commentId());
+        Member requestMember = loadMemberPort.findMemberByEmail(command.requestMemberEmail());
         freeBoardComment.checkMemberAuthority(requestMember);
         deleteFreeBoardCommentPort.delete(freeBoardComment.getId());
     }

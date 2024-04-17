@@ -3,18 +3,14 @@ package tdd.groomingzone.post.freeboard.adapter.in.web;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.post.common.WriterInfo;
@@ -97,8 +93,8 @@ class PutFreeBoardControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(testPut.getTitle()))
-                .andExpect(jsonPath("$.content").value(testPut.getContent()))
+                .andExpect(jsonPath("$.title").value(testPut.title()))
+                .andExpect(jsonPath("$.content").value(testPut.content()))
                 .andDo(document("put-free-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),

@@ -87,17 +87,17 @@ class GetFreeBoardCommentServiceTest {
         MultiFreeBoardCommentResponse multiFreeBoardCommentResponse = getFreeBoardCommentService.getFreeBoardComment(command);
 
         //then
-        assertThat(multiFreeBoardCommentResponse.getPageInfo().getPageNumber()).isEqualTo(commentEntityPage.getNumber() + 1);
-        assertThat(multiFreeBoardCommentResponse.getPageInfo().getSize()).isEqualTo(commentEntityPage.getSize());
-        assertThat(multiFreeBoardCommentResponse.getPageInfo().getTotalPage()).isEqualTo(commentEntityPage.getTotalPages());
-        assertThat(multiFreeBoardCommentResponse.getPageInfo().getTotalElements()).isEqualTo(commentEntityPage.getTotalElements());
+        assertThat(multiFreeBoardCommentResponse.pageInfo().getPageNumber()).isEqualTo(commentEntityPage.getNumber() + 1);
+        assertThat(multiFreeBoardCommentResponse.pageInfo().getSize()).isEqualTo(commentEntityPage.getSize());
+        assertThat(multiFreeBoardCommentResponse.pageInfo().getTotalPage()).isEqualTo(commentEntityPage.getTotalPages());
+        assertThat(multiFreeBoardCommentResponse.pageInfo().getTotalElements()).isEqualTo(commentEntityPage.getTotalElements());
 
-        List<SingleFreeBoardCommentResponse> responseList = multiFreeBoardCommentResponse.getPageResponse();
+        List<SingleFreeBoardCommentResponse> responseList = multiFreeBoardCommentResponse.pageResponse();
         for (int i = 0; i < responseList.size(); i++) {
-            assertThat(responseList.get(i).getContent()).isEqualTo(entityResultList.get(i).getContent());
-            assertThat(responseList.get(i).getCreatedAt()).isEqualTo(entityResultList.get(i).getCreatedAt());
-            assertThat(responseList.get(i).getModifiedAt()).isEqualTo(entityResultList.get(i).getModifiedAt());
-            assertThat(responseList.get(i).getWriterInfo().getWriterId()).isEqualTo(entityResultList.get(i).getWriterId());
+            assertThat(responseList.get(i).content()).isEqualTo(entityResultList.get(i).getContent());
+            assertThat(responseList.get(i).createdAt()).isEqualTo(entityResultList.get(i).getCreatedAt());
+            assertThat(responseList.get(i).modifiedAt()).isEqualTo(entityResultList.get(i).getModifiedAt());
+            assertThat(responseList.get(i).writerInfo().getWriterId()).isEqualTo(entityResultList.get(i).getWriterId());
         }
     }
 }

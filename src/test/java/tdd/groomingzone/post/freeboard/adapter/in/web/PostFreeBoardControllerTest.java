@@ -3,23 +3,15 @@ package tdd.groomingzone.post.freeboard.adapter.in.web;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.auth.application.service.MemberDetailsService;
-import tdd.groomingzone.member.adapter.out.persistence.MemberEntity;
-import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.post.common.WriterInfo;
 import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
 import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
@@ -31,7 +23,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -93,8 +84,8 @@ class PostFreeBoardControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value(testPost.getTitle()))
-                .andExpect(jsonPath("$.content").value(testPost.getContent()))
+                .andExpect(jsonPath("$.title").value(testPost.title()))
+                .andExpect(jsonPath("$.content").value(testPost.content()))
                 .andDo(document(
                         "post-free-board",
                         getRequestPreProcessor(),

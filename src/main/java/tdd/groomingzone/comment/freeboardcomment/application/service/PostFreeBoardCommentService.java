@@ -28,14 +28,14 @@ public class PostFreeBoardCommentService implements PostFreeBoardCommentUseCase 
 
     @Override
     public SingleFreeBoardCommentResponse postFreeBoardComment(PostFreeBoardCommentCommand command) {
-        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.getBoardId());
-        Member commentWriter = loadMemberPort.findMemberByEmail(command.getWriterEmail());
+        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.boardId());
+        Member commentWriter = loadMemberPort.findMemberByEmail(command.writerEmail());
 
         LocalDateTime writeCommentTime = LocalDateTime.now();
         FreeBoardComment freeBoardComment = FreeBoardComment.builder()
                 .writer(commentWriter)
                 .freeBoard(freeBoard)
-                .content(command.getContent())
+                .content(command.content())
                 .createdAt(writeCommentTime)
                 .modifiedAt(writeCommentTime)
                 .build();

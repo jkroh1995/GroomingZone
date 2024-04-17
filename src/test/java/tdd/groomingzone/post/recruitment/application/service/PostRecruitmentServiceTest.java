@@ -10,8 +10,8 @@ import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruitmentCommand;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -42,6 +42,7 @@ class PostRecruitmentServiceTest {
         String testContent = "content";
         String testType = "OFFER";
         int testViewCount = 1;
+        long testId = 1L;
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
 
@@ -50,23 +51,24 @@ class PostRecruitmentServiceTest {
                 testContent,
                 testType);
 
-        RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L,
-                writer.getMemberId(),
-                writer.getNickName(),
-                testTitle,
-                testContent,
-                testType,
-                testViewCount,
-                testCreatedAt,
-                testModifiedAt);
+        Recruitment recruitment = Recruitment.builder()
+                .id(testId)
+                .writer(writer)
+                .title(testTitle)
+                .content(testContent)
+                .type(testType)
+                .viewCount(testViewCount)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
 
-        given(saveRecruitmentPort.save(any())).willReturn(entityQueryResult);
+        given(saveRecruitmentPort.save(any())).willReturn(recruitment);
         given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
 
         SingleRecruitmentResponse response = postRecruitmentService.postRecruitment(postRecruitmentCommand);
 
-        assertThat(response.getTitle()).isEqualTo(postRecruitmentCommand.getTitle());
-        assertThat(response.getContent()).isEqualTo(postRecruitmentCommand.getContent());
-        assertThat(response.getType()).isEqualTo(postRecruitmentCommand.getType());
+        assertThat(response.getTitle()).isEqualTo(postRecruitmentCommand.title());
+        assertThat(response.getContent()).isEqualTo(postRecruitmentCommand.content());
+        assertThat(response.getType()).isEqualTo("구인");
     }
 }

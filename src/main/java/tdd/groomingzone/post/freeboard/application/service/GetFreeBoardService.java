@@ -25,7 +25,7 @@ public class GetFreeBoardService implements GetFreeBoardUseCase {
     @Override
     @Transactional
     public SingleFreeBoardCommandResponse getFreeBoard(GetFreeBoardCommand command) {
-        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.getFreeBoardId());
+        FreeBoard freeBoard = loadFreeBoardPort.loadFreeBoardById(command.freeBoardId());
         freeBoard.viewed();
         saveFreeBoardPort.save(freeBoard);
 
