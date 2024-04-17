@@ -33,12 +33,7 @@ class FreeBoardTest {
         LocalDateTime fakeModifiedTime = LocalDateTime.of(2099, 11, 28, 22, 30, 10);
         StubTime stubTime = new StubTime(fakeModifiedTime);
 
-        testEntity.modify(BoardInfo.builder()
-                .title(modifiedTitle)
-                .content(modifiedContent)
-                .modifiedAt(fakeModifiedTime)
-                .viewCount(0)
-                .build());
+        testEntity.modify(modifiedTitle, modifiedContent, fakeModifiedTime);
         assertThat(testEntity.getTitle()).isEqualTo(modifiedTitle);
         assertThat(testEntity.getContent()).isEqualTo(modifiedContent);
         assertThat(testEntity.getModifiedAt()).isEqualTo(fakeModifiedTime);
