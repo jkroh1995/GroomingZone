@@ -18,8 +18,8 @@ public class BoardInfo {
 
     @Builder
     public BoardInfo(String title, String content, int viewCount, LocalDateTime modifiedAt) {
-        this.title = Title.of(title);
-        this.content = Content.of(content);
+        this.title = new Title(title);
+        this.content = new Content(content);
         this.viewCount = viewCount;
         this.modifiedAt = modifiedAt;
     }
@@ -29,8 +29,8 @@ public class BoardInfo {
     }
 
     public void modify(String title, String content, LocalDateTime modifiedAt) {
-        this.title = Title.of(title);
-        this.content = Content.of(content);
+        this.title = new Title(title);
+        this.content = new Content(content);
         this.modifiedAt = modifiedAt;
     }
 }
