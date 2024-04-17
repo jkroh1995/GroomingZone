@@ -22,7 +22,7 @@ public class Member {
 
     @Builder
     private Member(long memberId, String email, String password, String nickName, String phoneNumber, String role, String provider, LocalDateTime createdAt, LocalDateTime modifiedAt, String profileImageUrl) {
-        this.memberVO = MemberVO.of(memberId);
+        this.memberVO = new MemberVO(memberId);
         this.email = Email.of(email);
         this.password = Password.of(password);
         this.nickName = NickName.of(nickName);
@@ -84,7 +84,7 @@ public class Member {
     }
 
     public Long getMemberId() {
-        return memberVO.getMemberId();
+        return memberVO.memberId();
     }
 
     @Getter

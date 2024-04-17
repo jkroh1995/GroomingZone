@@ -30,15 +30,15 @@ public class PutFreeBoardController {
     public ResponseEntity<FreeBoardApiDto.Response> putFreeBoard(@AuthenticationPrincipal UserDetails requestMember,
                                                                  @PathVariable("free-board-id") long freeBoardId,
                                                                  @RequestBody FreeBoardApiDto.Put putDto) {
-        PutFreeBoardCommand putFreeBoardCommand = PutFreeBoardCommand.of(requestMember.getUsername(), freeBoardId, putDto.getTitle(), putDto.getContent(), time.now());
+        PutFreeBoardCommand putFreeBoardCommand = PutFreeBoardCommand.of(requestMember.getUsername(), freeBoardId, putDto.title(), putDto.content(), time.now());
         SingleFreeBoardCommandResponse commandResponse = putFreeBoardUseCase.putFreeBoard(putFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.builder()
-                .boardId(commandResponse.getBoardId())
-                .title(commandResponse.getTitle())
-                .content(commandResponse.getContent())
-                .createdAt(commandResponse.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                .modifiedAt(commandResponse.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                .writerInfo(commandResponse.getWriterInfo())
+                .boardId(commandResponse.boardId())
+                .title(commandResponse.title())
+                .content(commandResponse.content())
+                .createdAt(commandResponse.createdAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .modifiedAt(commandResponse.modifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                .writerInfo(commandResponse.writerInfo())
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }

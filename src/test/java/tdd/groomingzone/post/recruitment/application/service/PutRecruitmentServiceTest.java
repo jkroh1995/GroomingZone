@@ -11,8 +11,8 @@ import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.command.PutRecruitmentCommand;
 import tdd.groomingzone.post.recruitment.application.port.out.LoadRecruitmentPort;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -44,6 +44,7 @@ class PutRecruitmentServiceTest {
         String testTitle = "title";
         String testContent = "content";
         int testViewCount = 1;
+        long testId = 1L;
         LocalDateTime testCreatedAt = LocalDateTime.now();
         LocalDateTime testModifiedAt = LocalDateTime.now();
         String testType = "OFFER";
@@ -51,22 +52,29 @@ class PutRecruitmentServiceTest {
         PutRecruitmentCommand putRecruitmentCommand = PutRecruitmentCommand.of(testTitle,
                 testContent,
                 writer.getEmail(),
-                1L,
+                testId,
                 testModifiedAt);
 
-        RecruitmentEntityQueryResult entityQueryResult = RecruitmentEntityQueryResult.of(1L, writer.getMemberId(), writer.getNickName(), testTitle,testContent, testType, testViewCount, testCreatedAt, testModifiedAt);
+        Recruitment recruitment = Recruitment.builder()
+                .id(testId)
+                .writer(writer)
+                .title(testTitle)
+                .content(testContent)
+                .type(testType)
+                .viewCount(testViewCount)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
 
-
-        given(loadMemberPort.findMemberById(anyLong())).willReturn(writer);
         given(loadMemberPort.findMemberByEmail(anyString())).willReturn(writer);
-        given(loadRecruitmentPort.loadRecruitmentById(anyLong())).willReturn(entityQueryResult);
-        given(saveRecruitmentPort.save(any())).willReturn(entityQueryResult);
+        given(loadRecruitmentPort.loadRecruitmentById(anyLong())).willReturn(recruitment);
+        given(saveRecruitmentPort.save(any())).willReturn(recruitment);
 
         SingleRecruitmentResponse response = putRecruitmentService.putRecruitment(putRecruitmentCommand);
 
-        assertThat(response.getBoardId()).isEqualTo(putRecruitmentCommand.getRecruitmentId());
-        assertThat(response.getTitle()).isEqualTo(putRecruitmentCommand.getTitle());
-        assertThat(response.getContent()).isEqualTo(putRecruitmentCommand.getContent());
-        assertThat(response.getModifiedAt()).isEqualTo(putRecruitmentCommand.getModifiedAt());
+        assertThat(response.getBoardId()).isEqualTo(putRecruitmentCommand.recruitmentId());
+        assertThat(response.getTitle()).isEqualTo(putRecruitmentCommand.title());
+        assertThat(response.getContent()).isEqualTo(putRecruitmentCommand.content());
+        assertThat(response.getModifiedAt()).isEqualTo(putRecruitmentCommand.modifiedAt());
     }
 }

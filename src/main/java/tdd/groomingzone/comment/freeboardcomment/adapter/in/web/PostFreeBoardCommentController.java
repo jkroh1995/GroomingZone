@@ -23,7 +23,7 @@ public class PostFreeBoardCommentController {
     public ResponseEntity<FreeBoardCommentApiDto.Response> postFreeBoardComment(@AuthenticationPrincipal UserDetails writer,
                                                @PathVariable("free-board-id") long boardId,
                                                @RequestBody FreeBoardCommentApiDto.Post dto) {
-        PostFreeBoardCommentCommand postFreeBoardCommentCommand = PostFreeBoardCommentCommand.of(writer.getUsername(), boardId, dto.getContent());
+        PostFreeBoardCommentCommand postFreeBoardCommentCommand = PostFreeBoardCommentCommand.of(writer.getUsername(), boardId, dto.content());
         SingleFreeBoardCommentResponse commentResponse = postFreeBoardCommentUseCase.postFreeBoardComment(postFreeBoardCommentCommand);
         FreeBoardCommentApiDto.Response responseDto = FreeBoardCommentApiDto.Response.of(commentResponse);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);

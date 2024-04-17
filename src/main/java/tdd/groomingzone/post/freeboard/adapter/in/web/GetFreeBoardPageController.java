@@ -32,10 +32,10 @@ public class GetFreeBoardPageController {
                                                                                        @RequestParam(name = "page", defaultValue = "1") int pageNumber) {
         GetFreeBoardPageCommand getFreeBoardPageCommand = GetFreeBoardPageCommand.of(title, content, writer, pageNumber);
         MultiFreeBoardCommandResponse commandResponse = getFreeBoardPageUseCase.getFreeBoardPage(getFreeBoardPageCommand);
-        List<FreeBoardApiDto.SimpleResponse> responseDtoList= commandResponse.getPageResponse().stream()
+        List<FreeBoardApiDto.SimpleResponse> responseDtoList= commandResponse.pageResponse().stream()
                 .map(FreeBoardApiDto.SimpleResponse::of)
                 .collect(Collectors.toList());
-        PagedResponseDto<FreeBoardApiDto.SimpleResponse> response = new PagedResponseDto<>(responseDtoList, commandResponse.getPageInfo());
+        PagedResponseDto<FreeBoardApiDto.SimpleResponse> response = new PagedResponseDto<>(responseDtoList, commandResponse.pageInfo());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

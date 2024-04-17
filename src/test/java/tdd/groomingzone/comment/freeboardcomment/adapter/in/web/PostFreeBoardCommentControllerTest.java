@@ -81,11 +81,11 @@ class PostFreeBoardCommentControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.content").value(testResponse.getContent()))
-                .andExpect(jsonPath("$.createdAt").value(testResponse.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
-                .andExpect(jsonPath("$.modifiedAt").value(testResponse.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
-                .andExpect(jsonPath("$.writerInfo.writerId").value(testResponse.getWriterInfo().getWriterId()))
-                .andExpect(jsonPath("$.writerInfo.writerNickName").value(testResponse.getWriterInfo().getWriterNickName()))
+                .andExpect(jsonPath("$.content").value(testResponse.content()))
+                .andExpect(jsonPath("$.createdAt").value(testResponse.createdAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
+                .andExpect(jsonPath("$.modifiedAt").value(testResponse.modifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
+                .andExpect(jsonPath("$.writerInfo.writerId").value(testResponse.writerInfo().getWriterId()))
+                .andExpect(jsonPath("$.writerInfo.writerNickName").value(testResponse.writerInfo().getWriterNickName()))
                 .andDo(document(
                         "post-free-board-comment",
                         getRequestPreProcessor(),

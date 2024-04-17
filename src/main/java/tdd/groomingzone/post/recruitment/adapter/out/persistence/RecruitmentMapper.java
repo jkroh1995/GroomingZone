@@ -1,34 +1,43 @@
 package tdd.groomingzone.post.recruitment.adapter.out.persistence;
 
 import org.springframework.stereotype.Component;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
-import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
+import tdd.groomingzone.member.application.port.out.LoadMemberPort;
+import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 
 @Component
 public class RecruitmentMapper {
-    public RecruitmentEntity mapToDatabaseEntity(SaveRecruitmentQuery query) {
+    private final LoadMemberPort loadMemberPort;
+
+    public RecruitmentMapper(LoadMemberPort loadMemberPort) {
+        this.loadMemberPort = loadMemberPort;
+    }
+
+    public RecruitmentEntity mapToDatabaseEntity(Recruitment recruitment) {
         return RecruitmentEntity.builder()
-                .boardId(query.getBoardId())
-                .writerId(query.getWriterId())
-                .writerNickName(query.getWriterNickName())
-                .title(query.getTitle())
-                .content(query.getContent())
-                .createdAt(query.getCreatedAt())
-                .modifiedAt(query.getModifiedAt())
-                .viewCount(query.getViewCount())
-                .type(query.getType())
+                .boardId(recruitment.getBoardId())
+                .writerId(recruitment.getWriterId())
+                .writerNickName(recruitment.getWriterNickName())
+                .title(recruitment.getTitle())
+                .content(recruitment.getContent())
+                .createdAt(recruitment.getCreatedAt())
+                .modifiedAt(recruitment.getModifiedAt())
+                .viewCount(recruitment.getViewCount())
+                .type(recruitment.getRecruitmentType())
                 .build();
     }
 
-    public RecruitmentEntityQueryResult mapToEntityQueryResult(RecruitmentEntity savedDatabaseEntity) {
-        return RecruitmentEntityQueryResult.of(savedDatabaseEntity.getBoardId(),
-                savedDatabaseEntity.getWriterId(),
-                savedDatabaseEntity.getWriterNickName(),
-                savedDatabaseEntity.getTitle(),
-                savedDatabaseEntity.getContent(),
-                savedDatabaseEntity.getType(),
-                savedDatabaseEntity.getViewCount(),
-                savedDatabaseEntity.getCreatedAt(),
-                savedDatabaseEntity.getModifiedAt());
+    public Recruitment mapToDomainEntity(RecruitmentEntity databaseEntity) {
+        Member writer = loadMemberPort.findMemberById(databaseEntity.getWriterId());
+        return Recruitment.builder()
+                .id(databaseEntity.getBoardId())
+                .writer(writer)
+                .title(databaseEntity.getTitle())
+                .content(databaseEntity.getContent())
+                .viewCount(databaseEntity.getViewCount())
+                .createdAt(databaseEntity.getCreatedAt())
+                .modifiedAt(databaseEntity.getModifiedAt())
+                .type(databaseEntity.getType())
+                .build();
     }
 }

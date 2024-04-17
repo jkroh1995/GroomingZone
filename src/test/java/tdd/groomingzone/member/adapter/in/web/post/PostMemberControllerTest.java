@@ -79,11 +79,11 @@ class PostMemberControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value(postDto.getEmail()))
-                .andExpect(jsonPath("$.nickName").value(postDto.getNickName()))
-                .andExpect(jsonPath("$.phoneNumber").value(postDto.getPhoneNumber()))
-                .andExpect(jsonPath("$.role").value(postDto.getRole()))
-                .andExpect(jsonPath("$.profileImageUrl").value(postDto.getProfileImageUrl()))
+                .andExpect(jsonPath("$.email").value(postDto.email()))
+                .andExpect(jsonPath("$.nickName").value(postDto.nickName()))
+                .andExpect(jsonPath("$.phoneNumber").value(postDto.phoneNumber()))
+                .andExpect(jsonPath("$.role").value(postDto.role()))
+                .andExpect(jsonPath("$.profileImageUrl").value(postDto.profileImageUrl()))
                 .andDo(document(
                         "post-member",
                         getRequestPreProcessor(),

@@ -61,13 +61,13 @@ class PostFreeBoardServiceTest {
 
         SingleFreeBoardCommandResponse response = postFreeBoardService.postFreeBoard(postFreeBoardCommand);
 
-        assertThat(response.getBoardId()).isEqualTo(freeBoard.getId());
-        assertThat(response.getTitle()).isEqualTo(freeBoard.getTitle());
-        assertThat(response.getContent()).isEqualTo(freeBoard.getContent());
-        assertThat(response.getViewCount()).isEqualTo(freeBoard.getViewCount());
-        assertThat(response.getCreatedAt()).isEqualTo(freeBoard.getCreatedAt());
-        assertThat(response.getModifiedAt()).isEqualTo(freeBoard.getModifiedAt());
-        assertThat(response.getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
-        assertThat(response.getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
+        assertThat(response.boardId()).isEqualTo(freeBoard.getId());
+        assertThat(response.title()).isEqualTo(freeBoard.getTitle());
+        assertThat(response.content()).isEqualTo(freeBoard.getContent());
+        assertThat(response.viewCount()).isEqualTo(freeBoard.getViewCount());
+        assertThat(response.createdAt()).isEqualTo(freeBoard.getCreatedAt());
+        assertThat(response.modifiedAt()).isEqualTo(freeBoard.getModifiedAt());
+        assertThat(response.writerInfo().getWriterId()).isEqualTo(writer.getMemberId());
+        assertThat(response.writerInfo().getWriterNickName()).isEqualTo(writer.getNickName());
     }
 }

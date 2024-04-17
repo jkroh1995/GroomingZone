@@ -91,18 +91,18 @@ class GetFreeBoardPageServiceTest {
                 testPageIndex + 1);
         MultiFreeBoardCommandResponse pageCommandResponse = getFreeBoardPageService.getFreeBoardPage(command);
 
-        List<SingleFreeBoardCommandResponse> pageResponse = pageCommandResponse.getPageResponse();
-        PageInfo pageInfo = pageCommandResponse.getPageInfo();
+        List<SingleFreeBoardCommandResponse> pageResponse = pageCommandResponse.pageResponse();
+        PageInfo pageInfo = pageCommandResponse.pageInfo();
 
         for (int i = 0; i < pageResponse.size(); i++) {
-            assertThat(pageResponse.get(i).getBoardId()).isEqualTo(entityQueryResults.get(i).getId());
-            assertThat(pageResponse.get(i).getTitle()).isEqualTo(entityQueryResults.get(i).getTitle());
-            assertThat(pageResponse.get(i).getContent()).isEqualTo(entityQueryResults.get(i).getContent());
-            assertThat(pageResponse.get(i).getViewCount()).isEqualTo(entityQueryResults.get(i).getViewCount());
-            assertThat(pageResponse.get(i).getCreatedAt()).isEqualTo(entityQueryResults.get(i).getCreatedAt());
-            assertThat(pageResponse.get(i).getModifiedAt()).isEqualTo(entityQueryResults.get(i).getModifiedAt());
-            assertThat(pageResponse.get(i).getWriterInfo().getWriterId()).isEqualTo(writer.getMemberId());
-            assertThat(pageResponse.get(i).getWriterInfo().getWriterNickName()).isEqualTo(writer.getNickName());
+            assertThat(pageResponse.get(i).boardId()).isEqualTo(entityQueryResults.get(i).getId());
+            assertThat(pageResponse.get(i).title()).isEqualTo(entityQueryResults.get(i).getTitle());
+            assertThat(pageResponse.get(i).content()).isEqualTo(entityQueryResults.get(i).getContent());
+            assertThat(pageResponse.get(i).viewCount()).isEqualTo(entityQueryResults.get(i).getViewCount());
+            assertThat(pageResponse.get(i).createdAt()).isEqualTo(entityQueryResults.get(i).getCreatedAt());
+            assertThat(pageResponse.get(i).modifiedAt()).isEqualTo(entityQueryResults.get(i).getModifiedAt());
+            assertThat(pageResponse.get(i).writerInfo().getWriterId()).isEqualTo(writer.getMemberId());
+            assertThat(pageResponse.get(i).writerInfo().getWriterNickName()).isEqualTo(writer.getNickName());
         }
 
         assertThat(pageInfo.getPageNumber()).isEqualTo(freeBoardEntityPage.getNumber());

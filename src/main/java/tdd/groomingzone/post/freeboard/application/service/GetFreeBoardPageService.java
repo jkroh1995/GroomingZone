@@ -10,7 +10,6 @@ import tdd.groomingzone.post.freeboard.application.port.in.usecase.GetFreeBoardP
 
 import tdd.groomingzone.post.freeboard.application.port.out.FreeBoardPage;
 import tdd.groomingzone.post.freeboard.application.port.out.LoadFreeBoardPort;
-import tdd.groomingzone.post.freeboard.domain.FreeBoard;
 import tdd.groomingzone.global.pagedresponse.PageInfo;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
@@ -31,24 +30,15 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
 
     @Override
     public MultiFreeBoardCommandResponse getFreeBoardPage(GetFreeBoardPageCommand command) {
-        PageNumber pageNumber = new PageNumber(command.getPageNumber());
-        FreeBoardPage freeBoardPage = loadFreeBoardPort.loadFreeBoardPage(command.getTitle(),
-                command.getContent(),
-                command.getWriterNickName(),
+        PageNumber pageNumber = new PageNumber(command.pageNumber());
+        FreeBoardPage freeBoardPage = loadFreeBoardPort.loadFreeBoardPage(command.title(),
+                command.content(),
+                command.writerNickName(),
                 pageNumber);
 
-        List<SingleFreeBoardCommandResponse> pageResponse = freeBoardPage.getFreeBoards().stream()
-                .map(eachQueryResult -> {
-                    Member writer = loadMemberPort.findMemberById(eachQueryResult.getWriterId());
-                    FreeBoard freeBoard = FreeBoard.builder()
-                            .id(eachQueryResult.getId())
-                            .writer(writer)
-                            .title(eachQueryResult.getTitle())
-                            .content(eachQueryResult.getContent())
-                            .viewCount(eachQueryResult.getViewCount())
-                            .createdAt(eachQueryResult.getCreatedAt())
-                            .modifiedAt(eachQueryResult.getModifiedAt())
-                            .build();
+        List<SingleFreeBoardCommandResponse> pageResponse = freeBoardPage.freeBoards().stream()
+                .map(freeBoard -> {
+                    Member writer = loadMemberPort.findMemberById(freeBoard.getWriterId());
                    return SingleFreeBoardCommandResponse.of(freeBoard.getId(),
                            freeBoard.getTitle(),
                            freeBoard.getContent(),
@@ -58,7 +48,7 @@ public class GetFreeBoardPageService implements GetFreeBoardPageUseCase {
                            WriterInfo.of(writer.getMemberId(), writer.getNickName()));
                 })
                 .collect(Collectors.toList());
-        PageInfo pageInfo = PageInfo.of(pageNumber.getPageNumber(), freeBoardPage.getPageSize(), freeBoardPage.getTotalElements(), freeBoardPage.getTotalPages());
+        PageInfo pageInfo = PageInfo.of(pageNumber.pageNumber(), freeBoardPage.pageSize(), freeBoardPage.totalElements(), freeBoardPage.totalPages());
 
         return MultiFreeBoardCommandResponse.of(pageResponse, pageInfo);
     }

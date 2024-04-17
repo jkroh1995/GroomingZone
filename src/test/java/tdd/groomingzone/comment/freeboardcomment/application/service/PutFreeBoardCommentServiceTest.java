@@ -73,8 +73,8 @@ class PutFreeBoardCommentServiceTest {
         SingleFreeBoardCommentResponse singleFreeBoardCommentResponse = putFreeBoardCommentService.putFreeBoard(command);
 
         //then
-        assertThat(singleFreeBoardCommentResponse.getContent()).isEqualTo(command.getContent());
-        assertThat(singleFreeBoardCommentResponse.getCreatedAt()).isEqualTo(freeBoardComment.getCreatedAt());
-        assertThat(singleFreeBoardCommentResponse.getModifiedAt()).isEqualTo(freeBoardComment.getModifiedAt());
+        assertThat(singleFreeBoardCommentResponse.content()).isEqualTo(command.content());
+        assertThat(singleFreeBoardCommentResponse.createdAt()).isEqualTo(freeBoardComment.getCreatedAt());
+        assertThat(singleFreeBoardCommentResponse.modifiedAt()).isEqualTo(freeBoardComment.getModifiedAt());
     }
 }

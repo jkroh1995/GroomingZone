@@ -57,11 +57,11 @@ class PostMemberServiceTest {
         //when
         MemberCommandResponse memberCommandResponse = postMemberService.postMember(command);
 
-        assertThat(memberCommandResponse.getMemberId()).isEqualTo(member.getMemberId());
-        assertThat(memberCommandResponse.getEmail()).isEqualTo(member.getEmail());
-        assertThat(memberCommandResponse.getNickName()).isEqualTo(member.getNickName());
-        assertThat(memberCommandResponse.getPhoneNumber()).isEqualTo(member.getPhoneNumber());
-        assertThat(memberCommandResponse.getRole()).isEqualTo(member.getRole());
+        assertThat(memberCommandResponse.memberId()).isEqualTo(member.getMemberId());
+        assertThat(memberCommandResponse.email()).isEqualTo(member.getEmail());
+        assertThat(memberCommandResponse.nickName()).isEqualTo(member.getNickName());
+        assertThat(memberCommandResponse.phoneNumber()).isEqualTo(member.getPhoneNumber());
+        assertThat(memberCommandResponse.role()).isEqualTo(member.getRole());
     }
 
     @Test

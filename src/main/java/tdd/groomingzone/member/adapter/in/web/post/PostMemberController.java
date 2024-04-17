@@ -23,19 +23,19 @@ public class PostMemberController {
 
     @PostMapping
     public ResponseEntity<MemberApiDto.Response> postMember(@RequestBody MemberApiDto.Post dto){
-        PostMemberCommand postMemberCommand = PostMemberCommand.of(dto.getEmail(),
-                dto.getPassword(),
-                dto.getNickName(),
-                dto.getPhoneNumber(),
-                dto.getRole(),
-                dto.getProfileImageUrl());
+        PostMemberCommand postMemberCommand = PostMemberCommand.of(dto.email(),
+                dto.password(),
+                dto.nickName(),
+                dto.phoneNumber(),
+                dto.role(),
+                dto.profileImageUrl());
         MemberCommandResponse commandResponse = postMemberUseCase.postMember(postMemberCommand);
         MemberApiDto.Response responseDto = MemberApiDto.Response.builder()
-                .email(commandResponse.getEmail())
-                .nickName(commandResponse.getNickName())
-                .phoneNumber(commandResponse.getPhoneNumber())
-                .role(commandResponse.getRole())
-                .profileImageUrl(commandResponse.getProfileImageUrl())
+                .email(commandResponse.email())
+                .nickName(commandResponse.nickName())
+                .phoneNumber(commandResponse.phoneNumber())
+                .role(commandResponse.role())
+                .profileImageUrl(commandResponse.profileImageUrl())
                 .build();
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }

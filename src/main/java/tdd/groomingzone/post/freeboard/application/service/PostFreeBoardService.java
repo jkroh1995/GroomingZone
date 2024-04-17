@@ -32,12 +32,12 @@ public class PostFreeBoardService implements PostFreeBoardUseCase {
     @Override
     @Transactional
     public SingleFreeBoardCommandResponse postFreeBoard(PostFreeBoardCommand command) {
-        Member writer = loadMemberPort.findMemberByEmail(command.getWriterEmail());
+        Member writer = loadMemberPort.findMemberByEmail(command.writerEmail());
         FreeBoard freeBoard = FreeBoard.builder()
                 .id(CommonEnums.NEW_INSTANCE.getValue())
                 .writer(writer)
-                .title(command.getTitle())
-                .content(command.getContent())
+                .title(command.title())
+                .content(command.content())
                 .viewCount(CommonEnums.NEW_INSTANCE.getValue())
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())

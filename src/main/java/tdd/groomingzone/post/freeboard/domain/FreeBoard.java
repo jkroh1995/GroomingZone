@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 public class FreeBoard implements Post {
     private final BoardVO boardVO;
-    private BoardInfo boardInfo;
+    private final BoardInfo boardInfo;
 
     @Builder
     public FreeBoard(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt) {
@@ -32,13 +32,12 @@ public class FreeBoard implements Post {
                 .build();
     }
 
-    @Override
-    public void modify(BoardInfo boardInfo) {
-        this.boardInfo = boardInfo;
+    public void modify(String title, String content, LocalDateTime modifiedAt) {
+        boardInfo.modify(title, content, modifiedAt);
     }
 
     public void viewed() {
-        boardInfo.setViewCount(boardInfo.getViewCount() + 1);
+        boardInfo.addViewCount(boardInfo.getViewCount() + 1);
     }
 
     @Override

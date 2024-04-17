@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 public class Recruitment implements Post {
     private final BoardVO boardVO;
-    private BoardInfo boardInfo;
-    private final Type type;
+    private final BoardInfo boardInfo;
+    private final RecruitmentType recruitmentType;
 
     @Builder
     private Recruitment(long id, Member writer, String title, String content, int viewCount, LocalDateTime createdAt, LocalDateTime modifiedAt, String type) {
@@ -31,7 +31,7 @@ public class Recruitment implements Post {
                 .viewCount(viewCount)
                 .build();
 
-        this.type = Type.of(type);
+        this.recruitmentType = RecruitmentType.of(type);
     }
 
     public Long getId() {
@@ -66,8 +66,8 @@ public class Recruitment implements Post {
         return boardInfo.getModifiedAt();
     }
 
-    public String getType() {
-        return this.type.getType();
+    public String getRecruitmentType() {
+        return this.recruitmentType.getType();
     }
 
     public Member getWriter(){
@@ -79,30 +79,34 @@ public class Recruitment implements Post {
         if (member.isAdmin()) {
             return;
         }
-        if (getWriterId() != member.getMemberId()) {
+        if (!getWriterId().equals(member.getMemberId())) {
             throw new BusinessException(ExceptionCode.UNAUTHORIZED);
         }
     }
 
     @Override
-    public void modify(BoardInfo boardInfo) {
-        this.boardInfo = boardInfo;
+    public void modify(String title, String content, LocalDateTime modifiedAt) {
+        boardInfo.modify(title, content, modifiedAt);
+    }
+
+    public Long getBoardId() {
+        return this.boardVO.getId();
     }
 
     @Getter
-    private enum Type {
+    private enum RecruitmentType {
         OFFER("구인"),
         SEARCH("구직");
 
         private final String type;
 
-        Type(String type) {
+        RecruitmentType(String type) {
             this.type = type;
         }
 
-        public static Type of(String type) {
+        public static RecruitmentType of(String type) {
             try{
-                return Type.valueOf(type);
+                return RecruitmentType.valueOf(type);
             }catch (IllegalArgumentException e){
                 throw new BusinessException(ExceptionCode.INVALID_RECRUITMENT_TYPE);
             }

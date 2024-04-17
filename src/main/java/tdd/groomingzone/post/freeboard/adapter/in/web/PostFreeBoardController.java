@@ -24,7 +24,7 @@ public class PostFreeBoardController {
     @PostMapping
     public ResponseEntity<FreeBoardApiDto.Response> postFreeBoard(@AuthenticationPrincipal UserDetails writer,
                                                                   @RequestBody FreeBoardApiDto.Post postDto) {
-        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer.getUsername(), postDto.getTitle(), postDto.getContent());
+        PostFreeBoardCommand postFreeBoardCommand = PostFreeBoardCommand.of(writer.getUsername(), postDto.title(), postDto.content());
         SingleFreeBoardCommandResponse commandResponse = postFreeBoardUseCase.postFreeBoard(postFreeBoardCommand);
         FreeBoardApiDto.Response responseDto = FreeBoardApiDto.Response.of(commandResponse);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);

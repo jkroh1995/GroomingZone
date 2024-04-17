@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
 import tdd.groomingzone.post.recruitment.application.port.in.usecase.PostRecruitmentUseCase;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;
@@ -71,17 +71,18 @@ class PostRecruitmentControllerTest {
 
         Member writer = MemberCreator.createMember();
 
-        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(RecruitmentEntityQueryResult.of(
-                testId,
-                writer.getMemberId(),
-                writer.getNickName(),
-                testTitle,
-                testContent,
-                testType,
-                testViewCount,
-                testCreatedAt,
-                testModifiedAt
-        ));
+        Recruitment recruitment = Recruitment.builder()
+                .id(testId)
+                .writer(writer)
+                .title(testTitle)
+                .content(testContent)
+                .type(testType)
+                .viewCount(testViewCount)
+                .createdAt(testCreatedAt)
+                .modifiedAt(testModifiedAt)
+                .build();
+
+        SingleRecruitmentResponse testResponse = SingleRecruitmentResponse.of(recruitment);
 
         given(postRecruitmentUseCase.postRecruitment(any())).willReturn(testResponse);
 
@@ -94,7 +95,7 @@ class PostRecruitmentControllerTest {
                 ).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(testPost.getTitle()))
                 .andExpect(jsonPath("$.content").value(testPost.getContent()))
-                .andExpect(jsonPath("$.type").value(testPost.getType()))
+                .andExpect(jsonPath("$.type").value("구인"))
                 .andDo(document(
                         "post-recruitment",
                         getRequestPreProcessor(),

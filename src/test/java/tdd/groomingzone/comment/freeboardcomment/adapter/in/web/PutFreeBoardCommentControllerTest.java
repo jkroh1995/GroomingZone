@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -79,11 +78,11 @@ public class PutFreeBoardCommentControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value(response.getContent()))
-                .andExpect(jsonPath("$.createdAt").value(response.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
-                .andExpect(jsonPath("$.modifiedAt").value(response.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
-                .andExpect(jsonPath("$.writerInfo.writerId").value(response.getWriterInfo().getWriterId()))
-                .andExpect(jsonPath("$.writerInfo.writerNickName").value(response.getWriterInfo().getWriterNickName()))
+                .andExpect(jsonPath("$.content").value(response.content()))
+                .andExpect(jsonPath("$.createdAt").value(response.createdAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
+                .andExpect(jsonPath("$.modifiedAt").value(response.modifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))))
+                .andExpect(jsonPath("$.writerInfo.writerId").value(response.writerInfo().getWriterId()))
+                .andExpect(jsonPath("$.writerInfo.writerNickName").value(response.writerInfo().getWriterNickName()))
                 .andDo(document(
                         "put-free-board-comment",
                         getRequestPreProcessor(),

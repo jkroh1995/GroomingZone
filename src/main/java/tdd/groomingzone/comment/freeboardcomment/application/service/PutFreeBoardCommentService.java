@@ -28,10 +28,10 @@ public class PutFreeBoardCommentService implements PutFreeBoardCommentUseCase {
 
     @Override
     public SingleFreeBoardCommentResponse putFreeBoard(PutFreeBoardCommentCommand command) {
-        FreeBoardComment freeBoardComment = loadFreeBoardCommentPort.loadFreeBoardComment(command.getCommentId());
-        Member requestMember = loadMemberPort.findMemberByEmail(command.getRequestMemberEmail());
+        FreeBoardComment freeBoardComment = loadFreeBoardCommentPort.loadFreeBoardComment(command.commentId());
+        Member requestMember = loadMemberPort.findMemberByEmail(command.requestMemberEmail());
         freeBoardComment.checkMemberAuthority(requestMember);
-        freeBoardComment.modify(command.getContent(), LocalDateTime.now());
+        freeBoardComment.modify(command.content(), LocalDateTime.now());
 
         FreeBoardComment savedComment = saveFreeBoardCommentPort.save(freeBoardComment);
         return SingleFreeBoardCommentResponse.of(savedComment.getContent(),

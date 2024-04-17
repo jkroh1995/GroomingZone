@@ -9,35 +9,27 @@ import java.time.format.FormatStyle;
 
 public final class FreeBoardCommentApiDto {
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Post {
-        private String content;
+    public record Post(String content) {
     }
 
-    @Getter
     @Builder
-    public final static class Response {
-        private final String content;
-        private final String createdAt;
-        private final String modifiedAt;
-        private final WriterInfo writerInfo;
+    public record Response(
+            String content,
+            String createdAt,
+            String modifiedAt,
+            WriterInfo writerInfo
 
+    ) {
         public static FreeBoardCommentApiDto.Response of(SingleFreeBoardCommentResponse commandResponse) {
             return FreeBoardCommentApiDto.Response.builder()
-                    .content(commandResponse.getContent())
-                    .createdAt(commandResponse.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                    .modifiedAt(commandResponse.getModifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
-                    .writerInfo(commandResponse.getWriterInfo())
+                    .content(commandResponse.content())
+                    .createdAt(commandResponse.createdAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                    .modifiedAt(commandResponse.modifiedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)))
+                    .writerInfo(commandResponse.writerInfo())
                     .build();
         }
     }
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Put {
-        private String content;
+    public record Put(String content) {
     }
 }

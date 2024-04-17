@@ -28,19 +28,19 @@ public class PostMemberService implements PostMemberUseCase {
     @Override
     @Transactional
     public MemberCommandResponse postMember(PostMemberCommand command) {
-        verifyEmailDuplicate(command.getEmail());
+        verifyEmailDuplicate(command.email());
         LocalDateTime createAt = LocalDateTime.now();
         Member member = Member.builder()
                 .memberId(0)
-                .email(command.getEmail())
-                .password(command.getPassword())
-                .nickName(command.getNickName())
-                .phoneNumber(command.getPhoneNumber())
-                .role(command.getRole())
+                .email(command.email())
+                .password(command.password())
+                .nickName(command.nickName())
+                .phoneNumber(command.phoneNumber())
+                .role(command.role())
                 .createdAt(createAt)
                 .modifiedAt(createAt)
                 .provider("SERVER")
-                .profileImageUrl(command.getProfileImageUrl())
+                .profileImageUrl(command.profileImageUrl())
                 .build();
         Member savedMember = saveMemberPort.save(member);
         return MemberCommandResponse.of(savedMember.getMemberId(),

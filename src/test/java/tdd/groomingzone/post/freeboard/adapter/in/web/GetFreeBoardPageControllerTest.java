@@ -85,9 +85,9 @@ class GetFreeBoardPageControllerTest {
                                     .accept(MediaType.APPLICATION_JSON)
                                     .contentType(MediaType.APPLICATION_JSON)
                     ).andExpect(jsonPath("data", hasSize(testCommandResponseList.size())))
-                    .andExpect(jsonPath("data[%d].boardId", i).value(testCommandResponseList.get(i).getBoardId()))
-                    .andExpect(jsonPath("data[%d].title", i).value(testCommandResponseList.get(i).getTitle()))
-                    .andExpect(jsonPath("data[%d].viewCount", i).value(testCommandResponseList.get(i).getViewCount()))
+                    .andExpect(jsonPath("data[%d].boardId", i).value(testCommandResponseList.get(i).boardId()))
+                    .andExpect(jsonPath("data[%d].title", i).value(testCommandResponseList.get(i).title()))
+                    .andExpect(jsonPath("data[%d].viewCount", i).value(testCommandResponseList.get(i).viewCount()))
                     .andExpect(jsonPath("data[%d].writerInfo.writerId", i).value(writer.getMemberId()))
                     .andExpect(jsonPath("data[%d].writerInfo.writerNickName", i).value(writer.getNickName()))
                     .andDo(document("get-free-board-page",

@@ -4,10 +4,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
-import tdd.groomingzone.post.recruitment.application.port.out.RecruitmentEntityQueryResult;
 import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
-import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentQuery;
 import tdd.groomingzone.post.recruitment.application.port.out.LoadRecruitmentPort;
+import tdd.groomingzone.post.recruitment.domain.Recruitment;
 
 @Repository
 public class RecruitmentPersistenceAdapter implements SaveRecruitmentPort, LoadRecruitmentPort {
@@ -22,17 +21,17 @@ public class RecruitmentPersistenceAdapter implements SaveRecruitmentPort, LoadR
 
     @Override
     @Transactional
-    public RecruitmentEntityQueryResult save(SaveRecruitmentQuery query) {
-        RecruitmentEntity databaseEntity = recruitmentMapper.mapToDatabaseEntity(query);
+    public Recruitment save(Recruitment recruitment) {
+        RecruitmentEntity databaseEntity = recruitmentMapper.mapToDatabaseEntity(recruitment);
         RecruitmentEntity savedDatabaseEntity = recruitmentEntityRepository.save(databaseEntity);
-        return recruitmentMapper.mapToEntityQueryResult(savedDatabaseEntity);
+        return recruitmentMapper.mapToDomainEntity(savedDatabaseEntity);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public RecruitmentEntityQueryResult loadRecruitmentById(long recruitmentId) {
+    public Recruitment loadRecruitmentById(long recruitmentId) {
         RecruitmentEntity databaseEntity = recruitmentEntityRepository.findById(recruitmentId).orElseThrow(() ->
                 new BusinessException(ExceptionCode.BOARD_NOT_FOUND));
-        return recruitmentMapper.mapToEntityQueryResult(databaseEntity);
+        return recruitmentMapper.mapToDomainEntity(databaseEntity);
     }
 }
