@@ -23,10 +23,10 @@ public class Member {
     @Builder
     private Member(long memberId, String email, String password, String nickName, String phoneNumber, String role, String provider, LocalDateTime createdAt, LocalDateTime modifiedAt, String profileImageUrl) {
         this.memberVO = new MemberVO(memberId);
-        this.email = Email.of(email);
-        this.password = Password.of(password);
-        this.nickName = NickName.of(nickName);
-        this.phoneNumber = PhoneNumber.of(phoneNumber);
+        this.email = new Email(email);
+        this.password = new Password(password);
+        this.nickName = new NickName(nickName);
+        this.phoneNumber = new PhoneNumber(phoneNumber);
         this.role = Role.of(role);
         this.provider = Provider.of(provider);
         this.createdAt = createdAt;
@@ -35,24 +35,13 @@ public class Member {
     }
 
     public void modify(String email, String password, String nickName, String phoneNumber, String role, LocalDateTime modifiedAt, String profileImageUrl) {
-        this.email = Email.of(email);
-        this.password = Password.of(password);
-        this.nickName = NickName.of(nickName);
-        this.phoneNumber = PhoneNumber.of(phoneNumber);
-        validateRole(role);
+        this.email = new Email(email);
+        this.password = new Password(password);
+        this.nickName = new NickName(nickName);
+        this.phoneNumber = new PhoneNumber(phoneNumber);
         this.role = Role.of(role);
         this.modifiedAt = modifiedAt;
         this.profileImageUrl = profileImageUrl;
-    }
-
-    private void validateRole(String inputRole) {
-        Role [] roles = Role.values();
-        for(Role role : roles){
-            if(role.getRole().equals(inputRole)){
-                return;
-            }
-        }
-        throw new BusinessException(ExceptionCode.INVALID_ROLE);
     }
 
     public String getNickName(){
@@ -60,11 +49,11 @@ public class Member {
     }
 
     public String getEmail() {
-        return email.getEmail();
+        return email.email();
     }
 
     public String getPassword() {
-        return password.getPassword();
+        return password.password();
     }
 
     public String getRole() {
@@ -72,7 +61,7 @@ public class Member {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber.getPhoneNumber();
+        return phoneNumber.phoneNumber();
     }
 
     public boolean isAdmin() {
@@ -101,10 +90,21 @@ public class Member {
 
         public static Role of(String inputRole){
             try{
+                validateRole(inputRole);
                 return Role.valueOf(inputRole);
             }catch (IllegalArgumentException e){
                 throw new BusinessException(ExceptionCode.INVALID_ROLE);
             }
+        }
+
+        private static void validateRole(String inputRole) {
+            Role [] roles = Role.values();
+            for(Role role : roles){
+                if(role.getRole().equals(inputRole)){
+                    return;
+                }
+            }
+            throw new BusinessException(ExceptionCode.INVALID_ROLE);
         }
     }
 

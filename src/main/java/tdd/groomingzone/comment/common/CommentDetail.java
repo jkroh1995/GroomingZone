@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
-public class CommentInfo {
+public class CommentDetail {
     private String content;
     private LocalDateTime modifiedAt;
 
