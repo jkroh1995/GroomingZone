@@ -9,6 +9,8 @@ import tdd.groomingzone.barbershop.employment.application.port.out.SaveEmploymen
 import tdd.groomingzone.barbershop.employment.application.dto.PostEmploymentCommand;
 import tdd.groomingzone.barbershop.employment.application.dto.PostEmploymentResponse;
 import tdd.groomingzone.barbershop.employment.domain.Employment;
+import tdd.groomingzone.global.exception.BusinessException;
+import tdd.groomingzone.global.exception.ExceptionCode;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
 
@@ -30,6 +32,9 @@ public class PostEmploymentService implements PostEmploymentUseCase {
     public PostEmploymentResponse postEmployment(PostEmploymentCommand command) {
         Member requestMember = loadMemberPort.findMemberByEmail(command.getRequestMemberEmail());
         BarberShop barberShop = loadBarberShopPort.findBarberShopById(command.getBarberShopId());
+        if(requestMemberIsNotOwner(barberShop, requestMember)){
+            throw new BusinessException(ExceptionCode.UNAUTHORIZED);
+        }
         Member worker = loadMemberPort.findMemberById(command.getWorkerId());
         Employment employment = Employment.builder()
                 .employmentId(0L)
@@ -37,9 +42,6 @@ public class PostEmploymentService implements PostEmploymentUseCase {
                 .worker(worker)
                 .build();
         Employment savedEmployment = saveEmploymentPort.save(employment);
-        if(requestMemberIsNotOwner(barberShop, requestMember)){
-            //
-        }
         return PostEmploymentResponse.of(savedEmployment.getWorkPlaceId(), savedEmployment.getWorkPlaceName(), savedEmployment.getWorkerId(), savedEmployment.getWorkerNickName());
     }
 
