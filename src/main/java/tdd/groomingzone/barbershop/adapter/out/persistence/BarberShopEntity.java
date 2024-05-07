@@ -1,13 +1,16 @@
 package tdd.groomingzone.barbershop.adapter.out.persistence;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @Table(name = "BARBER_SHOP")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BarberShopEntity {
 
     @Id
