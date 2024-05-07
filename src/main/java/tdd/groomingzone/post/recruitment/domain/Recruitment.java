@@ -51,11 +51,11 @@ public class Recruitment implements Post {
     }
 
     public String getTitle() {
-        return boardInfo.getTitle().getTitle();
+        return boardInfo.getTitle().title();
     }
 
     public String getContent() {
-        return boardInfo.getContent().getContent();
+        return boardInfo.getContent().content();
     }
 
     public int getViewCount() {

@@ -3,25 +3,19 @@ package tdd.groomingzone.member.domain;
 import tdd.groomingzone.global.exception.BusinessException;
 import tdd.groomingzone.global.exception.ExceptionCode;
 
-public class NickName {
-
-    private String nickName;
-
-    private NickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public static NickName of(String nickName) {
+public record NickName(
+        String nickName
+) {
+    public NickName{
         verifyNickName(nickName);
-        return new NickName(nickName);
     }
 
-    private static void verifyNickName(String nickName) {
+    private void verifyNickName(String nickName) {
         verifyLength(nickName);
         verifyNickNameIsNotBlank(nickName);
     }
 
-    private static void verifyNickNameIsNotBlank(String nickName) {
+    private void verifyNickNameIsNotBlank(String nickName) {
         if(nickName.isBlank()){
             throw new BusinessException(ExceptionCode.BLANK_NICK_NAME);
         }

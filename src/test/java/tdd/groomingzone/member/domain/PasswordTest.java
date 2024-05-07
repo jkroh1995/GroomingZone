@@ -12,6 +12,6 @@ class PasswordTest {
     @DisplayName("비밀번호가 적절하지 않으면 예외처리한다.")
     void testInappropriatePasswordThrowException() {
         String inappropriatePassword = "nono";
-        assertThrows(BusinessException.class, () -> Password.of(inappropriatePassword));
+        assertThrows(BusinessException.class, () -> new Password(inappropriatePassword));
     }
 }
