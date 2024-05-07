@@ -3,7 +3,7 @@ package tdd.groomingzone.barbershop.employment.application.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tdd.groomingzone.barbershop.domain.BarberShop;
-import tdd.groomingzone.barbershop.application.port.LoadBarberShopPort;
+import tdd.groomingzone.barbershop.application.port.out.LoadBarberShopPort;
 import tdd.groomingzone.barbershop.employment.application.port.in.PostEmploymentUseCase;
 import tdd.groomingzone.barbershop.employment.application.port.out.SaveEmploymentPort;
 import tdd.groomingzone.barbershop.employment.application.dto.PostEmploymentCommand;

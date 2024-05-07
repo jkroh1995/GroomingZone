@@ -19,4 +19,14 @@ public class BarberShopMapper {
                 .name(databaseEntity.getName())
                 .build();
     }
+
+    public BarberShopEntity mapToDatabaseEntity(BarberShop domainEntity) {
+        return BarberShopEntity.builder()
+                .ownerId(domainEntity.getOwnerId())
+                .name(domainEntity.getName())
+                .zipCode(domainEntity.getZipCode())
+                .streetAddress(domainEntity.getStreetAddress())
+                .detailAddress(domainEntity.getDetailAddress())
+                .build();
+    }
 }

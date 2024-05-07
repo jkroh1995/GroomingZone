@@ -1,4 +1,4 @@
-package tdd.groomingzone.barbershop.application.port;
+package tdd.groomingzone.barbershop.application.port.out;
 
 import tdd.groomingzone.barbershop.domain.BarberShop;
 

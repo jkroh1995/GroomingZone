@@ -44,7 +44,7 @@ public class Member {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public String getNickName(){
+    public String getNickName() {
         return nickName.getValue();
     }
 
@@ -68,12 +68,16 @@ public class Member {
         return role.equals(Role.ADMIN);
     }
 
-    public String getProvider(){
+    public String getProvider() {
         return this.provider.getProvider();
     }
 
     public Long getMemberId() {
         return memberVO.memberId();
+    }
+
+    public boolean isCustomer() {
+        return this.role == Role.CUSTOMER;
     }
 
     @Getter
@@ -88,19 +92,19 @@ public class Member {
             this.role = role;
         }
 
-        public static Role of(String inputRole){
-            try{
+        public static Role of(String inputRole) {
+            try {
                 validateRole(inputRole);
                 return Role.valueOf(inputRole);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 throw new BusinessException(ExceptionCode.INVALID_ROLE);
             }
         }
 
         private static void validateRole(String inputRole) {
-            Role [] roles = Role.values();
-            for(Role role : roles){
-                if(role.getRole().equals(inputRole)){
+            Role[] roles = Role.values();
+            for (Role role : roles) {
+                if (role.getRole().equals(inputRole)) {
                     return;
                 }
             }
@@ -109,7 +113,7 @@ public class Member {
     }
 
     @Getter
-    public enum Provider{
+    public enum Provider {
         SERVER("SERVER"),
         KAKAO("KAKAO"),
         NAVER("NAVER");
@@ -120,10 +124,10 @@ public class Member {
             this.provider = provider;
         }
 
-        public static Provider of(String input){
-            try{
+        public static Provider of(String input) {
+            try {
                 return Provider.valueOf(input);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 throw new BusinessException(ExceptionCode.INVALID_ROLE);
             }
         }
