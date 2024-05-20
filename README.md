@@ -61,3 +61,4 @@ TDD 구현 방식 연습 및 기술 학습을 위한 프로젝트입니다.
 - [Pull Request 027. 로그인 / 로그아웃 로직 리팩토링하기 - Http Header 대신 Cookie를 사용해보자](https://random-topic.tistory.com/212)
 - [Pull Request 028. Spring Security + OAuth2.0 로그인 적용하기](https://random-topic.tistory.com/218)
 - [Pull Request 029. Record를 적용한 리팩토링 진행하기](https://random-topic.tistory.com/234)
+- [Pull Request 030. 바버샵 등록 기능 구현하기 - Slack WebHook 연동 및 비동기 이벤트 처리 해보기 + 계층 간 통신 고민하기](https://random-topic.tistory.com/235)
