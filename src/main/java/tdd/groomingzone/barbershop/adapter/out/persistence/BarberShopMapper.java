@@ -1,6 +1,7 @@
 package tdd.groomingzone.barbershop.adapter.out.persistence;
 
 import org.springframework.stereotype.Component;
+import tdd.groomingzone.barbershop.domain.Address;
 import tdd.groomingzone.barbershop.domain.BarberShop;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 
@@ -17,6 +18,8 @@ public class BarberShopMapper {
                 .barberShopId(databaseEntity.getBarberShopId())
                 .owner(loadMemberPort.findMemberById(databaseEntity.getOwnerId()))
                 .name(databaseEntity.getName())
+                .phoneNumber(databaseEntity.getPhoneNumber())
+                .address(new Address(databaseEntity.getZipCode(), databaseEntity.getStreetAddress(), databaseEntity.getDetailAddress()))
                 .build();
     }
 
@@ -27,6 +30,7 @@ public class BarberShopMapper {
                 .zipCode(domainEntity.getZipCode())
                 .streetAddress(domainEntity.getStreetAddress())
                 .detailAddress(domainEntity.getDetailAddress())
+                .phoneNumber(domainEntity.getPhoneNumber())
                 .build();
     }
 }

@@ -18,13 +18,13 @@ public final class BarberShopApiDto {
     public record Response(
             Long barberShopId,
             String ownerName,
-            String name,
+            String barberShopName,
             Address address
     ) {
         public static Response of(SingleBarberShopResponse commandResponse) {
             return new Response(commandResponse.barberShopId(),
-                    commandResponse.owner().getNickName(),
-                    commandResponse.name(),
+                    commandResponse.ownerNickName(),
+                    commandResponse.barberShopName(),
                     commandResponse.address());
         }
     }

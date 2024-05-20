@@ -93,18 +93,14 @@ public class Member {
         }
 
         public static Role of(String inputRole) {
-            try {
-                validateRole(inputRole);
-                return Role.valueOf(inputRole);
-            } catch (IllegalArgumentException e) {
-                throw new BusinessException(ExceptionCode.INVALID_ROLE);
-            }
+            validateRole(inputRole);
+            return Role.valueOf(inputRole);
         }
 
         private static void validateRole(String inputRole) {
             Role[] roles = Role.values();
             for (Role role : roles) {
-                if (role.getRole().equals(inputRole)) {
+                if (role.toString().equals(inputRole)) {
                     return;
                 }
             }
