@@ -6,12 +6,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tdd.groomingzone.barbershop.application.port.in.SingleBarberShopResponse;
 import tdd.groomingzone.barbershop.application.port.in.command.PostBarberShopCommand;
 import tdd.groomingzone.barbershop.application.port.in.usecase.PostBarberUseCase;
 
-@RestController("/barber-shop")
+@RestController
+@RequestMapping("/barber-shop")
 public class PostBarberShopController {
 
     private final PostBarberUseCase postBarberUseCase;
@@ -22,7 +24,7 @@ public class PostBarberShopController {
 
     @PostMapping
     public ResponseEntity<BarberShopApiDto.Response> postBarberShop(@AuthenticationPrincipal UserDetails writer,
-                                           @RequestBody BarberShopApiDto.Post dto) {
+                                                                    @RequestBody BarberShopApiDto.Post dto) {
         PostBarberShopCommand command = PostBarberShopCommand.of(writer.getUsername(), dto);
         SingleBarberShopResponse commandResponse = postBarberUseCase.postBarberShop(command);
         BarberShopApiDto.Response responseDto = BarberShopApiDto.Response.of(commandResponse);

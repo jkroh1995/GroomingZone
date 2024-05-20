@@ -28,14 +28,17 @@ public class BarberShopEntity {
 
     private String detailAddress;
 
+    private String phoneNumber;
+
     private long rate = 0;
 
     @Builder
-    private BarberShopEntity(Long ownerId, String name, String zipCode, String streetAddress, String detailAddress) {
+    private BarberShopEntity(Long ownerId, String name, String zipCode, String streetAddress, String detailAddress, String phoneNumber) {
         this.ownerId = ownerId;
         this.name = name;
         this.zipCode = zipCode;
         this.streetAddress = streetAddress;
         this.detailAddress = detailAddress;
+        this.phoneNumber = phoneNumber;
     }
 }
