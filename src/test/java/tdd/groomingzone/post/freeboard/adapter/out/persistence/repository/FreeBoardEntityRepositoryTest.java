@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import tdd.groomingzone.post.freeboard.adapter.out.persistence.entity.FreeBoardEntity;
+import tdd.groomingzone.post.freeboard.repository.FreeBoardEntity;
+import tdd.groomingzone.post.freeboard.repository.FreeBoardEntityRepository;
 import tdd.groomingzone.util.RepositoryTest;
 
 import java.util.Arrays;

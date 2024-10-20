@@ -9,7 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.DeleteFreeBoardCommentUseCase;
+import tdd.groomingzone.comment.freeboardcomment.service.DeleteFreeBoardCommentUseCase;
+import tdd.groomingzone.comment.freeboardcomment.controller.DeleteFreeBoardCommentController;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

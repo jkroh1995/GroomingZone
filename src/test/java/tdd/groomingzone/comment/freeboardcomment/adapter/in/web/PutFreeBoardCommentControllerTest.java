@@ -12,9 +12,11 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
+import tdd.groomingzone.comment.freeboardcomment.controller.PutFreeBoardCommentController;
+import tdd.groomingzone.comment.freeboardcomment.dto.FreeBoardCommentApiDto;
 import tdd.groomingzone.post.common.WriterInfo;
-import tdd.groomingzone.comment.freeboardcomment.application.port.in.dto.response.SingleFreeBoardCommentResponse;
-import tdd.groomingzone.comment.freeboardcomment.application.port.in.usecase.PutFreeBoardCommentUseCase;
+import tdd.groomingzone.comment.freeboardcomment.dto.SingleFreeBoardCommentResponse;
+import tdd.groomingzone.comment.freeboardcomment.service.PutFreeBoardCommentUseCase;
 import tdd.groomingzone.member.domain.Member;
 import tdd.groomingzone.util.MemberCreator;
 

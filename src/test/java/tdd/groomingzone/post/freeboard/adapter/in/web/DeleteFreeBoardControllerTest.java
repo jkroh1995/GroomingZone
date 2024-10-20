@@ -3,14 +3,14 @@ package tdd.groomingzone.post.freeboard.adapter.in.web;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
-import tdd.groomingzone.post.freeboard.application.port.in.usecase.DeleteFreeBoardUseCase;
+import tdd.groomingzone.post.freeboard.service.DeleteFreeBoardUseCase;
+import tdd.groomingzone.post.freeboard.controller.DeleteFreeBoardController;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;

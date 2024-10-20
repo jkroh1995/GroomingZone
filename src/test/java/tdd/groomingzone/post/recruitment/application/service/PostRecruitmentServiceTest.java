@@ -8,10 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.groomingzone.member.application.port.out.LoadMemberPort;
 import tdd.groomingzone.member.domain.Member;
-import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
-import tdd.groomingzone.post.recruitment.application.port.in.command.PostRecruitmentCommand;
-import tdd.groomingzone.post.recruitment.application.port.out.SaveRecruitmentPort;
+import tdd.groomingzone.post.recruitment.dto.SingleRecruitmentResponse;
+import tdd.groomingzone.post.recruitment.dto.PostRecruitmentCommand;
+import tdd.groomingzone.post.recruitment.repository.SaveRecruitmentPort;
 import tdd.groomingzone.post.recruitment.domain.Recruitment;
+import tdd.groomingzone.post.recruitment.service.PostRecruitmentService;
 import tdd.groomingzone.util.MemberCreator;
 
 import java.time.LocalDateTime;

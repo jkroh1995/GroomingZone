@@ -14,9 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.member.domain.Member;
-import tdd.groomingzone.post.recruitment.application.port.in.SingleRecruitmentResponse;
-import tdd.groomingzone.post.recruitment.application.port.in.usecase.PutRecruitmentUseCase;
+import tdd.groomingzone.post.recruitment.dto.SingleRecruitmentResponse;
+import tdd.groomingzone.post.recruitment.service.PutRecruitmentUseCase;
+import tdd.groomingzone.post.recruitment.controller.PutRecruitmentController;
 import tdd.groomingzone.post.recruitment.domain.Recruitment;
+import tdd.groomingzone.post.recruitment.dto.RecruitmentApiDto;
 import tdd.groomingzone.util.MemberCreator;
 import tdd.groomingzone.util.StubTime;
 

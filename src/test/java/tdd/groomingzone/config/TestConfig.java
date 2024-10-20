@@ -3,7 +3,7 @@ package tdd.groomingzone.config;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import tdd.groomingzone.post.freeboard.adapter.out.persistence.repository.FreeBoardEntityCustomRepositoryImpl;
+import tdd.groomingzone.post.freeboard.repository.FreeBoardEntityCustomRepositoryImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

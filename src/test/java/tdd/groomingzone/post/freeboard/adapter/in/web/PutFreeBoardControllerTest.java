@@ -14,10 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import tdd.groomingzone.global.time.Time;
 import tdd.groomingzone.post.common.WriterInfo;
-import tdd.groomingzone.post.freeboard.adapter.in.web.dto.FreeBoardApiDto;
-import tdd.groomingzone.post.freeboard.application.port.in.SingleFreeBoardCommandResponse;
-import tdd.groomingzone.post.freeboard.application.port.in.usecase.PutFreeBoardUseCase;
+import tdd.groomingzone.post.freeboard.dto.FreeBoardApiDto;
+import tdd.groomingzone.post.freeboard.dto.SingleFreeBoardCommandResponse;
+import tdd.groomingzone.post.freeboard.service.PutFreeBoardUseCase;
 import tdd.groomingzone.member.domain.Member;
+import tdd.groomingzone.post.freeboard.controller.PutFreeBoardController;
 import tdd.groomingzone.util.MemberCreator;
 import tdd.groomingzone.util.StubTime;
 
